@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_ranking"
+        android:icon="@drawable/ic_ranking"
+        android:title="@string/ranking" />
+
+    <item
+        android:id="@+id/menu_clip"
+        android:icon="@drawable/ic_clip"
+        android:title="@string/clip" />
+
+    <item
+        android:id="@+id/menu_want_to_drink"
+        android:icon="@drawable/ic_want_to_drink"
+        android:title="@string/want_to_drink" />
+
+    <item
+        android:id="@+id/menu_my_page"
+        android:icon="@drawable/ic_my_page"
+        android:title="@string/my_page" />
+</menu>
