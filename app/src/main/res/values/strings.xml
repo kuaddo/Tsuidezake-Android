@@ -4,4 +4,6 @@
     <string name="want_to_drink">呑みたい</string>
     <string name="my_page">マイページ</string>
     <string name="detail">詳細</string>
+
+    <string name="price">¥%1$,d</string>
 </resources>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
@@ -11,6 +12,7 @@ import jp.kuaddo.tsuidezake.databinding.FragmentDrinkDetailBinding
 import jp.kuaddo.tsuidezake.extensions.dataBinding
 
 class DrinkDetailFragment : DaggerFragment() {
+    private val args by navArgs<DrinkDetailFragmentArgs>()
     private val binding by dataBinding<FragmentDrinkDetailBinding>(R.layout.fragment_drink_detail)
 
     override fun onCreateView(
@@ -18,6 +20,7 @@ class DrinkDetailFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding.drinkDetail = args.drinkDetail
         return binding.root
     }
 
