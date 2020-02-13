@@ -9,12 +9,14 @@ import jp.kuaddo.tsuidezake.ui.common.DataBoundListAdapter
 import jp.kuaddo.tsuidezake.ui.common.SimpleDiffUtil
 
 class RankingAdapter(
-    lifecycleOwner: LifecycleOwner
+    lifecycleOwner: LifecycleOwner,
+    private val onClickItem: (drink: Drink) -> Unit
 ) : DataBoundListAdapter<Drink, ItemRankingBinding>(lifecycleOwner, SimpleDiffUtil()) {
     override fun createBinding(parent: ViewGroup): ItemRankingBinding =
         ItemRankingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
     override fun bind(binding: ItemRankingBinding, item: Drink) {
         binding.drink = item
+        binding.root.setOnClickListener { onClickItem(item) }
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
@@ -24,7 +25,9 @@ class RankingFragment : DaggerFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = RankingAdapter(viewLifecycleOwner)
+        adapter = RankingAdapter(viewLifecycleOwner) {
+            findNavController().navigate(RankingFragmentDirections.actionRankingToDrinkDetail())
+        }
         binding.recyclerView.let { recyclerView ->
             recyclerView.adapter = adapter
             recyclerView.addItemDecoration(

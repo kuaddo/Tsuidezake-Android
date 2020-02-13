@@ -10,5 +10,15 @@
         android:id="@+id/ranking_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.ranking.RankingFragment"
         android:label="@string/ranking"
-        tools:layout="@layout/fragment_ranking" />
+        tools:layout="@layout/fragment_ranking">
+
+        <action
+            android:id="@+id/action_ranking_to_drink_detail"
+            app:destination="@id/drink_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/drink_detail_fragment"
+        android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
+        android:label="@string/detail" />
 </navigation>
