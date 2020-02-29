@@ -62,47 +62,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             app:chipSpacing="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/drink_price_text"
             app:layout_constraintStart_toStartOf="@+id/drink_name_text"
             app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
             app:singleSelection="true" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/do_not_want_to_drink_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="@string/dialog_do_not_want_to_drink"
-            app:cornerRadius="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tags_chip_group" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/do_not_want_to_drink_button"
-            app:layout_constraintEnd_toStartOf="@+id/want_to_drink_button"
-            app:layout_constraintStart_toEndOf="@+id/do_not_want_to_drink_button"
-            app:layout_constraintTop_toTopOf="@+id/do_not_want_to_drink_button" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/want_to_drink_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="@string/want_to_drink"
-            app:cornerRadius="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/do_not_want_to_drink_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/divider"
-            app:layout_constraintTop_toTopOf="@id/do_not_want_to_drink_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
