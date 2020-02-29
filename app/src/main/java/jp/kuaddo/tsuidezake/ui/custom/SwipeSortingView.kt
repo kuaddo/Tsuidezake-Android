@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.ui.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.widget.FrameLayout
 import com.google.android.material.chip.Chip
 import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
@@ -26,12 +27,12 @@ class SwipeSortingView @JvmOverloads constructor(
 
     fun submitDrinks(drinks: List<DrinkDetail>) {
         this.drinks = drinks
+        if (drinks.isEmpty()) return
 
-        if (drinks.isNotEmpty()) initializeRecommendDrinkBinding(drinks[0])
+        initializeRecommendDrinkBinding(drinks[0])
         if (drinks.size > 1) initializeRecommendDrinkBinding(drinks[1])
+        setOnTouchListener(FRONT)
         nextDrinkIndex = minOf(2, drinks.size)
-
-        setOnClickListener { replaceFront() }
     }
 
     private fun initializeRecommendDrinkBinding(drinkDetail: DrinkDetail) {
@@ -47,28 +48,54 @@ class SwipeSortingView @JvmOverloads constructor(
         addView(binding.root, BACK)
     }
 
+    private fun setOnTouchListener(index: Int) {
+        val targetView = getChildAt(index)
+        targetView.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_MOVE -> {
+                    v.x += event.x - v.width / 2
+                }
+                MotionEvent.ACTION_UP -> {
+                    // TODO: 要修正
+                    if (event.rawX.toInt() in (width / 3)..(width * 2 / 3)) v.x = 0f
+                    else replaceFront()
+                }
+            }
+            true
+        }
+    }
+
     private fun replaceFront() {
         val drinks = drinks ?: return
         when {
             nextDrinkIndex > drinks.size -> {
-                removeViewAt(BACK)
+                resetViewState(BACK)
                 onLastDrinkRemoved?.invoke()
                 return
             }
             nextDrinkIndex == drinks.size -> {
-                removeViewAt(FRONT)
+                resetViewState(FRONT)
+                setOnTouchListener(BACK)
                 nextDrinkIndex++
                 return
             }
         }
 
-        removeViewAt(FRONT)
+        resetViewState(FRONT)
+        setOnTouchListener(BACK)
         val binding = bindingQueue.poll()?.also {
             it.drinkDetail = drinks[nextDrinkIndex++]
             it.executePendingBindings()
         } ?: return
         bindingQueue.offer(binding)
         addView(binding.root, BACK)
+    }
+
+    private fun resetViewState(index: Int) {
+        val targetView = getChildAt(index)
+        targetView.x = 0f
+        targetView.setOnTouchListener(null)
+        removeViewAt(index)
     }
 
     companion object {
