@@ -86,19 +86,28 @@ class SwipeSortingView @JvmOverloads constructor(
 
     private fun setOnTouchListener(index: Int) {
         val targetView = cardContainer.getChildAt(index)
-        targetView.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_MOVE -> {
-                    v.x += event.x - v.width / 2
+        targetView.setOnTouchListener(object : OnTouchListener {
+            var initialX: Float = 0f
+            var initialEventX: Float = 0f
+
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        initialX = v.x
+                        initialEventX = event.x
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        v.x += event.x - initialEventX
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        val moveDistance = (v.x - initialX).toInt()
+                        if (moveDistance in -(width / 3)..(width / 3)) v.x = 0f
+                        else replaceFront()
+                    }
                 }
-                MotionEvent.ACTION_UP -> {
-                    // TODO: 要修正
-                    if (event.rawX.toInt() in (width / 3)..(width * 2 / 3)) v.x = 0f
-                    else replaceFront()
-                }
+                return true
             }
-            true
-        }
+        })
     }
 
     private fun resetViewState(index: Int) {
