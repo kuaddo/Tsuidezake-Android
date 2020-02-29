@@ -31,6 +31,8 @@ class SwipeSortingView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_swipe_sorting, this)
         cardContainer = findViewById(R.id.card_container)
+        findViewById<View>(R.id.do_not_want_to_drink_button).setOnClickListener { replaceFront() }
+        findViewById<View>(R.id.want_to_drink_button).setOnClickListener { replaceFront() }
     }
 
     fun submitDrinks(drinks: List<DrinkDetail>) {
@@ -43,7 +45,7 @@ class SwipeSortingView @JvmOverloads constructor(
         nextDrinkIndex = minOf(2, drinks.size)
     }
 
-    fun replaceFront() {
+    private fun replaceFront() {
         val drinks = drinks ?: return
         when {
             nextDrinkIndex > drinks.size -> {
