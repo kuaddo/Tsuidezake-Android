@@ -7,8 +7,8 @@
 
     <item
         android:id="@+id/menu_clip"
-        android:icon="@drawable/ic_clip"
-        android:title="@string/clip" />
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/favorite" />
 
     <item
         android:id="@+id/menu_want_to_drink"
