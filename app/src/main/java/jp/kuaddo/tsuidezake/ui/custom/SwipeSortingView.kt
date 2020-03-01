@@ -13,6 +13,8 @@ import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 import java.util.Queue
 import java.util.concurrent.ArrayBlockingQueue
+import kotlin.math.cos
+import kotlin.math.sin
 
 class SwipeSortingView @JvmOverloads constructor(
     context: Context,
@@ -86,35 +88,47 @@ class SwipeSortingView @JvmOverloads constructor(
 
     private fun setOnTouchListener(index: Int) {
         val targetView = cardContainer.getChildAt(index)
-        targetView.setOnTouchListener(object : OnTouchListener {
-            var initialX: Float = 0f
-            var initialEventX: Float = 0f
-
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        initialX = v.x
-                        initialEventX = event.x
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        v.x += event.x - initialEventX
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        val moveDistance = (v.x - initialX).toInt()
-                        if (moveDistance in -(width / 3)..(width / 3)) v.x = 0f
-                        else replaceFront()
-                    }
-                }
-                return true
-            }
-        })
+        targetView.setOnTouchListener(MovingAndRotationTouchListener())
     }
 
     private fun resetViewState(index: Int) {
         val targetView = cardContainer.getChildAt(index)
         targetView.x = 0f
+        targetView.rotation = 0f
         targetView.setOnTouchListener(null)
         cardContainer.removeViewAt(index)
+    }
+
+    inner class MovingAndRotationTouchListener(
+        private val movingScale: Float = 1.2f,
+        private val rotationScale: Float = 0.1f
+    ) : OnTouchListener {
+        private var initialX: Float = 0f
+        private var initialEventX: Float = 0f
+
+        override fun onTouch(v: View, event: MotionEvent): Boolean {
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    initialX = v.x
+                    initialEventX = event.x
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val x = (event.x - width / 2) * cos(Math.toRadians(v.rotation.toDouble())) -
+                        (event.y - height / 2) * sin(Math.toRadians(v.rotation.toDouble())) + width / 2
+                    val moveDistance = x - initialEventX + v.x - initialX
+                    v.x = moveDistance.toFloat() * movingScale
+                    v.rotation = moveDistance.toFloat() * rotationScale
+                }
+                MotionEvent.ACTION_UP -> {
+                    val moveDistance = (v.x - initialX).toInt()
+                    if (moveDistance in -(width / 3)..(width / 3)) {
+                        v.x = 0f
+                        v.rotation = 0f
+                    } else replaceFront()
+                }
+            }
+            return true
+        }
     }
 
     companion object {
