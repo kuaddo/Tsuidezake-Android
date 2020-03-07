@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.google.android.material.chip.Chip
 import jp.kuaddo.tsuidezake.R
@@ -33,8 +32,6 @@ class SwipeSortingView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_swipe_sorting, this)
         cardContainer = findViewById(R.id.card_container)
-        findViewById<View>(R.id.do_not_want_to_drink_button).setOnClickListener { replaceFront() }
-        findViewById<View>(R.id.want_to_drink_button).setOnClickListener { replaceFront() }
     }
 
     fun submitDrinks(drinks: List<DrinkDetail>) {
@@ -65,30 +62,27 @@ class SwipeSortingView @JvmOverloads constructor(
 
         resetViewState(FRONT)
         setOnTouchListener(BACK)
-        val binding = bindingQueue.poll()?.also {
-            it.drinkDetail = drinks[nextDrinkIndex++]
-            it.executePendingBindings()
-        } ?: return
-        bindingQueue.offer(binding)
-        cardContainer.addView(binding.root, BACK)
+        bindingQueue.poll()?.apply {
+            update(drinks[nextDrinkIndex++])
+            insertBinding(this)
+        }
     }
 
     private fun initializeRecommendDrinkBinding(drinkDetail: DrinkDetail) {
-        val binding = ViewRecommendDrinkBinding.inflate(layoutInflater).also {
-            it.drinkDetail = drinkDetail
-            it.tagsChipGroup.let { chipGroup ->
-                drinkDetail.tags.map { Chip(context).apply { text = it } }
-                    .forEach { chip -> chipGroup.addView(chip) }
-            }
-            it.executePendingBindings()
+        ViewRecommendDrinkBinding.inflate(layoutInflater).apply {
+            update(drinkDetail)
+            insertBinding(this)
         }
-        bindingQueue.offer(binding)
-        cardContainer.addView(binding.root, BACK)
     }
 
     private fun setOnTouchListener(index: Int) {
         val targetView = cardContainer.getChildAt(index)
         targetView.setOnTouchListener(MovingAndRotationTouchListener())
+    }
+
+    private fun insertBinding(binding: ViewRecommendDrinkBinding) {
+        bindingQueue.offer(binding)
+        cardContainer.addView(binding.root, BACK)
     }
 
     private fun resetViewState(index: Int) {
@@ -97,6 +91,18 @@ class SwipeSortingView @JvmOverloads constructor(
         targetView.rotation = 0f
         targetView.setOnTouchListener(null)
         cardContainer.removeViewAt(index)
+    }
+
+    private fun ViewRecommendDrinkBinding.update(drinkDetail: DrinkDetail) {
+        this.drinkDetail = drinkDetail
+        tagsChipGroup.let { chipGroup ->
+            chipGroup.removeAllViews()
+            drinkDetail.tags.map { Chip(context).apply { text = it } }
+                .forEach { chip -> chipGroup.addView(chip) }
+        }
+        doNotWantToDrinkButton.setOnClickListener { replaceFront() }
+        wantToDrinkButton.setOnClickListener { replaceFront() }
+        executePendingBindings()
     }
 
     inner class MovingAndRotationTouchListener(

@@ -1,60 +1,9 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.widget.FrameLayout">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/button_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_container">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/do_not_want_to_drink_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/dialog_do_not_want_to_drink"
-                app:cornerRadius="0dp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/want_to_drink_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/want_to_drink"
-                app:cornerRadius="0dp" />
-        </LinearLayout>
-
-        <!-- 描画順制御のため下に定義 -->
-        <FrameLayout
-            android:id="@+id/card_container"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/button_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content" />
 </merge>
