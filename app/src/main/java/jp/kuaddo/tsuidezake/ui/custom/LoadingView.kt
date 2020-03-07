@@ -15,7 +15,7 @@ class LoadingView @JvmOverloads constructor(
     init {
         LayoutInflater.from(context).inflate(R.layout.view_loading, this)
 
-        setBackgroundResource(R.color.loading_background)
+        setBackgroundResource(R.color.transparent_background)
         isClickable = true
         isFocusable = true
     }

@@ -8,6 +8,6 @@
 
     <style name="AppTheme.FullScreenDialog">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:windowBackground">@color/loading_background</item>
+        <item name="android:windowBackground">@color/transparent_background</item>
     </style>
 </resources>
