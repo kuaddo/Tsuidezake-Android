@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import com.google.android.material.chip.Chip
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
@@ -20,7 +20,7 @@ class SwipeSortingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val layoutInflater = LayoutInflater.from(context)
     private val cardContainer: FrameLayout
