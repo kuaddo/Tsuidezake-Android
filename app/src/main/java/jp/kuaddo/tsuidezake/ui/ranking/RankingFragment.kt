@@ -6,16 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.dataBinding
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
-import jp.kuaddo.tsuidezake.ui.custom.SwipeSortingView
 
 class RankingFragment : DaggerFragment() {
     private val binding by dataBinding<FragmentRankingBinding>(R.layout.fragment_ranking)
@@ -56,27 +52,6 @@ class RankingFragment : DaggerFragment() {
         showRecommendDrinkDialog()
     }
 
-    private fun showRecommendDrinkDialog() {
-        context?.let {
-            var dialog: MaterialDialog? = null
-            val swipeSortingView = SwipeSortingView(it).apply {
-                val drinks = (1..5).map { index ->
-                    DrinkDetail(
-                        Drink(index, "獺祭", "日本酒"),
-                        10000 * index,
-                        "",
-                        tags = listOf("辛口", "初心者におすすめ", "コスパ良し")
-                    )
-                }
-                submitDrinks(drinks)
-                onLastDrinkRemoved = { dialog?.dismiss() }
-            }
-            dialog = MaterialDialog(it).show {
-                cornerRadius(res = R.dimen.material_dialog_corner_radius)
-                lifecycleOwner(viewLifecycleOwner)
-                customView(view = swipeSortingView, noVerticalPadding = true)
-                cancelOnTouchOutside(false)
-            }
-        }
-    }
+    private fun showRecommendDrinkDialog() =
+        findNavController().navigate(RankingFragmentDirections.actionRankingToSwipeSortingDialog())
 }
