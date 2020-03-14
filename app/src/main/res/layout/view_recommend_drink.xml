@@ -32,10 +32,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/colorAccent" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@color/colorAccent" />
+
+                    <ImageView
+                        android:id="@+id/want_to_drink_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="top|start"
+                        android:layout_margin="8dp"
+                        android:alpha="0"
+                        android:src="@drawable/ic_dialog_want_to_drink"
+                        android:tint="#FF0000" />
+
+                    <ImageView
+                        android:id="@+id/do_not_want_to_drink_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="8dp"
+                        android:alpha="0"
+                        android:src="@drawable/ic_dialog_do_not_want_to_drink"
+                        android:tint="#0000FF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </FrameLayout>
             </androidx.cardview.widget.CardView>
 
             <TextView

@@ -77,7 +77,11 @@ class SwipeSortingView @JvmOverloads constructor(
 
     private fun setOnTouchListener(index: Int) {
         val targetView = cardContainer.getChildAt(index)
-        targetView.setOnTouchListener(MovingAndRotationTouchListener())
+        val wantToDrink = targetView.findViewById<View>(R.id.want_to_drink_icon)
+        val doNotWantToDrink = targetView.findViewById<View>(R.id.do_not_want_to_drink_icon)
+        targetView.setOnTouchListener(
+            MovingAndRotationTouchListener(wantToDrink, doNotWantToDrink)
+        )
     }
 
     private fun insertBinding(binding: ViewRecommendDrinkBinding) {
@@ -106,6 +110,8 @@ class SwipeSortingView @JvmOverloads constructor(
     }
 
     inner class MovingAndRotationTouchListener(
+        private val wantToDrinkIcon: View,
+        private val doNotWantToDrinkIcon: View,
         private val movingScale: Float = 1.2f,
         private val rotationScale: Float = 0.03f,
         private val downOffsetDp: Int = 10,
@@ -129,10 +135,13 @@ class SwipeSortingView @JvmOverloads constructor(
                     val moveDistance = x - initialEventX + v.x - initialX
                     v.x = moveDistance.toFloat() * movingScale
                     v.rotation = moveDistance.toFloat() * rotationScale
+                    setRatioToIcon(getMoveDistanceRatio(v))
                 }
                 MotionEvent.ACTION_UP -> {
                     v.y -= downOffsetDp * density
                     v.alpha = 1.0f
+                    setRatioToIcon(0f)
+
                     val moveDistance = (v.x - initialX).toInt()
                     if (moveDistance in -(width / 3)..(width / 3)) {
                         v.x = 0f
@@ -141,6 +150,17 @@ class SwipeSortingView @JvmOverloads constructor(
                 }
             }
             return true
+        }
+
+        private fun getMoveDistanceRatio(v: View): Float {
+            val moveDistance = (v.x - initialX)
+            return maxOf(-1f, minOf(moveDistance * 3 / width, 1f))
+        }
+
+        private fun setRatioToIcon(ratio: Float) {
+            require(ratio in -1f..1f)
+            wantToDrinkIcon.alpha = maxOf(0f, minOf(ratio, 1f))
+            doNotWantToDrinkIcon.alpha = maxOf(0f, minOf(-ratio, 1f))
         }
     }
 
