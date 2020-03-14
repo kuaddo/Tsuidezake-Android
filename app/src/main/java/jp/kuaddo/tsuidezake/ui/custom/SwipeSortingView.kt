@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 import com.google.android.material.chip.Chip
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
@@ -19,9 +21,10 @@ class SwipeSortingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val layoutInflater = LayoutInflater.from(context)
+    private val closeButton: ImageView
     private val cardContainer: FrameLayout
     private val bindingQueue: Queue<ViewRecommendDrinkBinding> = ArrayBlockingQueue(2)
     private var nextDrinkIndex: Int = 0
@@ -31,7 +34,10 @@ class SwipeSortingView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.view_swipe_sorting, this)
+        closeButton = findViewById(R.id.close_button)
         cardContainer = findViewById(R.id.card_container)
+
+        closeButton.setOnClickListener { onLastDrinkRemoved?.invoke() }
     }
 
     fun submitDrinks(drinks: List<DrinkDetail>) {
