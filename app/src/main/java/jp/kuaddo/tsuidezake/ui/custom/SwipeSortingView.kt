@@ -107,8 +107,11 @@ class SwipeSortingView @JvmOverloads constructor(
 
     inner class MovingAndRotationTouchListener(
         private val movingScale: Float = 1.2f,
-        private val rotationScale: Float = 0.03f
+        private val rotationScale: Float = 0.03f,
+        private val downOffsetDp: Int = 10,
+        private val alpha: Float = 0.8f
     ) : OnTouchListener {
+        private val density = resources.displayMetrics.density
         private var initialX: Float = 0f
         private var initialEventX: Float = 0f
 
@@ -117,8 +120,8 @@ class SwipeSortingView @JvmOverloads constructor(
                 MotionEvent.ACTION_DOWN -> {
                     initialX = v.x
                     initialEventX = event.x
-                    v.y += 50f
-                    v.alpha = 0.8f
+                    v.y += downOffsetDp * density
+                    v.alpha = alpha
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val x = (event.x - width / 2) * cos(Math.toRadians(v.rotation.toDouble())) -
@@ -128,7 +131,7 @@ class SwipeSortingView @JvmOverloads constructor(
                     v.rotation = moveDistance.toFloat() * rotationScale
                 }
                 MotionEvent.ACTION_UP -> {
-                    v.y -= 50f
+                    v.y -= downOffsetDp * density
                     v.alpha = 1.0f
                     val moveDistance = (v.x - initialX).toInt()
                     if (moveDistance in -(width / 3)..(width / 3)) {
