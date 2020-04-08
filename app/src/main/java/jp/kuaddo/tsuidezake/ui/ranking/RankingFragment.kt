@@ -6,14 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.google.android.material.chip.Chip
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
-import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
 import jp.kuaddo.tsuidezake.extensions.dataBinding
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
@@ -57,27 +52,6 @@ class RankingFragment : DaggerFragment() {
         showRecommendDrinkDialog()
     }
 
-    private fun showRecommendDrinkDialog() {
-        context?.let {
-            val drinkBinding = ViewRecommendDrinkBinding.inflate(layoutInflater).apply {
-                drinkDetail = DrinkDetail(
-                    Drink(1, "獺祭", "日本酒"),
-                    10000,
-                    ""
-                )
-                tagsChipGroup.let { chipGroup ->
-                    // TODO: remove sample
-                    val tagTexts = listOf("辛口", "初心者におすすめ", "コスパ良し")
-                    tagTexts.map { Chip(requireContext()).apply { text = it } }
-                        .forEach { chip -> chipGroup.addView(chip) }
-                }
-            }
-            drinkBinding.executePendingBindings()
-            MaterialDialog(it).show {
-                cornerRadius(res = R.dimen.material_dialog_corner_radius)
-                lifecycleOwner(viewLifecycleOwner)
-                customView(view = drinkBinding.root, noVerticalPadding = true)
-            }
-        }
-    }
+    private fun showRecommendDrinkDialog() =
+        findNavController().navigate(RankingFragmentDirections.actionRankingToSwipeSortingDialog())
 }
