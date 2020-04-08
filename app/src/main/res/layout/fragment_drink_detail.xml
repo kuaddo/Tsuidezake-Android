@@ -13,191 +13,198 @@
             type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/drink_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@color/colorAccent"
-            app:layout_constraintDimensionRatio="w,9:16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/drink_name_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{drinkDetail.drink.name}"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/drink_image"
-            tools:text="秘幻 吟醸酒" />
+            <ImageView
+                android:id="@+id/drink_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@color/colorAccent"
+                app:layout_constraintDimensionRatio="w,9:16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/tags_chip_group"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:chipSpacing="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/drink_name_text"
-            app:layout_constraintStart_toStartOf="@+id/drink_name_text"
-            app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
-            app:singleSelection="true" />
+            <TextView
+                android:id="@+id/drink_name_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{drinkDetail.drink.name}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/drink_image"
+                tools:text="秘幻 吟醸酒" />
 
-        <TextView
-            android:id="@+id/description_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@{drinkDetail.description}"
-            app:isExpanded="@{viewModel.isExpanded}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tags_chip_group"
-            tools:maxLines="3"
-            tools:text="@tools:sample/lorem/random" />
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tags_chip_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:chipSpacing="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/drink_name_text"
+                app:layout_constraintStart_toStartOf="@+id/drink_name_text"
+                app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
+                app:singleSelection="true" />
 
-        <ImageView
-            android:id="@+id/expand_text_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:onClick="@{v -> viewModel.switchExpandState()}"
-            android:paddingTop="4dp"
-            android:src="@{viewModel.isExpanded ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
-            android:tint="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="@+id/description_text"
-            app:layout_constraintTop_toBottomOf="@+id/description_text"
-            tools:src="@drawable/ic_arrow_down" />
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@{drinkDetail.description}"
+                app:isExpanded="@{viewModel.isExpanded}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tags_chip_group"
+                tools:maxLines="3"
+                tools:text="@tools:sample/lorem/random" />
 
-        <TextView
-            android:id="@+id/how_to_drink_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/background_rounded_rectangle"
-            android:backgroundTint="@color/colorPrimary"
-            android:paddingStart="12dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="4dp"
-            android:text="@string/sake_detail_how_to_drink"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expand_text_icon" />
+            <ImageView
+                android:id="@+id/expand_text_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:onClick="@{v -> viewModel.switchExpandState()}"
+                android:paddingTop="4dp"
+                android:src="@{viewModel.isExpanded ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@+id/description_text"
+                app:layout_constraintTop_toBottomOf="@+id/description_text"
+                tools:src="@drawable/ic_arrow_down" />
 
-        <!-- TODO: このViewの大きさを自動調整したい -->
-        <ImageView
-            android:id="@+id/temperature_warm_image"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/background_rounded_rectangle_border"
-            android:padding="6dp"
-            android:src="@drawable/ic_sake_temperature_warm"
-            android:tint="@color/colorPrimary"
-            app:layout_constraintEnd_toStartOf="@+id/temperature_normal_image"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/how_to_drink_text" />
+            <TextView
+                android:id="@+id/how_to_drink_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_rounded_rectangle"
+                android:backgroundTint="@color/colorPrimary"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                android:text="@string/sake_detail_how_to_drink"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expand_text_icon" />
 
-        <ImageView
-            android:id="@+id/temperature_normal_image"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/background_rounded_rectangle_border"
-            android:padding="6dp"
-            android:src="@drawable/ic_sake_temperature_normal"
-            android:tint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/temperature_warm_image"
-            app:layout_constraintEnd_toStartOf="@+id/temperature_cold_image"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/temperature_warm_image"
-            app:layout_constraintTop_toTopOf="@+id/temperature_warm_image" />
+            <!-- TODO: このViewの大きさを自動調整したい -->
+            <ImageView
+                android:id="@+id/temperature_warm_image"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rounded_rectangle_border"
+                android:padding="6dp"
+                android:src="@drawable/ic_sake_temperature_warm"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/temperature_normal_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/how_to_drink_text" />
 
-        <ImageView
-            android:id="@+id/temperature_cold_image"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/background_rounded_rectangle_border"
-            android:padding="6dp"
-            android:src="@drawable/ic_sake_temperature_cold"
-            android:tint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/temperature_normal_image"
-            app:layout_constraintEnd_toStartOf="@+id/temperature_rock_image"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/temperature_normal_image"
-            app:layout_constraintTop_toTopOf="@+id/temperature_normal_image" />
+            <ImageView
+                android:id="@+id/temperature_normal_image"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/background_rounded_rectangle_border"
+                android:padding="6dp"
+                android:src="@drawable/ic_sake_temperature_normal"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/temperature_warm_image"
+                app:layout_constraintEnd_toStartOf="@+id/temperature_cold_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/temperature_warm_image"
+                app:layout_constraintTop_toTopOf="@+id/temperature_warm_image" />
 
-        <ImageView
-            android:id="@+id/temperature_rock_image"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/background_rounded_rectangle_border"
-            android:padding="4dp"
-            android:src="@drawable/ic_sake_temperature_rock"
-            android:tint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/temperature_cold_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/temperature_cold_image"
-            app:layout_constraintTop_toTopOf="@+id/temperature_cold_image" />
+            <ImageView
+                android:id="@+id/temperature_cold_image"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/background_rounded_rectangle_border"
+                android:padding="6dp"
+                android:src="@drawable/ic_sake_temperature_cold"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/temperature_normal_image"
+                app:layout_constraintEnd_toStartOf="@+id/temperature_rock_image"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/temperature_normal_image"
+                app:layout_constraintTop_toTopOf="@+id/temperature_normal_image" />
 
-        <TextView
-            android:id="@+id/recommended_appetizers_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/background_rounded_rectangle"
-            android:backgroundTint="@color/colorPrimary"
-            android:paddingStart="12dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="4dp"
-            android:text="@string/sake_detail_recommended_appetizers"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature_warm_image" />
+            <ImageView
+                android:id="@+id/temperature_rock_image"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_rounded_rectangle_border"
+                android:padding="4dp"
+                android:src="@drawable/ic_sake_temperature_rock"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/temperature_cold_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/temperature_cold_image"
+                app:layout_constraintTop_toTopOf="@+id/temperature_cold_image" />
 
-        <!-- TODO:おつまみはアイコン作成が終わってから実装 -->
+            <TextView
+                android:id="@+id/recommended_appetizers_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_rounded_rectangle"
+                android:backgroundTint="@color/colorPrimary"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                android:text="@string/sake_detail_recommended_appetizers"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/temperature_warm_image" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/sake_detail_let_us_drink_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text" />
+            <!-- TODO:おつまみはアイコン作成が終わってから実装 -->
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="@string/sake_detail_let_us_drink"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_want_to_drink"
-            app:iconSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/sake_detail_let_us_drink_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/sake_detail_let_us_drink"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_want_to_drink"
+                app:iconSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
