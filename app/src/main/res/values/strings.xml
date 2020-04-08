@@ -9,4 +9,9 @@
 
     <string name="dialog_want_to_drink">呑みたい</string>
     <string name="dialog_do_not_want_to_drink">そうでもない</string>
+
+    <string name="sake_detail_how_to_drink">おすすめの呑み方</string>
+    <string name="sake_detail_recommended_appetizers">おすすめのおつまみ</string>
+    <string name="sake_detail_let_us_drink">購入してお家で呑む</string>
+    <string name="sake_detail_let_us_drink_description">現地で呑めなかった・また呑みたい方はこちらから</string>
 </resources>
