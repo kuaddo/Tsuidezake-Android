@@ -7,6 +7,10 @@
         <variable
             name="drinkDetail"
             type="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+
+        <variable
+            name="viewModel"
+            type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,23 +58,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:ellipsize="end"
-            android:maxLines="3"
             android:text="@{drinkDetail.description}"
+            app:isExpanded="@{viewModel.isExpanded}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tags_chip_group"
+            tools:maxLines="3"
             tools:text="@tools:sample/lorem/random" />
 
         <ImageView
             android:id="@+id/expand_text_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:onClick="@{v -> viewModel.switchExpandState()}"
             android:paddingTop="4dp"
-            android:src="@drawable/ic_arrow_down"
+            android:src="@{viewModel.isExpanded ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
             android:tint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="@+id/description_text"
-            app:layout_constraintTop_toBottomOf="@+id/description_text" />
+            app:layout_constraintTop_toBottomOf="@+id/description_text"
+            tools:src="@drawable/ic_arrow_down" />
 
         <TextView
             android:id="@+id/how_to_drink_text"

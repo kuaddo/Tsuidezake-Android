@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentDrinkDetailBinding
 import jp.kuaddo.tsuidezake.extensions.dataBinding
+import javax.inject.Inject
 
 class DrinkDetailFragment : DaggerFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: DrinkDetailViewModel by viewModels { viewModelFactory }
     private val args by navArgs<DrinkDetailFragmentArgs>()
     private val binding by dataBinding<FragmentDrinkDetailBinding>(R.layout.fragment_drink_detail)
 
@@ -20,8 +27,11 @@ class DrinkDetailFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding.drinkDetail = args.drinkDetail
-        return binding.root
+        return binding.let {
+            it.drinkDetail = args.drinkDetail
+            it.viewModel = viewModel
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
