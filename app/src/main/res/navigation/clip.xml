@@ -9,6 +9,6 @@
     <fragment
         android:id="@+id/blank_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.BlankFragment"
-        android:label="@string/clip"
+        android:label="@string/favorite"
         tools:layout="@layout/fragment_blank" />
 </navigation>
