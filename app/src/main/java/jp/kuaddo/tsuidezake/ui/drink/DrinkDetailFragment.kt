@@ -38,8 +38,14 @@ class DrinkDetailFragment : DaggerFragment() {
         binding.tagsChipGroup.let { chipGroup ->
             // TODO: remove sample
             val tagTexts = listOf("辛口", "初心者におすすめ", "コスパ良し")
-            tagTexts.map { Chip(requireContext()).apply { text = it } }
-                .forEach { chip -> chipGroup.addView(chip) }
+            tagTexts.map { createChip(it) }.forEach { chip -> chipGroup.addView(chip) }
         }
+    }
+
+    private fun createChip(text: String): Chip {
+        val tagChip = LayoutInflater.from(requireContext())
+            .inflate(R.layout.view_tag_chip, null) as Chip
+        tagChip.text = text
+        return tagChip
     }
 }
