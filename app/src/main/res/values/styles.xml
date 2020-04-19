@@ -10,4 +10,10 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@color/transparent_background</item>
     </style>
+
+    <style name="TagChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipCornerRadius">8dp</item>
+        <item name="chipMinHeight">24dp</item>
+        <item name="chipMinTouchTargetSize">24dp</item>
+    </style>
 </resources>
