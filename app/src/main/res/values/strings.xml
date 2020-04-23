@@ -1,7 +1,7 @@
 <resources>
     <string name="ranking">ランキング</string>
-    <string name="favorite">お気に入り</string>
     <string name="want_to_drink">呑みたい</string>
+    <string name="finish_drinking">呑んだ</string>
     <string name="my_page">マイページ</string>
     <string name="detail">詳細</string>
 
