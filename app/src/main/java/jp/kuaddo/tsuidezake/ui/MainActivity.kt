@@ -39,7 +39,7 @@ class MainActivity : DaggerAppCompatActivity() {
         val controller = binding.navView.setupWithNavController(
             navGraphIds = listOf(
                 R.navigation.ranking,
-                R.navigation.clip,
+                R.navigation.finish_drinking,
                 R.navigation.want_to_drink,
                 R.navigation.my_page
             ),

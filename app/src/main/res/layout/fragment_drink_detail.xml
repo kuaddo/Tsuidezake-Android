@@ -298,7 +298,7 @@
                 android:text="@string/sake_detail_let_us_drink"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:icon="@drawable/ic_want_to_drink"
+                app:icon="@drawable/ic_sake"
                 app:iconSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
