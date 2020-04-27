@@ -12,8 +12,6 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_want_to_drink" />
+            tools:listitem="@layout/item_want_to_drink_grid" />
     </FrameLayout>
 </layout>
