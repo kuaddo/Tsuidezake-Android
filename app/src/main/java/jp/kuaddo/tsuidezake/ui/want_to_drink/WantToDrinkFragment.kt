@@ -42,7 +42,7 @@ class WantToDrinkFragment : DaggerFragment() {
         adapter.submitList(
             (1..15).map {
                 DrinkDetail(
-                    Drink(it, "獺祭$it", "日本酒"),
+                    Drink(it, "秘幻 吟醸酒 $it", "日本酒"),
                     it * 10000,
                     ""
                 )
