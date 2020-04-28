@@ -14,7 +14,7 @@ plugins {
 
 android {
     compileSdkVersion(29)
-    buildToolsVersion("29.0.2")
+    buildToolsVersion("29.0.3")
     defaultConfig {
         applicationId = "jp.kuaddo.tsuidezake"
         minSdkVersion(21)
@@ -52,12 +52,10 @@ android {
             )
         }
     }
-    androidExtensions {
-        isExperimental = true
-    }
-    dataBinding {
-        isEnabled = true
-    }
+
+    androidExtensions.isExperimental = true
+    dataBinding.isEnabled = true
+
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "1.8"
@@ -97,7 +95,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("androidx.fragment:fragment-ktx:1.2.1")
+    implementation("androidx.fragment:fragment-ktx:1.2.4")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.google.android.material:material:1.1.0")
     implementation("androidx.lifecycle:lifecycle-runtime:2.2.0")
@@ -105,9 +103,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.2.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-runtime-ktx:2.2.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.2.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.2.1")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.2.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.2.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
 
     // Dagger
     api("com.google.dagger:dagger:2.25.2")
@@ -131,8 +129,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.6.2")
 
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.8.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
+    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
+
+    // Groupie
+    implementation("com.xwray:groupie:2.8.0")
+    implementation("com.xwray:groupie-databinding:2.8.0")
 
     implementation("com.afollestad.material-dialogs:core:3.1.1")
     implementation("com.afollestad.material-dialogs:lifecycle:3.1.1")
