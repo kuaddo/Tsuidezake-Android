@@ -27,7 +27,7 @@ class WantToDrinkFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: WantToDrinkViewModel by viewModels { viewModelFactory }
+    private val wantToDrinkViewModel: WantToDrinkViewModel by viewModels { viewModelFactory }
     private val binding by dataBinding<FragmentWantToDrinkBinding>(R.layout.fragment_want_to_drink)
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -36,7 +36,10 @@ class WantToDrinkFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return binding.root
+        return binding.let {
+            it.wantToDrinkViewModel = wantToDrinkViewModel
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +49,7 @@ class WantToDrinkFragment : DaggerFragment() {
     }
 
     private fun observe() {
-        viewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
+        wantToDrinkViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
             adapter.clear()
             adapter.addAll(getGroups(isGrid))
             adapter.spanCount = 2
