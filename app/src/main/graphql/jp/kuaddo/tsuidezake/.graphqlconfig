@@ -1,0 +1,15 @@
+{
+  "name": "Tsuidezake GraphQL Schema",
+  "schemaPath": "./schema.json",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://us-central1-tsuidezake.cloudfunctions.net/graphql",
+        "introspect": true,
+        "headers": {
+          "Authorization": "test token"
+        }
+      }
+    }
+  }
+}

@@ -110,6 +110,10 @@ android {
     }
 }
 
+apollo {
+    generateKotlinModels.set(true)
+}
+
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to arrayOf("*.jar")))
 

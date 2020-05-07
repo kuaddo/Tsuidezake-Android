@@ -1,0 +1,14 @@
+query SakeQuery($id: Int!){
+  sake(id: $id) {
+    id
+    name
+    tags {
+      name
+    }
+    brewer
+    description
+    imgPath
+    suitableTemperatures
+    goodFoodCategories
+  }
+}
