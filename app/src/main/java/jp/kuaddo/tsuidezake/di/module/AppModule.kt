@@ -10,7 +10,6 @@ import dagger.Provides
 object AppModule {
 
     @Provides
-    @JvmStatic
     fun provideNotificationManager(context: Context): NotificationManager? =
         context.getSystemService()
 }

@@ -108,11 +108,11 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
 
     // Dagger
-    api("com.google.dagger:dagger:2.25.2")
-    api("com.google.dagger:dagger-android:2.25.2")
-    api("com.google.dagger:dagger-android-support:2.25.2")
-    kapt("com.google.dagger:dagger-compiler:2.25.2")
-    kapt("com.google.dagger:dagger-android-processor:2.25.2")
+    api("com.google.dagger:dagger:2.27")
+    api("com.google.dagger:dagger-android:2.27")
+    api("com.google.dagger:dagger-android-support:2.27")
+    kapt("com.google.dagger:dagger-compiler:2.27")
+    kapt("com.google.dagger:dagger-android-processor:2.27")
     compileOnly("com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2")
     kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.5.2")
 
