@@ -84,16 +84,15 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation(kotlin("reflect", KotlinCompilerVersion.VERSION))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6")
 
     // AndroidX
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.recyclerview:recyclerview:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta4")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta6")
     implementation("androidx.core:core-ktx:1.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
@@ -119,16 +118,16 @@ dependencies {
     kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.5.2")
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.2.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.2")
+    implementation("com.squareup.okhttp3:okhttp:4.7.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.7.0")
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.10.0")
-    kapt("com.github.bumptech.glide:compiler:4.10.0")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    kapt("com.github.bumptech.glide:compiler:4.11.0")
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.6.2")
-    implementation("com.squareup.retrofit2:converter-moshi:2.6.2")
+    implementation("com.squareup.retrofit2:retrofit:2.8.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.8.1")
 
     // Moshi
     implementation("com.squareup.moshi:moshi:1.9.2")
@@ -138,45 +137,45 @@ dependencies {
     implementation("com.xwray:groupie:2.8.0")
     implementation("com.xwray:groupie-databinding:2.8.0")
 
-    implementation("com.afollestad.material-dialogs:core:3.1.1")
-    implementation("com.afollestad.material-dialogs:lifecycle:3.1.1")
+    implementation("com.afollestad.material-dialogs:core:3.3.0")
+    implementation("com.afollestad.material-dialogs:lifecycle:3.3.0")
     implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
-    implementation("org.permissionsdispatcher:permissionsdispatcher:4.6.0")
-    kapt("org.permissionsdispatcher:permissionsdispatcher-processor:4.6.0")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")
+    implementation("org.permissionsdispatcher:permissionsdispatcher:4.7.0")
+    kapt("org.permissionsdispatcher:permissionsdispatcher-processor:4.7.0")
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.0")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.3")
 
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:${KotlinCompilerVersion.VERSION}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // JUnit
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.5.1")
-    testImplementation("org.assertj:assertj-core:3.12.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testImplementation("org.assertj:assertj-core:3.16.1")
 
     // Mockito
-    testImplementation("org.mockito:mockito-core:3.0.0")
+    testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
     // Spek
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.6")
-    testImplementation("org.spekframework.spek2:spek-runner-junit5:2.0.6")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
+    testImplementation("org.spekframework.spek2:spek-runner-junit5:2.0.10")
 
-    testImplementation("org.threeten:threetenbp:1.4.0") {
+    testImplementation("org.threeten:threetenbp:1.4.4") {
         exclude("com.jakewharton.threetenabp:threetenabp:1.2.1")
     }
 
     androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:${KotlinCompilerVersion.VERSION}")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
     androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // JUnit
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("org.assertj:assertj-core:3.12.2")
+    androidTestImplementation("org.assertj:assertj-core:3.16.1")
 
-    androidTestImplementation("org.threeten:threetenbp:1.4.0") {
+    androidTestImplementation("org.threeten:threetenbp:1.4.4") {
         exclude("com.jakewharton.threetenabp:threetenabp:1.2.1")
     }
 
