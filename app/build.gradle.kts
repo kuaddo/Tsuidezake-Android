@@ -138,6 +138,7 @@ dependencies {
     implementation("com.xwray:groupie:2.8.0")
     implementation("com.xwray:groupie-viewbinding:2.8.0")
 
+    implementation("com.github.wada811:DataBinding-ktx:4.0.0")
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("com.afollestad.material-dialogs:lifecycle:3.3.0")
     implementation("com.jakewharton.timber:timber:4.7.1")

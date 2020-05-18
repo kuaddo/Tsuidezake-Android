@@ -1,29 +1,20 @@
 package jp.kuaddo.tsuidezake.ui.ranking
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
-import jp.kuaddo.tsuidezake.extensions.dataBinding
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 
-class RankingFragment : DaggerFragment() {
-    private val binding by dataBinding<FragmentRankingBinding>(R.layout.fragment_ranking)
-    private lateinit var adapter: RankingAdapter
+class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return binding.root
-    }
+    private val binding: FragmentRankingBinding by dataBinding()
+    private lateinit var adapter: RankingAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = RankingAdapter(viewLifecycleOwner) { drink ->
