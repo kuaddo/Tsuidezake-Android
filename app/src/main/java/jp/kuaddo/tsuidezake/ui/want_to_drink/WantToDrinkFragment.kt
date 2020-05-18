@@ -39,8 +39,7 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
 
     private fun observe() {
         wantToDrinkViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
-            adapter.clear()
-            adapter.addAll(getGroups(isGrid))
+            adapter.update(getGroups(isGrid))
             adapter.spanCount = 2
             binding.recyclerView.layoutManager = getLayoutManager(isGrid)
         }
