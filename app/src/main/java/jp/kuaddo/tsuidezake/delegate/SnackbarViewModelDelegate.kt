@@ -7,6 +7,8 @@ import jp.kuaddo.tsuidezake.util.live.LiveEvent
 interface SnackbarViewModelDelegate {
     val snackbarEvent: LiveData<SnackbarMessage>
 
+    fun setMessage(message: SnackbarMessage)
+
     fun postMessage(message: SnackbarMessage)
 }
 
@@ -16,7 +18,10 @@ class LiveEventSnackbarViewModelDelegate : SnackbarViewModelDelegate {
 
     private val _snackbarEvent = LiveEvent<SnackbarMessage>()
 
-    override fun postMessage(message: SnackbarMessage) {
-        _snackbarEvent.postValue(message)
+    override fun setMessage(message: SnackbarMessage) {
+        _snackbarEvent.value = message
     }
+
+    override fun postMessage(message: SnackbarMessage) =
+        _snackbarEvent.postValue(message)
 }
