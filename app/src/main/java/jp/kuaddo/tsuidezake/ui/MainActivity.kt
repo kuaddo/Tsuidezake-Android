@@ -6,20 +6,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerAppCompatActivity
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
-import jp.kuaddo.tsuidezake.extensions.dataBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.setupWithNavController
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
-    private val binding by dataBinding<ActivityMainBinding>(R.layout.activity_main)
+    private val binding: ActivityMainBinding by dataBinding()
     private lateinit var currentNavController: LiveData<NavController>
 
     override fun onCreate(savedInstanceState: Bundle?) {

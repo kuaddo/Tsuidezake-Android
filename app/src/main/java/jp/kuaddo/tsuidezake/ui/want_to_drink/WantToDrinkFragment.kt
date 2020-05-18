@@ -1,48 +1,37 @@
 package jp.kuaddo.tsuidezake.ui.want_to_drink
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.wada811.databinding.dataBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
-import com.xwray.groupie.databinding.BindableItem
+import com.xwray.groupie.viewbinding.BindableItem
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentWantToDrinkBinding
-import jp.kuaddo.tsuidezake.extensions.dataBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 import javax.inject.Inject
 
-class WantToDrinkFragment : DaggerFragment() {
+class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val wantToDrinkViewModel: WantToDrinkViewModel by viewModels { viewModelFactory }
-    private val binding by dataBinding<FragmentWantToDrinkBinding>(R.layout.fragment_want_to_drink)
+    private val binding: FragmentWantToDrinkBinding by dataBinding()
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return binding.let {
-            it.wantToDrinkViewModel = wantToDrinkViewModel
-            it.root
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.wantToDrinkViewModel = wantToDrinkViewModel
         binding.recyclerView.adapter = adapter
 
         observe()

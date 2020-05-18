@@ -13,21 +13,17 @@ import jp.kuaddo.tsuidezake.delegate.ToastViewModelDelegate
 @Module
 abstract class ViewModelDelegateModule {
 
-    @Module
     companion object {
 
         @Provides
-        @JvmStatic
         fun provideLoadingViewModelDelegate(): LoadingViewModelDelegate =
             MediatorLoadingViewModelDelegate()
 
         @Provides
-        @JvmStatic
         fun provideSnackbarViewModelDelegate(): SnackbarViewModelDelegate =
             LiveEventSnackbarViewModelDelegate()
 
         @Provides
-        @JvmStatic
         fun provideToastViewModelDelegate(): ToastViewModelDelegate =
             LiveEventToastViewModelDelegate()
     }
