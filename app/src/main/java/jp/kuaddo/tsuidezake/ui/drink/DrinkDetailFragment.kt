@@ -1,13 +1,13 @@
 package jp.kuaddo.tsuidezake.ui.drink
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentDrinkDetailBinding
@@ -38,14 +38,13 @@ class DrinkDetailFragment : DaggerFragment() {
         binding.tagsChipGroup.let { chipGroup ->
             // TODO: remove sample
             val tagTexts = listOf("辛口", "初心者におすすめ", "コスパ良し")
-            tagTexts.map { createChip(it) }.forEach { chip -> chipGroup.addView(chip) }
+            tagTexts.forEach { text -> chipGroup.addTagChip(text) }
         }
     }
 
-    private fun createChip(text: String): Chip {
-        val tagChip = LayoutInflater.from(requireContext())
-            .inflate(R.layout.view_tag_chip, null) as Chip
+    private fun ChipGroup.addTagChip(text: String) {
+        val tagChip = View.inflate(requireContext(), R.layout.view_tag_chip, null) as Chip
         tagChip.text = text
-        return tagChip
+        addView(tagChip)
     }
 }
