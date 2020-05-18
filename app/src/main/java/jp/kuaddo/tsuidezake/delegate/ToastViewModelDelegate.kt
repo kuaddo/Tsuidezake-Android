@@ -7,6 +7,8 @@ import jp.kuaddo.tsuidezake.util.live.LiveEvent
 interface ToastViewModelDelegate {
     val toastEvent: LiveData<ToastMessage>
 
+    fun setMessage(message: ToastMessage)
+
     fun postMessage(message: ToastMessage)
 }
 
@@ -16,7 +18,10 @@ class LiveEventToastViewModelDelegate : ToastViewModelDelegate {
 
     private val _toastEvent = LiveEvent<ToastMessage>()
 
-    override fun postMessage(message: ToastMessage) {
-        _toastEvent.postValue(message)
+    override fun setMessage(message: ToastMessage) {
+        _toastEvent.value = message
     }
+
+    override fun postMessage(message: ToastMessage) =
+        _toastEvent.postValue(message)
 }
