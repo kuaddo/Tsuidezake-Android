@@ -8,13 +8,14 @@ import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
+import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 
 class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
 
     private val binding: FragmentRankingBinding by dataBinding()
-    private lateinit var adapter: RankingAdapter
+    private var adapter: RankingAdapter by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = RankingAdapter(viewLifecycleOwner) { drink ->
