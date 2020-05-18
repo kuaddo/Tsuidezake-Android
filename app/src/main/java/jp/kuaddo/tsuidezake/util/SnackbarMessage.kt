@@ -5,14 +5,11 @@ import com.google.android.material.snackbar.Snackbar
 
 sealed class SnackbarMessage
 
-data class SnackbarMessageRes(@StringRes val resId: Int, val duration: Int = Snackbar.LENGTH_LONG) :
-    SnackbarMessage()
-
-data class SnackbarMessageResParams(
+class SnackbarMessageRes(
     @StringRes val resId: Int,
-    val params: List<String>,
+    vararg val params: Any,
     val duration: Int = Snackbar.LENGTH_LONG
 ) : SnackbarMessage()
 
-data class SnackbarMessageText(val text: String, val duration: Int = Snackbar.LENGTH_LONG) :
+class SnackbarMessageText(val text: String, val duration: Int = Snackbar.LENGTH_LONG) :
     SnackbarMessage()
