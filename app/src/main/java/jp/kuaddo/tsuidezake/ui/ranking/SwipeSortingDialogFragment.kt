@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.DialogSwipeSortingBinding
+import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 
 class SwipeSortingDialogFragment : DialogFragment() {
 
-    private lateinit var binding: DialogSwipeSortingBinding
+    private var binding: DialogSwipeSortingBinding by autoCleared()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
