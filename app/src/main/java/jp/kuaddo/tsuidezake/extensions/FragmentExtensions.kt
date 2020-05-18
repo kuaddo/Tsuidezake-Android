@@ -9,6 +9,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
+import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
+import jp.kuaddo.tsuidezake.delegate.ToastViewModelDelegate
 import jp.kuaddo.tsuidezake.di.AssistedViewModelFactory
 import jp.kuaddo.tsuidezake.util.SnackbarMessage
 import jp.kuaddo.tsuidezake.util.SnackbarMessageRes
@@ -19,31 +21,15 @@ import jp.kuaddo.tsuidezake.util.ToastMessageText
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-fun Fragment.setupSnackbar(snackbarEvent: LiveData<SnackbarMessage>) {
-    snackbarEvent.observeNonNull(viewLifecycleOwner) { message ->
-        when (message) {
-            is SnackbarMessageRes -> view?.let {
-                val text = getString(message.resId, message.params)
-                Snackbar.make(it, text, message.duration).show()
-            }
-            is SnackbarMessageText -> view?.let {
-                Snackbar.make(it, message.text, message.duration).show()
-            }
-        }
+fun Fragment.observeViewModelDelegate(
+    viewModel: ViewModel,
+    lifecycleOwner: LifecycleOwner = viewLifecycleOwner
+) {
+    if (viewModel is SnackbarViewModelDelegate) {
+        observeSnackbar(viewModel.snackbarEvent, lifecycleOwner)
     }
-}
-
-fun Fragment.setupToast(toastEvent: LiveData<ToastMessage>) {
-    toastEvent.observeNonNull(viewLifecycleOwner) { message ->
-        when (message) {
-            is ToastMessageRes -> context?.let {
-                val text = getString(message.resId, message.params)
-                Toast.makeText(it, text, message.duration).show()
-            }
-            is ToastMessageText -> context?.let {
-                Toast.makeText(it, message.text, message.duration).show()
-            }
-        }
+    if (viewModel is ToastViewModelDelegate) {
+        observeToast(viewModel.toastEvent, lifecycleOwner)
     }
 }
 
@@ -91,3 +77,37 @@ inline fun <reified VM : ViewModel> Fragment.assistedViewModels(crossinline crea
 
 inline fun <reified VM : ViewModel> Fragment.assistedActivityViewModels(crossinline create: () -> VM): Lazy<VM> =
     activityViewModels { AssistedViewModelFactory { create() } }
+
+private fun Fragment.observeSnackbar(
+    snackbarEvent: LiveData<SnackbarMessage>,
+    lifecycleOwner: LifecycleOwner
+) {
+    snackbarEvent.observeNonNull(lifecycleOwner) { message ->
+        when (message) {
+            is SnackbarMessageRes -> view?.let {
+                val text = getString(message.resId, *message.params)
+                Snackbar.make(it, text, message.duration).show()
+            }
+            is SnackbarMessageText -> view?.let {
+                Snackbar.make(it, message.text, message.duration).show()
+            }
+        }
+    }
+}
+
+private fun Fragment.observeToast(
+    toastEvent: LiveData<ToastMessage>,
+    lifecycleOwner: LifecycleOwner
+) {
+    toastEvent.observeNonNull(lifecycleOwner) { message ->
+        when (message) {
+            is ToastMessageRes -> context?.let {
+                val text = getString(message.resId, *message.params)
+                Toast.makeText(it, text, message.duration).show()
+            }
+            is ToastMessageText -> context?.let {
+                Toast.makeText(it, message.text, message.duration).show()
+            }
+        }
+    }
+}
