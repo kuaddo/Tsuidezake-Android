@@ -57,6 +57,7 @@ android {
 
     androidExtensions.isExperimental = true
     dataBinding.isEnabled = true
+    viewBinding.isEnabled = true
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
@@ -135,7 +136,7 @@ dependencies {
 
     // Groupie
     implementation("com.xwray:groupie:2.8.0")
-    implementation("com.xwray:groupie-databinding:2.8.0")
+    implementation("com.xwray:groupie-viewbinding:2.8.0")
 
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("com.afollestad.material-dialogs:lifecycle:3.3.0")
