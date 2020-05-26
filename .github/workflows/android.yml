@@ -46,8 +46,6 @@ jobs:
         run: ./gradlew assembleDebug
 
   test:
-    needs: [decrypt, build]
-
     runs-on: ubuntu-latest
     
     steps:
