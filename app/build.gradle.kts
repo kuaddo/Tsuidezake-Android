@@ -28,9 +28,24 @@ android {
     signingConfigs {
         getByName("debug") {
             storeFile = rootProject.file("keystore/debug.keystore")
-            storePassword = Keystore.STORE_PASSWORD
-            keyAlias = Keystore.KEY_ALIAS
-            keyPassword = Keystore.KEY_PASSWORD
+
+            val instance = runCatching {
+                Class.forName("Keystore").kotlin.objectInstance
+            }.getOrNull()
+            if (instance == null) {
+                // CI build
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            } else {
+                // local build
+                fun getProperty(name: String): String =
+                    instance::class.members.first { it.name == name }.call() as String
+
+                storePassword = getProperty("STORE_PASSWORD")
+                keyAlias = getProperty("KEY_ALIAS")
+                keyPassword = getProperty("KEY_PASSWORD")
+            }
         }
     }
     buildTypes {
