@@ -21,6 +21,11 @@ jobs:
         run: ./decrypt_secret.sh
         env:
           GPG_SECRET: ${{ secrets.GPG_SECRET }}
+      - name: Upload decrypted files
+        uses: actions/upload-artifact@v1
+        with:
+          name: keystore
+          path: ./keystore/debug.keystore
 
   build:
     needs: decrypt
@@ -28,6 +33,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Download decrypted files
+        uses: actions/download-artifact@v1
+        with:
+          name: keystore
       - uses: actions/checkout@v2
       - name: set up JDK 1.8
         uses: actions/setup-java@v1
