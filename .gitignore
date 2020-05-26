@@ -66,4 +66,4 @@ fastlane/readme.md
 ApiKeys.kt
 Keystore.kt
 keystore/debug.keystore
-keystore/release.jks
+!keystore/debug.keystore.gpg
