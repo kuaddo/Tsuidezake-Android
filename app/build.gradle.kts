@@ -172,9 +172,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation("org.assertj:assertj-core:3.16.1")
 
-    // Mockito
-    testImplementation("org.mockito:mockito-core:3.3.3")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    // Mockk
+    testImplementation("io.mockk:mockk:1.10.0")
 
     // Spek
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
