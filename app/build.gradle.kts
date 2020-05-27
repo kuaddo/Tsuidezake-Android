@@ -226,7 +226,6 @@ task("jacocoTestReport", JacocoReport::class) {
         "dir" to ".",
         "includes" to listOf("**/tmp/kotlin-classes/debug/**"),
         "excludes" to listOf(
-            // TODO: うまく動いてないっぽいので修正する
             // Android
             "**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*", "**/*Test*.*",
             "**/*Spec*.*", "android/**/*.*", "**/*Application.*",
