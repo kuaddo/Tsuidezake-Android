@@ -258,7 +258,6 @@ ktlint {
     outputColorName.set("RED")
     ignoreFailures.set(true)
 
-
     reporters {
         reporter(ReporterType.CHECKSTYLE)
     }
