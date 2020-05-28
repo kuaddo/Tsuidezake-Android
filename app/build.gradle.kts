@@ -2,6 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.application")
@@ -10,7 +11,9 @@ plugins {
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
+    id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
+    id("jacoco")
     id("deploygate")
 }
 
@@ -56,6 +59,7 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             isDebuggable = true
+            isTestCoverageEnabled = true
             signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
@@ -87,6 +91,13 @@ android {
         disable("GoogleAppIndexingWarning")
     }
     testOptions {
+        unitTests.apply {
+            all {
+                extensions.configure(JacocoTaskExtension::class.java) {
+                    isIncludeNoLocationClasses = true
+                }
+            }
+        }
         junitPlatform {
             filters {
                 includeEngines("spek2")
@@ -98,8 +109,9 @@ android {
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to arrayOf("*.jar")))
 
-    implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    implementation(kotlin("reflect", KotlinCompilerVersion.VERSION))
+    val kotlinVersion = KotlinCompilerVersion.VERSION
+    implementation(kotlin("stdlib-jdk8", kotlinVersion))
+    implementation(kotlin("reflect", kotlinVersion))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6")
 
@@ -163,7 +175,7 @@ dependencies {
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.3")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:${KotlinCompilerVersion.VERSION}")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 
@@ -172,9 +184,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation("org.assertj:assertj-core:3.16.1")
 
-    // Mockito
-    testImplementation("org.mockito:mockito-core:3.3.3")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    // Mockk
+    testImplementation("io.mockk:mockk:1.10.0")
 
     // Spek
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
@@ -184,7 +195,7 @@ dependencies {
         exclude("com.jakewharton.threetenabp:threetenabp:1.2.1")
     }
 
-    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:${KotlinCompilerVersion.VERSION}")
+    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
     androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
 
@@ -206,9 +217,58 @@ tasks.withType<DependencyUpdatesTask> {
     }
 }
 
+task("jacocoTestReport", JacocoReport::class) {
+    dependsOn("testDebugUnitTest")
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = true
+        csv.isEnabled = false
+    }
+    sourceDirectories.setFrom("$projectDir/src/main/java")
+    classDirectories.setFrom(
+        fileTree(
+            "dir" to ".",
+            "includes" to listOf("**/tmp/kotlin-classes/debug/**"),
+            "excludes" to listOf(
+                // Android
+                "**/R.class",
+                "**/R$*.class",
+                "**/BuildConfig.*",
+                "**/Manifest*.*",
+                "**/*Test*.*",
+                "**/*Spec*.*",
+                "android/**/*.*",
+                "**/*Application.*",
+
+                // Dagger
+                "**/*Dagger*Component*.*",
+                "**/*Module.*",
+                "**/*Module$*.*",
+                "**/*MembersInjector*.*",
+                "**/*_Factory*.*",
+                "**/*Provide*Factory*.*"
+            )
+        )
+    )
+    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(true)
+
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+    }
+}
+
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
 }
+
+fun com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions.all(block: Test.() -> Unit) =
+    all(KotlinClosure1<Any, Test>({ (this as Test).apply(block) }, owner = this))

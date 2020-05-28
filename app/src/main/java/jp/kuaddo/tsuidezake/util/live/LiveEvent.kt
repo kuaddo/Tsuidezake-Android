@@ -16,9 +16,10 @@ open class LiveEvent<T>(private val generateUUIDTag: Boolean = false) : MutableL
 
     @MainThread
     @Deprecated(
-            message = "Multiple observers registered but only one will be notified of changes. set tags for each observer.",
-            replaceWith = ReplaceWith("observe(owner, \"\", observer)"),
-            level = DeprecationLevel.HIDDEN
+        message = "Multiple observers registered but only one will be notified of changes. " +
+            "set tags for each observer.",
+        replaceWith = ReplaceWith("observe(owner, \"\", observer)"),
+        level = DeprecationLevel.HIDDEN
     )
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         observe(owner, if (generateUUIDTag) UUID.randomUUID().toString() else "", observer)
@@ -26,9 +27,10 @@ open class LiveEvent<T>(private val generateUUIDTag: Boolean = false) : MutableL
 
     @MainThread
     @Deprecated(
-            message = "Multiple observers registered but only one will be notified of changes. set tags for each observer.",
-            replaceWith = ReplaceWith("observeForever(\"\", observer)"),
-            level = DeprecationLevel.HIDDEN
+        message = "Multiple observers registered but only one will be notified of changes. " +
+            "set tags for each observer.",
+        replaceWith = ReplaceWith("observeForever(\"\", observer)"),
+        level = DeprecationLevel.HIDDEN
     )
     override fun observeForever(observer: Observer<in T>) {
         observeForever(if (generateUUIDTag) UUID.randomUUID().toString() else "", observer)

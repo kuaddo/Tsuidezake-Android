@@ -12,5 +12,7 @@ abstract class DataModule {
     @Suppress("unused")
     @Binds
     @Singleton
-    abstract fun providePreferenceStorage(preferenceStorage: SharedPreferenceStorage): PreferenceStorage
+    abstract fun providePreferenceStorage(
+        preferenceStorage: SharedPreferenceStorage
+    ): PreferenceStorage
 }

@@ -72,11 +72,13 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
  */
 fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
 
-inline fun <reified VM : ViewModel> Fragment.assistedViewModels(crossinline create: () -> VM): Lazy<VM> =
-    viewModels { AssistedViewModelFactory { create() } }
+inline fun <reified VM : ViewModel> Fragment.assistedViewModels(
+    crossinline create: () -> VM
+): Lazy<VM> = viewModels { AssistedViewModelFactory { create() } }
 
-inline fun <reified VM : ViewModel> Fragment.assistedActivityViewModels(crossinline create: () -> VM): Lazy<VM> =
-    activityViewModels { AssistedViewModelFactory { create() } }
+inline fun <reified VM : ViewModel> Fragment.assistedActivityViewModels(
+    crossinline create: () -> VM
+): Lazy<VM> = activityViewModels { AssistedViewModelFactory { create() } }
 
 private fun Fragment.observeSnackbar(
     snackbarEvent: LiveData<SnackbarMessage>,
