@@ -12,6 +12,7 @@ class TsuidezakeApp : DaggerApplication() {
     @Inject
     lateinit var preferenceStorage: PreferenceStorage
 
+
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)

@@ -17,8 +17,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Install danger
+        run: |
+          gem install bundler
+          bundle install
       - name: ktlint
         run: ./gradlew ktlintCheck
+      - name: Run danger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: danger
 
   build:
     needs: lint

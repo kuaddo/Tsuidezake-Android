@@ -2,6 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.application")
@@ -255,6 +256,12 @@ task("jacocoTestReport", JacocoReport::class) {
 ktlint {
     android.set(true)
     outputColorName.set("RED")
+    ignoreFailures.set(true)
+
+
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+    }
 }
 
 fun isNonStable(version: String): Boolean {
