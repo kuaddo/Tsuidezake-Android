@@ -1,6 +1,6 @@
 name: Android CI
 
-on: pull_request
+on: push
 
 env:
   STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
@@ -8,7 +8,15 @@ env:
   KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
 jobs:
+  skip:
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo 'Start jobs'
+
   lint:
+    needs: skip
     runs-on: ubuntu-latest
 
     steps:
@@ -34,6 +42,7 @@ jobs:
         run: danger
 
   build:
+    needs: skip
     runs-on: ubuntu-latest
 
     steps:
@@ -50,6 +59,7 @@ jobs:
         run: ./gradlew assembleDebug
 
   test:
+    needs: skip
     runs-on: ubuntu-latest
 
     steps:
