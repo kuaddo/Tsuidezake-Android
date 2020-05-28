@@ -34,7 +34,6 @@ jobs:
         run: danger
 
   build:
-    needs: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +50,6 @@ jobs:
         run: ./gradlew assembleDebug
 
   test:
-    needs: lint
     runs-on: ubuntu-latest
 
     steps:
