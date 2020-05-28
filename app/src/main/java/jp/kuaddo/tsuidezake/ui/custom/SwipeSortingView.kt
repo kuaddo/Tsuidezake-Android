@@ -137,7 +137,8 @@ class SwipeSortingView @JvmOverloads constructor(
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val x = (event.x - width / 2) * cos(Math.toRadians(v.rotation.toDouble())) -
-                        (event.y - height / 2) * sin(Math.toRadians(v.rotation.toDouble())) + width / 2
+                        (event.y - height / 2) * sin(Math.toRadians(v.rotation.toDouble())) +
+                        width / 2
                     val moveDistance = x - initialEventX + v.x - initialX
                     v.x = moveDistance.toFloat() * movingScale
                     v.rotation = moveDistance.toFloat() * rotationScale

@@ -19,6 +19,12 @@ abstract class ActivityModule {
     abstract fun contributeLauncherActivity(): LauncherActivity
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [RankingModule::class, WantToDrinkModule::class, DrinkModule::class])
+    @ContributesAndroidInjector(
+        modules = [
+            RankingModule::class,
+            WantToDrinkModule::class,
+            DrinkModule::class
+        ]
+    )
     abstract fun contributeMainActivity(): MainActivity
 }

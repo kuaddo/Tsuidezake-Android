@@ -159,8 +159,8 @@ private fun BottomNavigationView.setupDeepLinks(
             containerId
         )
         // Handle Intent
-        if (navHostFragment.navController.handleDeepLink(intent)
-            && selectedItemId != navHostFragment.navController.graph.id
+        if (navHostFragment.navController.handleDeepLink(intent) &&
+            selectedItemId != navHostFragment.navController.graph.id
         ) {
             this.selectedItemId = navHostFragment.navController.graph.id
         }
@@ -205,7 +205,6 @@ private fun attachNavHostFragment(
             }
         }
         .commitNow()
-
 }
 
 private fun obtainNavHostFragment(
