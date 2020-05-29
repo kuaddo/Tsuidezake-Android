@@ -259,7 +259,6 @@ task("jacocoTestReport", JacocoReport::class) {
 ktlint {
     android.set(true)
     outputColorName.set("RED")
-    ignoreFailures.set(true)
 
     reporters {
         reporter(ReporterType.CHECKSTYLE)

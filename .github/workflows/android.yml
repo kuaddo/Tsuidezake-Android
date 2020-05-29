@@ -27,13 +27,15 @@ jobs:
           gem install bundler
           bundle install
       - name: ktlint
-        run: ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck --continue
       - name: Run danger
         run: danger
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    needs: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -50,6 +52,7 @@ jobs:
         run: ./gradlew assembleDebug
 
   test:
+    needs: lint
     runs-on: ubuntu-latest
 
     steps:
