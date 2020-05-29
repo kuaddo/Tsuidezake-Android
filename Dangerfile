@@ -8,6 +8,13 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 
 # ktlint
 checkstyle_format.base_path = Dir.pwd
-Dir["app/build/reports/ktlint/ktlint*.xml"].each do |file|
+Dir["**/build/reports/ktlint/ktlint*.xml"].each do |file|
   checkstyle_format.report file
+end
+
+# test
+Dir["**/build/test-results/**/*.xml"].each do |file|
+  junit.parse(file)
+  junit.show_skipped_tests = true
+  junit.report
 end

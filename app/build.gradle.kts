@@ -96,6 +96,9 @@ android {
                 extensions.configure(JacocoTaskExtension::class.java) {
                     isIncludeNoLocationClasses = true
                 }
+                testLogging {
+                    setEvents(listOf("passed", "skipped", "failed", "standardOut", "standardError"))
+                }
             }
         }
         junitPlatform {
