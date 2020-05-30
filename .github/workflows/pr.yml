@@ -101,7 +101,7 @@ jobs:
         env:
           SLACK_COLOR: '#00FF00'
           SLACK_TITLE: ':rocket::commit: Deploy(PR) :commit::rocket:'
-          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<${{ env.DISTRIBUTION_URL }} | Download link>"
+          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<https://deploygate.com/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps/jp.kuaddo.tsuidezake.debug | Download link>"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DEPLOY }}
 
   test:
