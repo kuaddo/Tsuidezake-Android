@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 一旦fetchしないと対象のコミットを見ることができない
 git fetch --prune --unshallow
