@@ -27,6 +27,14 @@ jobs:
           bundle install
       - name: ktlint
         run: ./gradlew ktlintCheck --continue
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        if: failure()
+        env:
+          SLACK_COLOR: '#FF0000'
+          SLACK_TITLE: ':fire::fire::fire: ktlint failed :fire::fire::fire:'
+          SLACK_MESSAGE: "ktlint failed! Please check github!"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_FAILURE }}
       - name: Run danger
         run: danger
         if: always()
@@ -73,12 +81,28 @@ jobs:
           GPG_SECRET: ${{ secrets.GPG_SECRET }}
       - name: Build
         run: ./gradlew assembleDebug
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        if: failure()
+        env:
+          SLACK_COLOR: '#FF0000'
+          SLACK_TITLE: ':fire::fire::fire: Build failed :fire::fire::fire:'
+          SLACK_MESSAGE: "Build failed! Please check github!"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_FAILURE }}
       - name: Deploy to DeployGate
         run: .github/scripts/deploy_on_pr.sh
         env:
           COMMIT_HASH: ${{ github.event.after }}
           DEPLOY_GATE_TOKEN: ${{secrets.DEPLOY_GATE_TOKEN}}
           DEPLOY_GATE_USER_NAME: ${{secrets.DEPLOY_GATE_USER_NAME}}
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        if: startsWith(env.DISTRIBUTION_URL, 'https')
+        env:
+          SLACK_COLOR: '#00FF00'
+          SLACK_TITLE: ':rocket::commit: Deploy(PR) :commit::rocket:'
+          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<${{ env.DISTRIBUTION_URL }} | Download link>"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DEPLOY }}
 
   test:
     needs: lint
@@ -100,6 +124,14 @@ jobs:
           bundle install
       - name: Test
         run: ./gradlew testDebugUnitTest
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        if: failure()
+        env:
+          SLACK_COLOR: '#FF0000'
+          SLACK_TITLE: ':fire::fire::fire: Test failed :fire::fire::fire:'
+          SLACK_MESSAGE: "Test failed! Please check github!"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_FAILURE }}
       - name: Run danger
         run: danger
         if: always()
