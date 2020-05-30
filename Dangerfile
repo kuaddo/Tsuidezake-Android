@@ -10,8 +10,13 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 Dir["**/build/dependencyUpdates/report.txt"].each do |file|
     fileContent = File.open(file, "rb").read
     toRemove = "The following dependencies have later milestone versions:”
-    contentToPrint = fileContent.slice(fileContent.index(toRemove)..-1)
-    warn(contentToPrint)
+    index = fileContent.index(toRemove)
+    if index.nil?
+        message("All libraries are up to date.")
+    else
+        contentToPrint = fileContent.slice(index..-1)
+        warn(contentToPrint)
+    end
 end
 
 # ktlint
