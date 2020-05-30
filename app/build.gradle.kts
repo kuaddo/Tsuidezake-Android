@@ -73,11 +73,11 @@ android {
             )
         }
     }
-
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
     androidExtensions.isExperimental = true
-    dataBinding.isEnabled = true
-    viewBinding.isEnabled = true
-
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "1.8"
