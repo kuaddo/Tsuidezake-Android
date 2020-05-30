@@ -115,8 +115,8 @@ dependencies {
     val kotlinVersion = KotlinCompilerVersion.VERSION
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
 
     // AndroidX
     implementation("androidx.appcompat:appcompat:1.1.0")
@@ -124,7 +124,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta6")
-    implementation("androidx.core:core-ktx:1.2.0")
+    implementation("androidx.core:core-ktx:1.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
     implementation("androidx.fragment:fragment-ktx:1.2.4")
@@ -140,25 +140,25 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
 
     // Dagger
-    api("com.google.dagger:dagger:2.27")
-    api("com.google.dagger:dagger-android:2.27")
-    api("com.google.dagger:dagger-android-support:2.27")
-    kapt("com.google.dagger:dagger-compiler:2.27")
-    kapt("com.google.dagger:dagger-android-processor:2.27")
+    api("com.google.dagger:dagger:2.28")
+    api("com.google.dagger:dagger-android:2.28")
+    api("com.google.dagger:dagger-android-support:2.28")
+    kapt("com.google.dagger:dagger-compiler:2.28")
+    kapt("com.google.dagger:dagger-android-processor:2.28")
     compileOnly("com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2")
     kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.5.2")
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.7.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.7.0")
+    implementation("com.squareup.okhttp3:okhttp:4.7.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
     kapt("com.github.bumptech.glide:compiler:4.11.0")
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.8.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.8.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     // Moshi
     implementation("com.squareup.moshi:moshi:1.9.2")
@@ -179,7 +179,7 @@ dependencies {
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.3")
 
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // JUnit
@@ -199,7 +199,7 @@ dependencies {
     }
 
     androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7")
     androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // JUnit
