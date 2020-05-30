@@ -30,5 +30,6 @@ jobs:
       - name: Deploy to DeployGate
         run: .github/scripts/deploy_on_merged.sh
         env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
           DEPLOY_GATE_TOKEN: ${{secrets.DEPLOY_GATE_TOKEN}}
           DEPLOY_GATE_USER_NAME: ${{secrets.DEPLOY_GATE_USER_NAME}}
