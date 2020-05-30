@@ -3,6 +3,7 @@
 # 一旦fetchしないと対象のコミットを見ることができない
 git fetch --prune --unshallow
 COMMIT_MESSAGE=`git log --pretty=format:%s -n1 $COMMIT_HASH`
+echo "commit message = $COMMIT_MESSAGE"
 
 if [[ $COMMIT_MESSAGE == *\[Deploy\]* || $COMMIT_MESSAGE == *\[deploy\]* ]]; then
   DISTRIBUTION_URL=`curl \
