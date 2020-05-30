@@ -95,6 +95,14 @@ jobs:
           COMMIT_HASH: ${{ github.event.after }}
           DEPLOY_GATE_TOKEN: ${{secrets.DEPLOY_GATE_TOKEN}}
           DEPLOY_GATE_USER_NAME: ${{secrets.DEPLOY_GATE_USER_NAME}}
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        if: startsWith(env.DISTRIBUTION_URL, 'https')
+        env:
+          SLACK_COLOR: '#00FF00'
+          SLACK_TITLE: ':rocket::commit: Deploy(PR) :commit::rocket:'
+          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<${{ env.DISTRIBUTION_URL }} | Download link>"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DEPLOY }}
 
   test:
     needs: lint
