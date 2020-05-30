@@ -29,3 +29,6 @@ jobs:
         run: ./gradlew assembleDebug
       - name: Deploy to DeployGate
         run: .github/scripts/deploy_on_merged.sh
+        env:
+          DEPLOY_GATE_TOKEN: ${{secrets.DEPLOY_GATE_TOKEN}}
+          DEPLOY_GATE_USER_NAME: ${{secrets.DEPLOY_GATE_USER_NAME}}

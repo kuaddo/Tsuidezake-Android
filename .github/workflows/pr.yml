@@ -75,6 +75,10 @@ jobs:
         run: ./gradlew assembleDebug
       - name: Deploy to DeployGate
         run: .github/scripts/deploy_on_pr.sh
+        env:
+          COMMIT_HASH: ${{ github.event.after }}
+          DEPLOY_GATE_TOKEN: ${{secrets.DEPLOY_GATE_TOKEN}}
+          DEPLOY_GATE_USER_NAME: ${{secrets.DEPLOY_GATE_USER_NAME}}
 
   test:
     needs: lint
