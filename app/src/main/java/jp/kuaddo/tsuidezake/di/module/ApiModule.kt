@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.di.module
 
+import com.apollographql.apollo.ApolloClient
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -11,6 +12,12 @@ import javax.inject.Singleton
 
 @Module
 object ApiModule {
+    @Provides
+    @Singleton
+    fun provideApollo(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
+        .serverUrl("https://us-central1-tsuidezake.cloudfunctions.net/graphql")
+        .okHttpClient(okHttpClient)
+        .build()
 
     @Provides
     @Singleton
