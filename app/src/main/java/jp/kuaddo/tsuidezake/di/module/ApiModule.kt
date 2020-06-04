@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import jp.kuaddo.tsuidezake.data.remote.OAuthHeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
@@ -29,6 +30,7 @@ object ApiModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(OAuthHeaderInterceptor())
             .addInterceptor(
                 HttpLoggingInterceptor(
                     object : HttpLoggingInterceptor.Logger {
