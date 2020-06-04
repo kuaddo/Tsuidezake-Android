@@ -10,6 +10,7 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.apollographql.apollo")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
@@ -109,6 +110,10 @@ android {
     }
 }
 
+apollo {
+    generateKotlinModels.set(true)
+}
+
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to arrayOf("*.jar")))
 
@@ -156,9 +161,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
     kapt("com.github.bumptech.glide:compiler:4.11.0")
 
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    // Apollo
+    implementation("com.apollographql.apollo:apollo-runtime:2.0.2")
+    implementation("com.apollographql.apollo:apollo-coroutines-support:2.0.2")
+    compileOnly("org.jetbrains:annotations:16.0.1")
 
     // Moshi
     implementation("com.squareup.moshi:moshi:1.9.2")

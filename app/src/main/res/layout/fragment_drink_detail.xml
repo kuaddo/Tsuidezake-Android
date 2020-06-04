@@ -5,10 +5,6 @@
     <data>
 
         <variable
-            name="drinkDetail"
-            type="jp.kuaddo.tsuidezake.model.DrinkDetail" />
-
-        <variable
             name="viewModel"
             type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
     </data>
@@ -38,7 +34,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@{drinkDetail.drink.name}"
+                android:text="@{viewModel.sakeDetail.name}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +60,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:text="@{drinkDetail.description}"
+                android:text="@{viewModel.sakeDetail.description}"
                 android:textSize="14sp"
                 app:isExpanded="@{viewModel.isExpanded}"
                 app:layout_constraintEnd_toEndOf="parent"

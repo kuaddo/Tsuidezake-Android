@@ -1,21 +1,14 @@
 package jp.kuaddo.tsuidezake.ui.drink
 
-import androidx.lifecycle.ViewModel
-import dagger.Binds
+import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import jp.kuaddo.tsuidezake.di.ViewModelKey
 
 @Suppress("unused")
-@Module
+@AssistedModule
+@Module(includes = [AssistedInject_DrinkModule::class])
 abstract class DrinkModule {
 
     @ContributesAndroidInjector
     abstract fun contributeDrinkDetailFragment(): DrinkDetailFragment
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(DrinkDetailViewModel::class)
-    abstract fun bindMainViewModel(viewModel: DrinkDetailViewModel): ViewModel
 }

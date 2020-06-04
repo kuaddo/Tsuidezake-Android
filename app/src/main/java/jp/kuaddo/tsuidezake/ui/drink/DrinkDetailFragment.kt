@@ -2,8 +2,6 @@ package jp.kuaddo.tsuidezake.ui.drink
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -11,25 +9,31 @@ import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentDrinkDetailBinding
+import jp.kuaddo.tsuidezake.extensions.assistedViewModels
+import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import javax.inject.Inject
 
 class DrinkDetailFragment : DaggerFragment(R.layout.fragment_drink_detail) {
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: DrinkDetailViewModel.Factory
 
-    private val viewModel: DrinkDetailViewModel by viewModels { viewModelFactory }
+    private val viewModel: DrinkDetailViewModel by assistedViewModels {
+        viewModelFactory.create(sakeId = 1) // TODO: argsで受け取ったidを利用する
+    }
     private val args by navArgs<DrinkDetailFragmentArgs>()
     private val binding: FragmentDrinkDetailBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.let {
-            it.drinkDetail = args.drinkDetail
-            it.viewModel = viewModel
-        }
-        binding.tagsChipGroup.let { chipGroup ->
-            // TODO: remove sample
-            val tagTexts = listOf("辛口", "初心者におすすめ", "コスパ良し")
-            tagTexts.forEach { text -> chipGroup.addTagChip(text) }
+        binding.viewModel = viewModel
+        observe()
+    }
+
+    private fun observe() {
+        viewModel.sakeDetail.observeNonNull(viewLifecycleOwner) { sakeDetail ->
+            binding.tagsChipGroup.let { chipGroup ->
+                chipGroup.removeAllViews()
+                sakeDetail.tags.forEach { text -> chipGroup.addTagChip(text) }
+            }
         }
     }
 

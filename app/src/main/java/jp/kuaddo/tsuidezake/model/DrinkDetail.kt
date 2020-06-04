@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+// TODO: Use SakeDetail instead of this
 @Parcelize
 data class DrinkDetail(
     val drink: Drink,
