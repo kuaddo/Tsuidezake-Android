@@ -3,6 +3,7 @@ object Deps {
     private const val coroutinesVersion = "1.3.7"
     private const val navigationVersion = "2.2.2"
     private const val apolloVersion = "2.1.0"
+    const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.0.0"

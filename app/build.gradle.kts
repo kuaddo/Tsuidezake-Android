@@ -18,14 +18,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
-    buildToolsVersion("29.0.3")
+    compileSdkVersion(Versions.compileSdkVersion)
+    buildToolsVersion(Deps.buildToolsVersion)
     defaultConfig {
         applicationId = "jp.kuaddo.tsuidezake"
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0.0"
+        minSdkVersion(Versions.minSdkVersion)
+        targetSdkVersion(Versions.targetSdkVersion)
+        versionCode = Versions.versionCode
+        versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
