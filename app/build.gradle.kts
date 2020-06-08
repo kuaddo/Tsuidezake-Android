@@ -80,7 +80,7 @@ android {
     androidExtensions.isExperimental = true
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
     compileOptions {
