@@ -1,8 +1,8 @@
 package jp.kuaddo.tsuidezake.delegate
 
 import androidx.lifecycle.LiveData
+import jp.kuaddo.tsuidezake.core.live.LiveEvent
 import jp.kuaddo.tsuidezake.util.SnackbarMessage
-import jp.kuaddo.tsuidezake.util.live.LiveEvent
 
 interface SnackbarViewModelDelegate {
     val snackbarEvent: LiveData<SnackbarMessage>

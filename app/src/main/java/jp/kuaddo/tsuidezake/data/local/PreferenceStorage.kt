@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
-import jp.kuaddo.tsuidezake.util.live.UnitLiveEvent
+import jp.kuaddo.tsuidezake.core.live.UnitLiveEvent
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

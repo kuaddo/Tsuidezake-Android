@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.util.live
+package jp.kuaddo.tsuidezake.core.live
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
@@ -7,9 +7,10 @@ import androidx.lifecycle.Observer
 import java.util.UUID
 
 /**
- * @param generateUUIDTag MediatorLiveData.addSource()等を利用する場合にはobserve(owner, "", observer)
- *                        が呼ばれてしまう。tagが""で同じになるので、複数のObserverに通知ができない。
- *                        generateUUIDTagをtrueにすることでこの問題を解決することができる。
+ * @param generateUUIDTag
+ *  MediatorLiveData.addSource()等を利用する場合にはobserve(owner, "", observer)が呼ばれてしまう。
+ *  tagが""で同じになるので、複数のObserverに通知ができない。generateUUIDTagをtrueにすることで
+ *  この問題を解決することができる。
  */
 open class LiveEvent<T>(private val generateUUIDTag: Boolean = false) : MutableLiveData<T>() {
     private val dispatchedTagSet = mutableSetOf<String>()
@@ -38,7 +39,7 @@ open class LiveEvent<T>(private val generateUUIDTag: Boolean = false) : MutableL
 
     @MainThread
     open fun observe(owner: LifecycleOwner, tag: String, observer: Observer<in T>) {
-        super.observe(owner, Observer<T> {
+        super.observe(owner, Observer {
             val internalTag = owner::class.java.name + "#" + tag
             if (!dispatchedTagSet.contains(internalTag)) {
                 dispatchedTagSet.add(internalTag)

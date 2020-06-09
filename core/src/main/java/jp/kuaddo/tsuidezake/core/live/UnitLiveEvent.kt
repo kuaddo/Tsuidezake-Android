@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.util.live
+package jp.kuaddo.tsuidezake.core.live
 
 import androidx.annotation.MainThread
 
