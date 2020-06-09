@@ -114,6 +114,8 @@ apollo {
 }
 
 dependencies {
+    implementation(project(":model"))
+
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.reflect)
     implementation(Deps.Kotlin.coroutinesCore)

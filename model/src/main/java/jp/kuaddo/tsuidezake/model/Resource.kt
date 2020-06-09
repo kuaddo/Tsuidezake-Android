@@ -12,7 +12,8 @@ sealed class Resource<out T> {
         is ErrorResource -> {
             when (val result = data?.let(transform)) {
                 is SuccessResource -> ErrorResource(message, result.data)
-                is ErrorResource -> ErrorResource("$message\n${result.message}", result.data)
+                is ErrorResource ->
+                    ErrorResource("$message\n${result.message}", result.data)
                 LoadingResource -> LoadingResource
                 null -> ErrorResource(message, null)
             }
