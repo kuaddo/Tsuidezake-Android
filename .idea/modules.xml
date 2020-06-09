@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" group="Tsuidezake-Android" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android_buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android_buildSrc.iml" group="Tsuidezake-Android/Tsuidezake-Android_buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Tsuidezake-Android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="Tsuidezake-Android/core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/data.iml" group="Tsuidezake-Android/data" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/local/local.iml" filepath="$PROJECT_DIR$/.idea/modules/data/local/local.iml" group="Tsuidezake-Android/data/local" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/model.iml" group="Tsuidezake-Android/model" />

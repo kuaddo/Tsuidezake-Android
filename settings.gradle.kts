@@ -1,5 +1,6 @@
 include(
     ":app",
+    ":core",
     ":model",
     ":data:local"
 )
