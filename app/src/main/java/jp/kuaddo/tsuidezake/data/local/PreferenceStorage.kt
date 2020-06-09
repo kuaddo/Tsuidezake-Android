@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.data
+package jp.kuaddo.tsuidezake.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
