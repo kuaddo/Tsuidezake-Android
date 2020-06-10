@@ -9,7 +9,6 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.apollographql.apollo")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
@@ -109,13 +108,10 @@ android {
     }
 }
 
-apollo {
-    generateKotlinModels.set(true)
-}
-
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
+    implementation(project(":data:remote"))
 
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.reflect)

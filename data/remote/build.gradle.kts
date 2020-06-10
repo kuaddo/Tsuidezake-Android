@@ -4,6 +4,8 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
+    id("com.apollographql.apollo")
 }
 
 android {
@@ -28,6 +30,20 @@ android {
     }
 }
 
+apollo {
+    generateKotlinModels.set(true)
+}
+
 dependencies {
+    implementation(project(":model"))
+
     implementation(Deps.Kotlin.stdlib)
+    implementation(Deps.Kotlin.coroutinesCore)
+    api(Deps.Dagger.core)
+    kapt(Deps.Dagger.compiler)
+    implementation(Deps.OkHttp.core)
+    implementation(Deps.OkHttp.loggingInterceptor)
+    implementation(Deps.Apollo.runtime)
+    implementation(Deps.Apollo.coroutines)
+    implementation(Deps.timber)
 }
