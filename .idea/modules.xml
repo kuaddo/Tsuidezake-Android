@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/local/local.iml" filepath="$PROJECT_DIR$/.idea/modules/data/local/local.iml" group="Tsuidezake-Android/data/local" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/model.iml" group="Tsuidezake-Android/model" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" filepath="$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" group="Tsuidezake-Android/data/remote" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/repository/repository.iml" filepath="$PROJECT_DIR$/.idea/modules/data/repository/repository.iml" group="Tsuidezake-Android/data/repository" />
     </modules>
   </component>
 </project>
