@@ -30,5 +30,5 @@ android {
 
 dependencies {
     implementation(Deps.Kotlin.stdlib)
-    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    api(Deps.AndroidX.Lifecycle.liveDataKtx)
 }

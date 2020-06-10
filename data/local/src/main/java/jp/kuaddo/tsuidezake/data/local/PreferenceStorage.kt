@@ -10,14 +10,17 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 interface PreferenceStorage {
+    // TODO: 使うようになったタイミングでLiveDataに変更する
     val preferenceChangedEvent: UnitLiveEvent
 }
 
-class SharedPreferenceStorage @Inject constructor(context: Context) : PreferenceStorage {
+class SharedPreferenceStorage @Inject constructor(context: Context) :
+    PreferenceStorage {
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     override val preferenceChangedEvent = UnitLiveEvent(generateUUIDTag = true)
 
+    // TODO: 使うようになったタイミングで調査する
     // リスナーをフィールドとして保持しておかないと、初回起動時のコールバックが呼ばれない
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
         preferenceChangedEvent.callFromWorkerThread()
