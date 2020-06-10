@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -29,5 +30,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":model"))
+    implementation(project(":data:local"))
+    implementation(project(":data:remote"))
     implementation(Deps.Kotlin.stdlib)
+    api(Deps.Dagger.core)
+    kapt(Deps.Dagger.compiler)
 }

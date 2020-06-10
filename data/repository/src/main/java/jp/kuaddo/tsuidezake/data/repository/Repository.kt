@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.data
+package jp.kuaddo.tsuidezake.data.repository
 
 import jp.kuaddo.tsuidezake.data.remote.ErrorResponse
 import jp.kuaddo.tsuidezake.data.remote.SuccessResponse
