@@ -1,6 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -10,7 +9,6 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.apollographql.apollo")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
@@ -19,14 +17,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
-    buildToolsVersion("29.0.3")
+    compileSdkVersion(Versions.compileSdkVersion)
+    buildToolsVersion(Deps.buildToolsVersion)
     defaultConfig {
         applicationId = "jp.kuaddo.tsuidezake"
-        minSdkVersion(21)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0.0"
+        minSdkVersion(Versions.minSdkVersion)
+        targetSdkVersion(Versions.targetSdkVersion)
+        versionCode = Versions.versionCode
+        versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -81,7 +79,7 @@ android {
     androidExtensions.isExperimental = true
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
     compileOptions {
@@ -110,114 +108,74 @@ android {
     }
 }
 
-apollo {
-    generateKotlinModels.set(true)
-}
-
 dependencies {
-    implementation(fileTree("dir" to "libs", "include" to arrayOf("*.jar")))
+    implementation(project(":core"))
+    implementation(project(":model"))
+    implementation(project(":data:remote"))
+    implementation(project(":data:repository"))
 
-    val kotlinVersion = KotlinCompilerVersion.VERSION
-    implementation(kotlin("stdlib-jdk8", kotlinVersion))
-    implementation(kotlin("reflect", kotlinVersion))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
+    implementation(Deps.Kotlin.stdlib)
+    implementation(Deps.Kotlin.reflect)
+    implementation(Deps.Kotlin.coroutinesCore)
+    implementation(Deps.Kotlin.coroutinesAndroid)
 
-    // AndroidX
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta6")
-    implementation("androidx.core:core-ktx:1.3.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("androidx.fragment:fragment-ktx:1.2.4")
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("com.google.android.material:material:1.1.0")
-    implementation("androidx.lifecycle:lifecycle-runtime:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.2.0")
+    implementation(Deps.AndroidX.appCompat)
+    implementation(Deps.AndroidX.recyclerView)
+    implementation(Deps.AndroidX.constraint)
+    implementation(Deps.AndroidX.viewPager)
+    implementation(Deps.AndroidX.coreKtx)
+    implementation(Deps.AndroidX.fragmentKtx)
+    implementation(Deps.AndroidX.material)
+    implementation(Deps.AndroidX.Lifecycle.viewModelKtx)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Deps.AndroidX.Lifecycle.commonJava8)
+    implementation(Deps.AndroidX.Navigation.fragmentKtx)
+    implementation(Deps.AndroidX.Navigation.uiKtx)
 
-    // Navigation
-    implementation("androidx.navigation:navigation-runtime-ktx:2.2.2")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.2.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
+    api(Deps.Dagger.core)
+    api(Deps.Dagger.android)
+    api(Deps.Dagger.androidSupport)
+    kapt(Deps.Dagger.compiler)
+    kapt(Deps.Dagger.androidProcessor)
+    compileOnly(Deps.Dagger.AssistedInject.annotations)
+    kapt(Deps.Dagger.AssistedInject.processor)
 
-    // Dagger
-    api("com.google.dagger:dagger:2.28")
-    api("com.google.dagger:dagger-android:2.28")
-    api("com.google.dagger:dagger-android-support:2.28")
-    kapt("com.google.dagger:dagger-compiler:2.28")
-    kapt("com.google.dagger:dagger-android-processor:2.28")
-    compileOnly("com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2")
-    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.5.2")
+    implementation(Deps.OkHttp.core)
+    implementation(Deps.OkHttp.loggingInterceptor)
 
-    // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.7.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
+    implementation(Deps.Glide.core)
+    kapt(Deps.Glide.compiler)
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.11.0")
-    kapt("com.github.bumptech.glide:compiler:4.11.0")
+    implementation(Deps.Apollo.runtime)
+    implementation(Deps.Apollo.coroutines)
 
-    // Apollo
-    implementation("com.apollographql.apollo:apollo-runtime:2.0.2")
-    implementation("com.apollographql.apollo:apollo-coroutines-support:2.0.2")
-    compileOnly("org.jetbrains:annotations:16.0.1")
+    implementation(Deps.Groupie.core)
+    implementation(Deps.Groupie.viewBinding)
 
-    // Moshi
-    implementation("com.squareup.moshi:moshi:1.9.2")
-    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
+    implementation(Deps.MaterialDialogs.core)
+    implementation(Deps.MaterialDialogs.lifecycle)
 
-    // Groupie
-    implementation("com.xwray:groupie:2.8.0")
-    implementation("com.xwray:groupie-viewbinding:2.8.0")
+    implementation(Deps.timber)
+    implementation(Deps.threeTenAbp)
+    implementation(Deps.dataBindingKtx)
+    debugImplementation(Deps.leakCanary)
 
-    implementation("com.github.wada811:DataBinding-ktx:4.0.0")
-    implementation("com.afollestad.material-dialogs:core:3.3.0")
-    implementation("com.afollestad.material-dialogs:lifecycle:3.3.0")
-    implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")
-    implementation("org.permissionsdispatcher:permissionsdispatcher:4.7.0")
-    kapt("org.permissionsdispatcher:permissionsdispatcher-processor:4.7.0")
+    testImplementation(Deps.Kotlin.reflect)
+    testImplementation(Deps.Test.kotlinCoroutinesTest)
+    testImplementation(Deps.Test.androidXCoreTesting)
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.3")
+    testImplementation(Deps.JUnit.jupiterApi)
+    testImplementation(Deps.JUnit.jupiterEngine)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation(Deps.Spek.dslJvm)
+    testImplementation(Deps.Spek.junit5)
 
-    // JUnit
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
-    testImplementation("org.assertj:assertj-core:3.16.1")
+    testImplementation(Deps.Test.assertJ)
+    testImplementation(Deps.Test.mockk)
 
-    // Mockk
-    testImplementation("io.mockk:mockk:1.10.0")
-
-    // Spek
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
-    testImplementation("org.spekframework.spek2:spek-runner-junit5:2.0.10")
-
-    testImplementation("org.threeten:threetenbp:1.4.4") {
-        exclude("com.jakewharton.threetenabp:threetenabp:1.2.1")
+    testImplementation(Deps.Test.threeTenBp) {
+        exclude(Deps.threeTenAbp)
     }
-
-    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7")
-    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-
-    // JUnit
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("org.assertj:assertj-core:3.16.1")
-
-    androidTestImplementation("org.threeten:threetenbp:1.4.4") {
-        exclude("com.jakewharton.threetenabp:threetenabp:1.2.1")
-    }
-
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }
 
 tasks.withType<DependencyUpdatesTask> {

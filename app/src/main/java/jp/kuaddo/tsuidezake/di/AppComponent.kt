@@ -9,7 +9,6 @@ import jp.kuaddo.tsuidezake.TsuidezakeApp
 import jp.kuaddo.tsuidezake.di.module.ActivityModule
 import jp.kuaddo.tsuidezake.di.module.ApiModule
 import jp.kuaddo.tsuidezake.di.module.AppModule
-import jp.kuaddo.tsuidezake.di.module.DataModule
 import jp.kuaddo.tsuidezake.di.module.ViewModelDelegateModule
 import jp.kuaddo.tsuidezake.di.module.ViewModelModule
 import javax.inject.Singleton
@@ -22,7 +21,6 @@ import javax.inject.Singleton
         ViewModelModule::class,
         ViewModelDelegateModule::class,
         ApiModule::class,
-        DataModule::class,
         AppModule::class
     ]
 )
