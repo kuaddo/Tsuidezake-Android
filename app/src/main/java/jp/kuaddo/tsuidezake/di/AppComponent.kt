@@ -6,7 +6,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import jp.kuaddo.tsuidezake.TsuidezakeApp
-import jp.kuaddo.tsuidezake.data.remote.RemoteModule
+import jp.kuaddo.tsuidezake.data.repository.RepositoryModule
 import jp.kuaddo.tsuidezake.di.module.ActivityModule
 import jp.kuaddo.tsuidezake.di.module.AppModule
 import jp.kuaddo.tsuidezake.di.module.ViewModelDelegateModule
@@ -21,7 +21,7 @@ import javax.inject.Singleton
         ViewModelModule::class,
         ViewModelDelegateModule::class,
         AppModule::class,
-        RemoteModule::class // TODO: Repositoryのモジュールが完成後に削除
+        RepositoryModule::class
     ]
 )
 interface AppComponent : AndroidInjector<TsuidezakeApp> {
