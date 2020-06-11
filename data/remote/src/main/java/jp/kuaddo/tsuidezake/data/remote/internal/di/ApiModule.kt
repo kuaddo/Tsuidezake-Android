@@ -1,25 +1,24 @@
-package jp.kuaddo.tsuidezake.di.module
+package jp.kuaddo.tsuidezake.data.remote.internal.di
 
 import com.apollographql.apollo.ApolloClient
 import dagger.Module
 import dagger.Provides
-import jp.kuaddo.tsuidezake.data.remote.OAuthHeaderInterceptor
+import jp.kuaddo.tsuidezake.data.remote.internal.OAuthHeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
-import javax.inject.Singleton
 
 @Module
-object ApiModule {
+internal object ApiModule {
     @Provides
-    @Singleton
+    @RemoteScope
     fun provideApollo(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
         .serverUrl("https://us-central1-tsuidezake.cloudfunctions.net/graphql")
         .okHttpClient(okHttpClient)
         .build()
 
     @Provides
-    @Singleton
+    @RemoteScope
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(OAuthHeaderInterceptor())
