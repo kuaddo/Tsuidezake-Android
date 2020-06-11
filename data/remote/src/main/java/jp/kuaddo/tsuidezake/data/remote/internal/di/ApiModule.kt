@@ -11,14 +11,14 @@ import timber.log.Timber
 @Module
 internal object ApiModule {
     @Provides
-    @RemoteScope
+    @RemoteDataScope
     fun provideApollo(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
         .serverUrl("https://us-central1-tsuidezake.cloudfunctions.net/graphql")
         .okHttpClient(okHttpClient)
         .build()
 
     @Provides
-    @RemoteScope
+    @RemoteDataScope
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(OAuthHeaderInterceptor())

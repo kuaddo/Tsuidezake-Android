@@ -2,15 +2,15 @@ package jp.kuaddo.tsuidezake.data.repository.internal.di
 
 import dagger.Subcomponent
 import jp.kuaddo.tsuidezake.core.scope.RepositoryScope
-import jp.kuaddo.tsuidezake.data.local.LocalModule
-import jp.kuaddo.tsuidezake.data.remote.RemoteModule
+import jp.kuaddo.tsuidezake.data.local.LocalDataModule
+import jp.kuaddo.tsuidezake.data.remote.RemoteDataModule
 import jp.kuaddo.tsuidezake.data.repository.internal.RepositoryImpl
 
 @RepositoryScope
 @Subcomponent(
     modules = [
-        LocalModule::class,
-        RemoteModule::class
+        LocalDataModule::class,
+        RemoteDataModule::class
     ]
 )
 internal interface RepositorySubcomponent {

@@ -3,14 +3,14 @@ package jp.kuaddo.tsuidezake.data.local.internal.di
 import dagger.Subcomponent
 import jp.kuaddo.tsuidezake.data.local.internal.SharedPreferenceStorage
 
-@LocalScope
+@LocalDataScope
 @Subcomponent
-internal interface LocalSubcomponent {
+internal interface LocalDataSubcomponent {
 
     fun sharedPreferenceStorage(): SharedPreferenceStorage
 
     @Subcomponent.Builder
     interface Builder {
-        fun build(): LocalSubcomponent
+        fun build(): LocalDataSubcomponent
     }
 }
