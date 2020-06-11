@@ -8,9 +8,9 @@ import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
-import jp.kuaddo.tsuidezake.type.SuitableTemparature
 import javax.inject.Inject
 import jp.kuaddo.tsuidezake.type.FoodCategory as ApolloFoodCategory
+import jp.kuaddo.tsuidezake.type.SuitableTemperature as ApolloSuitableTemperature
 
 internal class TsuidezakeServiceImpl @Inject constructor(
     private val apolloClient: ApolloClient
@@ -30,13 +30,13 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }
     )
 
-    private fun SuitableTemparature.toSuitableTemperature() = when (this) {
-        SuitableTemparature.HOT -> SuitableTemperature.HOT
-        SuitableTemparature.WARM -> SuitableTemperature.WARM
-        SuitableTemparature.ROOM -> SuitableTemperature.NORMAL
-        SuitableTemparature.COLD -> SuitableTemperature.COLD
-        SuitableTemparature.ROCK -> SuitableTemperature.ROCK
-        SuitableTemparature.UNKNOWN__ -> error("Unknown temperature.")
+    private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
+        ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
+        ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
+        ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
+        ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
+        ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
+        ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature.")
     }
 
     private fun ApolloFoodCategory.toFoodCategory() = when (this) {
