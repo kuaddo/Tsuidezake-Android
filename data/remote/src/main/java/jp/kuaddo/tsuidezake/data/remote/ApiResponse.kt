@@ -11,7 +11,7 @@ data class SuccessResponse<T : Any>(val data: T) : ApiResponse<T>()
 
 data class ErrorResponse(val message: String) : ApiResponse<Nothing>()
 
-fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
+internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
     if (data != null) return SuccessResponse(data!!)
 
     val message = errors?.let {
@@ -21,7 +21,7 @@ fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
     return ErrorResponse(message)
 }
 
-suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
+internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
     transform: (T) -> R
 ): ApiResponse<R> = runCatching {
     when (val res = toDeferred().await().toApiResponse()) {
