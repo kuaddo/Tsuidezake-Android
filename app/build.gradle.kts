@@ -111,8 +111,6 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
-    implementation(project(":data:local"))
-    implementation(project(":data:remote"))
     implementation(project(":data:repository"))
 
     implementation(Deps.Kotlin.stdlib)
@@ -141,14 +139,8 @@ dependencies {
     compileOnly(Deps.Dagger.AssistedInject.annotations)
     kapt(Deps.Dagger.AssistedInject.processor)
 
-    implementation(Deps.OkHttp.core)
-    implementation(Deps.OkHttp.loggingInterceptor)
-
     implementation(Deps.Glide.core)
     kapt(Deps.Glide.compiler)
-
-    implementation(Deps.Apollo.runtime)
-    implementation(Deps.Apollo.coroutines)
 
     implementation(Deps.Groupie.core)
     implementation(Deps.Groupie.viewBinding)

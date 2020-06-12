@@ -37,4 +37,10 @@ dependencies {
     implementation(Deps.Kotlin.stdlib)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+
+    // TODO: move remote module
+    implementation(Deps.OkHttp.core)
+    implementation(Deps.OkHttp.loggingInterceptor)
+    implementation(Deps.Apollo.runtime)
+    implementation(Deps.Apollo.coroutines)
 }
