@@ -111,6 +111,8 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
+    implementation(project(":data:local"))
+    implementation(project(":data:remote"))
     implementation(project(":data:repository"))
 
     implementation(Deps.Kotlin.stdlib)

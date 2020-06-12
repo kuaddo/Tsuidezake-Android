@@ -10,8 +10,7 @@ import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-internal class SharedPreferenceStorage @Inject constructor(context: Context) :
-    PreferenceStorage {
+internal class SharedPreferenceStorage @Inject constructor(context: Context) : PreferenceStorage {
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     override val preferenceChangedEvent = UnitLiveEvent(generateUUIDTag = true)
