@@ -11,8 +11,8 @@ internal interface RemoteDataSubcomponent {
 
     fun tsuidezakeServiceImpl(): TsuidezakeServiceImpl
 
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): RemoteDataSubcomponent
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): RemoteDataSubcomponent
     }
 }

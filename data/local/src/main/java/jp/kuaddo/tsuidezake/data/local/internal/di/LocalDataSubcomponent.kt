@@ -9,8 +9,8 @@ internal interface LocalDataSubcomponent {
 
     fun sharedPreferenceStorage(): SharedPreferenceStorage
 
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): LocalDataSubcomponent
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): LocalDataSubcomponent
     }
 }

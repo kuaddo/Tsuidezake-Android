@@ -17,8 +17,8 @@ internal interface RepositorySubcomponent {
 
     fun repositoryImpl(): RepositoryImpl
 
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): RepositorySubcomponent
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): RepositorySubcomponent
     }
 }

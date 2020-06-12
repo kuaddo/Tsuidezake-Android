@@ -9,7 +9,7 @@ import jp.kuaddo.tsuidezake.data.remote.internal.di.RemoteDataSubcomponent
 object RemoteDataModule {
     @Provides
     @RepositoryScope
-    internal fun provideTsuidezakeService(builder: RemoteDataSubcomponent.Builder): TsuidezakeService {
-        return builder.build().tsuidezakeServiceImpl()
+    internal fun provideTsuidezakeService(factory: RemoteDataSubcomponent.Factory): TsuidezakeService {
+        return factory.create().tsuidezakeServiceImpl()
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    internal fun provideRepository(builder: RepositorySubcomponent.Builder): Repository {
-        return builder.build().repositoryImpl()
+    internal fun provideRepository(factory: RepositorySubcomponent.Factory): Repository {
+        return factory.create().repositoryImpl()
     }
 }

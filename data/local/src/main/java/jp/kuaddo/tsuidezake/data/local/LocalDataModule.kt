@@ -9,7 +9,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.di.LocalDataSubcomponent
 object LocalDataModule {
     @Provides
     @RepositoryScope
-    internal fun providePreferenceStorage(builder: LocalDataSubcomponent.Builder): PreferenceStorage {
-        return builder.build().sharedPreferenceStorage()
+    internal fun providePreferenceStorage(factory: LocalDataSubcomponent.Factory): PreferenceStorage {
+        return factory.create().sharedPreferenceStorage()
     }
 }
