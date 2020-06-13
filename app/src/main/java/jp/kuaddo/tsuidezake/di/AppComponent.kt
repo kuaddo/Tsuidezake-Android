@@ -6,6 +6,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import jp.kuaddo.tsuidezake.TsuidezakeApp
+import jp.kuaddo.tsuidezake.data.repository.DaggerRepositoryComponent
 import jp.kuaddo.tsuidezake.data.repository.RepositoryComponent
 import jp.kuaddo.tsuidezake.di.module.ActivityModule
 import jp.kuaddo.tsuidezake.di.module.AppModule
@@ -32,7 +33,8 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
         fun create(
             @BindsInstance application: TsuidezakeApp,
             @BindsInstance applicationContext: Context,
-            repositoryComponent: RepositoryComponent
+            repositoryComponent: RepositoryComponent =
+                DaggerRepositoryComponent.factory().create(applicationContext)
         ): AppComponent
     }
 

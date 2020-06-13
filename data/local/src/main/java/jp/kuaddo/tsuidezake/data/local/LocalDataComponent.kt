@@ -15,8 +15,6 @@ interface LocalDataComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(
-            @BindsInstance applicationContext: Context
-        ): LocalDataComponent
+        fun create(@BindsInstance applicationContext: Context): LocalDataComponent
     }
 }

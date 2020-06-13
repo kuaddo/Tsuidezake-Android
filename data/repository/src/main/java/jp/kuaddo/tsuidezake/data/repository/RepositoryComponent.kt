@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.data.repository
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import jp.kuaddo.tsuidezake.data.local.DaggerLocalDataComponent
 import jp.kuaddo.tsuidezake.data.local.LocalDataComponent
 import jp.kuaddo.tsuidezake.data.remote.RemoteDataModule
 import jp.kuaddo.tsuidezake.data.repository.internal.di.RepositoryModule
@@ -23,7 +24,8 @@ interface RepositoryComponent {
     interface Factory {
         fun create(
             @BindsInstance applicationContext: Context,
-            localDataComponent: LocalDataComponent
+            localDataComponent: LocalDataComponent =
+                DaggerLocalDataComponent.factory().create(applicationContext)
         ): RepositoryComponent
     }
 }
