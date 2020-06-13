@@ -18,12 +18,14 @@ internal abstract class RemoteDataModule {
 
     companion object {
         @Provides
+        @RemoteDataScope
         fun provideApollo(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
             .serverUrl("https://us-central1-tsuidezake.cloudfunctions.net/graphql")
             .okHttpClient(okHttpClient)
             .build()
 
         @Provides
+        @RemoteDataScope
         fun provideOkHttpClient(): OkHttpClient =
             OkHttpClient.Builder()
                 .addInterceptor(OAuthHeaderInterceptor())

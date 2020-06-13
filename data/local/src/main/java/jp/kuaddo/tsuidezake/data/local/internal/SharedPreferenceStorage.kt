@@ -13,6 +13,7 @@ import kotlin.reflect.KProperty
 internal class SharedPreferenceStorage @Inject constructor(context: Context) : PreferenceStorage {
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
+    // TODO: LiveDataで必要なデータを提供する形式に修正する
     override val preferenceChangedEvent = UnitLiveEvent(generateUUIDTag = true)
 
     // TODO: 使うようになったタイミングで調査する

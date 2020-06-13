@@ -12,9 +12,8 @@ import jp.kuaddo.tsuidezake.di.module.ActivityModule
 import jp.kuaddo.tsuidezake.di.module.AppModule
 import jp.kuaddo.tsuidezake.di.module.ViewModelDelegateModule
 import jp.kuaddo.tsuidezake.di.module.ViewModelModule
-import javax.inject.Singleton
 
-@Singleton
+@AppScope
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
