@@ -16,10 +16,6 @@ class TsuidezakeApp : DaggerApplication() {
         }
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder()
-            .application(this)
-            .applicationContext(this.applicationContext)
-            .build()
-    }
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.factory().create(this, applicationContext)
 }

@@ -35,7 +35,6 @@ apollo {
 }
 
 dependencies {
-    implementation(project(":core"))
     implementation(project(":model"))
 
     implementation(Deps.Kotlin.stdlib)

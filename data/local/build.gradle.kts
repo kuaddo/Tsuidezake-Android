@@ -31,6 +31,8 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":model"))
+
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.coreKtx)
     api(Deps.Dagger.core)

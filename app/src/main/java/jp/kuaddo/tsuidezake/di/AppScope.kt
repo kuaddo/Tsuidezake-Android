@@ -1,7 +1,7 @@
-package jp.kuaddo.tsuidezake.core.scope
+package jp.kuaddo.tsuidezake.di
 
 import javax.inject.Scope
 
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
-annotation class RepositoryScope
+internal annotation class AppScope
