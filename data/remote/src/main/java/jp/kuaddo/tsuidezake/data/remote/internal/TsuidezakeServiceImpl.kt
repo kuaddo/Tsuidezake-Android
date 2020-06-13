@@ -1,16 +1,16 @@
 package jp.kuaddo.tsuidezake.data.remote.internal
 
 import com.apollographql.apollo.ApolloClient
-import jp.kuaddo.tsuidezake.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
+import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import javax.inject.Inject
-import jp.kuaddo.tsuidezake.type.FoodCategory as ApolloFoodCategory
-import jp.kuaddo.tsuidezake.type.SuitableTemperature as ApolloSuitableTemperature
+import jp.kuaddo.tsuidezake.data.remote.type.FoodCategory as ApolloFoodCategory
+import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitableTemperature
 
 internal class TsuidezakeServiceImpl @Inject constructor(
     private val apolloClient: ApolloClient
@@ -36,7 +36,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
         ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
         ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
-        ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature.")
+        is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
     }
 
     private fun ApolloFoodCategory.toFoodCategory() = when (this) {
@@ -44,6 +44,6 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
         ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
         ApolloFoodCategory.SNACK -> FoodCategory.SNACK
-        ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category.")
+        is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
     }
 }

@@ -32,6 +32,8 @@ android {
 
 apollo {
     generateKotlinModels.set(true)
+    generateAsInternal.set(true)
+    sealedClassesForEnumsMatching.set(listOf(".*"))
 }
 
 dependencies {
