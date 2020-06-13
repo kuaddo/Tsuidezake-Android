@@ -111,9 +111,9 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
-    implementation(project(":data:local"))
-    implementation(project(":data:remote"))
     implementation(project(":data:repository"))
+    compileOnly(project(":data:local"))
+    compileOnly(project(":data:remote"))
 
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.reflect)
