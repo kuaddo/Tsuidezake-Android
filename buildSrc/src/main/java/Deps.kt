@@ -104,6 +104,7 @@ object Deps {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:4.0.0"
+    const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.3"
     const val inject = "javax.inject:javax.inject:1"
 
