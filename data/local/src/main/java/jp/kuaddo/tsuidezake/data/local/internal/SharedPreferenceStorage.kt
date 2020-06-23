@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
-import jp.kuaddo.tsuidezake.core.live.UnitLiveEvent
+import androidx.lifecycle.MutableLiveData
 import jp.kuaddo.tsuidezake.data.local.PreferenceStorage
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
@@ -14,12 +14,12 @@ internal class SharedPreferenceStorage @Inject constructor(context: Context) : P
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     // TODO: LiveDataで必要なデータを提供する形式に修正する
-    override val preferenceChangedEvent = UnitLiveEvent(generateUUIDTag = true)
+    override val preferenceChangedEvent = MutableLiveData<Unit>()
 
     // TODO: 使うようになったタイミングで調査する
     // リスナーをフィールドとして保持しておかないと、初回起動時のコールバックが呼ばれない
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-        preferenceChangedEvent.callFromWorkerThread()
+        preferenceChangedEvent.postValue(Unit)
     }
 
     init {
