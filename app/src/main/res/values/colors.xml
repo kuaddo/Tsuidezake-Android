@@ -15,4 +15,6 @@
     <color name="divider">@color/gray</color>
     <color name="background">#FFFEFE</color>
     <color name="transparent_background">#44222222</color>
+
+    <color name="thermometer_divider">#BDBDBD</color>
 </resources>
