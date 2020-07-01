@@ -27,7 +27,7 @@
             android:layout_gravity="end|top"
             android:layout_margin="12dp"
             android:background="@drawable/background_rounded_rectangle_4dp"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@color/light_gray"
             android:onClick="@{() -> wantToDrinkViewModel.switchRecyclerViewMode()}"
             android:orientation="horizontal">
 

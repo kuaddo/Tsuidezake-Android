@@ -19,6 +19,11 @@ fun View.bindVisibilityInvisible(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
 }
 
+@BindingAdapter("isEnabled")
+fun View.bindEnabled(isEnabled: Boolean) {
+    this.isEnabled = isEnabled
+}
+
 @BindingAdapter("rippleBackground", "rippleColor", requireAll = false)
 fun View.bindRipple(backgroundColor: Int, rippleColor: Int?) {
     val id = TypedValue().let {

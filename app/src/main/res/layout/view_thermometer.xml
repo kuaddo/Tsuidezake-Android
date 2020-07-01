@@ -188,7 +188,7 @@
         android:id="@+id/main_divider1"
         android:layout_width="@dimen/thermometer_divider_width"
         android:layout_height="@dimen/thermometer_divider_height"
-        android:background="@color/thermometer_divider"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/temperature_5"
         app:layout_constraintStart_toStartOf="@+id/temperature_5"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
@@ -208,7 +208,7 @@
         android:id="@+id/main_divider2"
         android:layout_width="@dimen/thermometer_divider_width"
         android:layout_height="@dimen/thermometer_divider_height"
-        android:background="@color/thermometer_divider"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/temperature_15"
         app:layout_constraintStart_toStartOf="@+id/temperature_15"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
@@ -239,7 +239,7 @@
         android:id="@+id/main_divider3"
         android:layout_width="@dimen/thermometer_divider_width"
         android:layout_height="@dimen/thermometer_divider_height"
-        android:background="@color/thermometer_divider"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/temperature_30"
         app:layout_constraintStart_toStartOf="@+id/temperature_30"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
@@ -270,7 +270,7 @@
         android:id="@+id/main_divider4"
         android:layout_width="@dimen/thermometer_divider_width"
         android:layout_height="@dimen/thermometer_divider_height"
-        android:background="@color/thermometer_divider"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/temperature_45"
         app:layout_constraintStart_toStartOf="@+id/temperature_45"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
@@ -301,7 +301,7 @@
         android:id="@+id/main_divider5"
         android:layout_width="@dimen/thermometer_divider_width"
         android:layout_height="@dimen/thermometer_divider_height"
-        android:background="@color/thermometer_divider"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/temperature_60"
         app:layout_constraintStart_toStartOf="@+id/temperature_60"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />

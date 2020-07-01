@@ -27,7 +27,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         imageUrl = imgPath,
         tags = tags.map { it.name!! }, // TODO: nonnull対応後に!!を消す
         suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
-        goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }
+        goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
     )
 
     private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
