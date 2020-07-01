@@ -8,6 +8,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
@@ -132,6 +133,9 @@ dependencies {
     implementation(Deps.AndroidX.Lifecycle.commonJava8)
     implementation(Deps.AndroidX.Navigation.fragmentKtx)
     implementation(Deps.AndroidX.Navigation.uiKtx)
+
+    implementation(Deps.Firebase.analytics)
+    implementation(Deps.Firebase.storage)
 
     api(Deps.Dagger.core)
     api(Deps.Dagger.android)

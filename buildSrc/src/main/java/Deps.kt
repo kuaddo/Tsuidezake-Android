@@ -8,6 +8,7 @@ object Deps {
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.0.0"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        const val gms = "com.google.gms:google-services:4.3.3"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
@@ -47,6 +48,11 @@ object Deps {
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
         }
+    }
+
+    object Firebase {
+        const val analytics = "com.google.firebase:firebase-analytics:17.4.3"
+        const val storage = "com.google.firebase:firebase-storage:19.1.1"
     }
 
     object Dagger {

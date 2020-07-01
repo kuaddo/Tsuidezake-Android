@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath(Deps.GradlePlugin.android)
         classpath(Deps.GradlePlugin.kotlin)
+        classpath(Deps.GradlePlugin.gms)
         classpath(Deps.GradlePlugin.safeArgs)
         classpath(Deps.GradlePlugin.apollo)
         classpath(Deps.GradlePlugin.junit5)
