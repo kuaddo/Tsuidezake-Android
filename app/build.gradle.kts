@@ -155,6 +155,7 @@ dependencies {
 
     implementation(Deps.timber)
     implementation(Deps.threeTenAbp)
+    implementation(Deps.liveEvent)
     implementation(Deps.dataBindingKtx)
     debugImplementation(Deps.leakCanary)
 

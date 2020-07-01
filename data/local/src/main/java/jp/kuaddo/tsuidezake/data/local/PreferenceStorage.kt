@@ -1,8 +1,8 @@
 package jp.kuaddo.tsuidezake.data.local
 
-import jp.kuaddo.tsuidezake.core.live.UnitLiveEvent
+import androidx.lifecycle.LiveData
 
 interface PreferenceStorage {
-    // TODO: 使うようになったタイミングでLiveDataに変更する
-    val preferenceChangedEvent: UnitLiveEvent
+    // TODO: 使うようになったタイミングでそれぞれの値を提供するLiveDataに変更する
+    val preferenceChangedEvent: LiveData<Unit>
 }

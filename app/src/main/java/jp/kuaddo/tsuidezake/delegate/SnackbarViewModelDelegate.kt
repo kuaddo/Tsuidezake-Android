@@ -1,7 +1,7 @@
 package jp.kuaddo.tsuidezake.delegate
 
 import androidx.lifecycle.LiveData
-import jp.kuaddo.tsuidezake.core.live.LiveEvent
+import com.hadilq.liveevent.LiveEvent
 import jp.kuaddo.tsuidezake.util.SnackbarMessage
 
 interface SnackbarViewModelDelegate {
