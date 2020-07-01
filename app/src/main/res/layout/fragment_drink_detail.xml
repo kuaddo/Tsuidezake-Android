@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="jp.kuaddo.tsuidezake.model.FoodCategory" />
+
         <variable
             name="viewModel"
             type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
@@ -21,11 +23,12 @@
                 android:id="@+id/drink_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@color/colorAccent"
                 app:layout_constraintDimensionRatio="w,9:16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:uri="@{viewModel.sakeDetail.imageUri}"
+                tools:src="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/drink_name_text"
@@ -105,88 +108,17 @@
                 app:layout_constraintStart_toEndOf="@+id/how_to_drink_text"
                 app:layout_constraintTop_toTopOf="@+id/how_to_drink_text" />
 
-            <ImageView
-                android:id="@+id/temperature_hot_image"
+            <jp.kuaddo.tsuidezake.ui.custom.ThermometerView
+                android:id="@+id/thermometer_view"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_rounded_rectangle_border"
-                android:maxWidth="60dp"
-                android:maxHeight="60dp"
-                android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_hot"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/temperature_warm_image"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/how_to_drink_text" />
-
-            <ImageView
-                android:id="@+id/temperature_warm_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_warm"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/temperature_hot_image"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/temperature_normal_image"
-                app:layout_constraintStart_toEndOf="@+id/temperature_hot_image"
-                app:layout_constraintTop_toTopOf="@+id/temperature_hot_image" />
-
-            <ImageView
-                android:id="@+id/temperature_normal_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_normal"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/temperature_warm_image"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/temperature_cold_image"
-                app:layout_constraintStart_toEndOf="@+id/temperature_warm_image"
-                app:layout_constraintTop_toTopOf="@+id/temperature_warm_image" />
-
-            <ImageView
-                android:id="@+id/temperature_cold_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_cold"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/temperature_normal_image"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/temperature_rock_image"
-                app:layout_constraintStart_toEndOf="@+id/temperature_normal_image"
-                app:layout_constraintTop_toTopOf="@+id/temperature_normal_image" />
-
-            <ImageView
-                android:id="@+id/temperature_rock_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/background_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_rock"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/temperature_cold_image"
-                app:layout_constraintDimensionRatio="w,1:1"
+                android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/temperature_cold_image"
-                app:layout_constraintTop_toTopOf="@+id/temperature_cold_image" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/how_to_drink_text"
+                app:suitableTemperatures="@{viewModel.sakeDetail.suitableTemperatures}" />
 
             <TextView
                 android:id="@+id/recommended_appetizers_text"
@@ -198,7 +130,7 @@
                 android:textColor="@color/textPrimaryColor"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/temperature_hot_image" />
+                app:layout_constraintTop_toBottomOf="@+id/thermometer_view" />
 
             <View
                 android:id="@+id/divider2"
@@ -216,67 +148,79 @@
                 android:id="@+id/appetizers_seafood_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="48dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/background_rounded_rectangle_border"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_rounded_rectangle_border"
+                android:maxWidth="60dp"
+                android:maxHeight="60dp"
                 android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_hot"
-                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_appetizers_seafood"
+                android:tint="@color/selector_enabled_color"
+                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SEAFOOD)}"
                 app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/temperature_hot_image"
+                app:layout_constraintEnd_toStartOf="@+id/appetizers_meat_text"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/temperature_hot_image"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text" />
 
             <ImageView
                 android:id="@+id/appetizers_meat_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/background_rounded_rectangle_border"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_rounded_rectangle_border"
                 android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_hot"
-                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_appetizers_meat"
+                android:tint="@color/selector_enabled_color"
+                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.MEAT)}"
                 app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
                 app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/temperature_warm_image"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/temperature_warm_image"
+                app:layout_constraintEnd_toStartOf="@+id/appetizers_dairy_text"
+                app:layout_constraintStart_toEndOf="@+id/appetizers_seafood_text"
                 app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
 
             <ImageView
                 android:id="@+id/appetizers_dairy_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/background_rounded_rectangle_border"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_rounded_rectangle_border"
                 android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_hot"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/appetizers_meat_text"
+                android:src="@drawable/ic_appetizers_dairy"
+                android:tint="@color/selector_enabled_color"
+                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.DAIRY)}"
+                app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
                 app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/temperature_normal_image"
+                app:layout_constraintEnd_toStartOf="@+id/appetizers_dry_text"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/temperature_normal_image"
-                app:layout_constraintTop_toTopOf="@+id/appetizers_meat_text" />
+                app:layout_constraintStart_toEndOf="@+id/appetizers_meat_text"
+                app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
 
             <ImageView
                 android:id="@+id/appetizers_dry_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/background_rounded_rectangle_border"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/selector_rounded_rectangle_border"
                 android:padding="6dp"
-                android:src="@drawable/ic_sake_temperature_hot"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/appetizers_dairy_text"
+                android:src="@drawable/ic_appetizers_dry"
+                android:tint="@color/selector_enabled_color"
+                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SNACK)}"
+                app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
                 app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/temperature_cold_image"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/temperature_cold_image"
-                app:layout_constraintTop_toTopOf="@+id/appetizers_dairy_text" />
+                app:layout_constraintStart_toEndOf="@+id/appetizers_dairy_text"
+                app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/sake_detail_let_us_drink_description"
                 android:textSize="14sp"

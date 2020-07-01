@@ -113,6 +113,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Decrypt
+        run: .github/scripts/decrypt_secret.sh
+        env:
+          GPG_SECRET: ${{ secrets.GPG_SECRET }}
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:

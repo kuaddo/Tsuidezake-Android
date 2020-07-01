@@ -22,7 +22,7 @@ internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
 }
 
 internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
-    transform: (T) -> R
+    transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
     when (val res = toDeferred().await().toApiResponse()) {
         is SuccessResponse -> SuccessResponse(transform(res.data))

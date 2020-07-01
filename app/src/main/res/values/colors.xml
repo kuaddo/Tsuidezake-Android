@@ -9,10 +9,11 @@
     <color name="textSecondaryColor">#FAFAFA</color>
 
     <color name="white">#FFFFFF</color>
-    <color name="gray">#E4E1E1</color>
+    <color name="light_gray">#E4E1E1</color>
+    <color name="gray">#BDBDBD</color>
     <color name="black">#000000</color>
 
-    <color name="divider">@color/gray</color>
+    <color name="divider">@color/light_gray</color>
     <color name="background">#FFFEFE</color>
     <color name="transparent_background">#44222222</color>
 </resources>

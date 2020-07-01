@@ -1,4 +1,9 @@
 <resources>
+    <string name="sake_temperature_cold">冷酒</string>
+    <string name="sake_temperature_normal">常温</string>
+    <string name="sake_temperature_warm">ぬる燗</string>
+    <string name="sake_temperature_hot">熱燗</string>
+
     <string name="ranking">ランキング</string>
     <string name="want_to_drink">呑みたい</string>
     <string name="finish_drinking">呑んだ</string>

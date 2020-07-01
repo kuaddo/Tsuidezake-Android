@@ -66,5 +66,7 @@ fastlane/readme.md
 
 ApiKeys.kt
 Keystore.kt
+app/google-services.json
+!app/google-services.json.gpg
 keystore/debug.keystore
 !keystore/debug.keystore.gpg

@@ -1,13 +1,14 @@
 object Deps {
     private const val kotlinVersion = "1.3.72"
     private const val coroutinesVersion = "1.3.7"
-    private const val navigationVersion = "2.2.2"
+    private const val navigationVersion = "2.3.0"
     private const val apolloVersion = "2.1.0"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.0.0"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        const val gms = "com.google.gms:google-services:4.3.3"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
@@ -24,6 +25,8 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+        const val coroutinesPlayServices =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
     }
 
     object AndroidX {
@@ -32,7 +35,7 @@ object Deps {
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.4"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
         const val material = "com.google.android.material:material:1.1.0"
 
         object Lifecycle {
@@ -49,8 +52,13 @@ object Deps {
         }
     }
 
+    object Firebase {
+        const val analytics = "com.google.firebase:firebase-analytics:17.4.3"
+        const val storage = "com.google.firebase:firebase-storage:19.1.1"
+    }
+
     object Dagger {
-        private const val version = "2.28"
+        private const val version = "2.28.1"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -105,7 +113,7 @@ object Deps {
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:4.0.0"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.3"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.4"
     const val inject = "javax.inject:javax.inject:1"
 
     object Test {
