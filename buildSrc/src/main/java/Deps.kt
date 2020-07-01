@@ -25,6 +25,8 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+        const val coroutinesPlayServices =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
     }
 
     object AndroidX {

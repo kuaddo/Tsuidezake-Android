@@ -23,11 +23,12 @@
                 android:id="@+id/drink_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@color/colorAccent"
                 app:layout_constraintDimensionRatio="w,9:16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:uri="@{viewModel.sakeDetail.imageUri}"
+                tools:src="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/drink_name_text"

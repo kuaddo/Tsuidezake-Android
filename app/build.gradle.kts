@@ -135,7 +135,6 @@ dependencies {
     implementation(Deps.AndroidX.Navigation.uiKtx)
 
     implementation(Deps.Firebase.analytics)
-    implementation(Deps.Firebase.storage)
 
     api(Deps.Dagger.core)
     api(Deps.Dagger.android)
