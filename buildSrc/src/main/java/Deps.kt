@@ -1,7 +1,7 @@
 object Deps {
     private const val kotlinVersion = "1.3.72"
     private const val coroutinesVersion = "1.3.7"
-    private const val navigationVersion = "2.2.2"
+    private const val navigationVersion = "2.3.0"
     private const val apolloVersion = "2.1.0"
     const val buildToolsVersion = "29.0.3"
 
@@ -33,7 +33,7 @@ object Deps {
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.4"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
         const val material = "com.google.android.material:material:1.1.0"
 
         object Lifecycle {
@@ -56,7 +56,7 @@ object Deps {
     }
 
     object Dagger {
-        private const val version = "2.28"
+        private const val version = "2.28.1"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -110,7 +110,7 @@ object Deps {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:4.0.0"
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.3"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.4"
     const val inject = "javax.inject:javax.inject:1"
 
     object Test {
