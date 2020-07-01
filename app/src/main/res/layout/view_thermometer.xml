@@ -349,4 +349,115 @@
         app:layout_constraintEnd_toStartOf="@+id/main_divider5"
         app:layout_constraintStart_toEndOf="@+id/main_divider4"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
+
+    <ImageView
+        android:id="@+id/dot1"
+        android:layout_width="@dimen/thermometer_dot_size"
+        android:layout_height="@dimen/thermometer_dot_size"
+        android:src="@drawable/background_oval"
+        android:tint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider1"
+        app:layout_constraintStart_toStartOf="@+id/main_divider1"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/line1_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/thermometer_line_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider2"
+        app:layout_constraintStart_toStartOf="@+id/main_divider1"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/dot2"
+        android:layout_width="@dimen/thermometer_dot_size"
+        android:layout_height="@dimen/thermometer_dot_size"
+        android:src="@drawable/background_oval"
+        android:tint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider2"
+        app:layout_constraintStart_toStartOf="@+id/main_divider2"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/line2_3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/thermometer_line_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider3"
+        app:layout_constraintStart_toStartOf="@+id/main_divider2"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1" />
+
+    <ImageView
+        android:id="@+id/dot3"
+        android:layout_width="@dimen/thermometer_dot_size"
+        android:layout_height="@dimen/thermometer_dot_size"
+        android:src="@drawable/background_oval"
+        android:tint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider3"
+        app:layout_constraintStart_toStartOf="@+id/main_divider3"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/line3_4"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/thermometer_line_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider4"
+        app:layout_constraintStart_toStartOf="@+id/main_divider3"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/dot4"
+        android:layout_width="@dimen/thermometer_dot_size"
+        android:layout_height="@dimen/thermometer_dot_size"
+        android:src="@drawable/background_oval"
+        android:tint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider4"
+        app:layout_constraintStart_toStartOf="@+id/main_divider4"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1" />
+
+    <View
+        android:id="@+id/line4_5"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/thermometer_line_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider5"
+        app:layout_constraintStart_toStartOf="@+id/main_divider4"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/dot5"
+        android:layout_width="@dimen/thermometer_dot_size"
+        android:layout_height="@dimen/thermometer_dot_size"
+        android:src="@drawable/background_oval"
+        android:tint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
+        app:layout_constraintEnd_toEndOf="@+id/main_divider5"
+        app:layout_constraintStart_toStartOf="@+id/main_divider5"
+        app:layout_constraintTop_toTopOf="@+id/sub_divider1_1"
+        tools:visibility="visible" />
 </merge>
