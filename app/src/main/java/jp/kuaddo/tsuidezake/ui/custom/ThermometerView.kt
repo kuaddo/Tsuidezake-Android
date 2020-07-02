@@ -53,7 +53,7 @@ class ThermometerView @JvmOverloads constructor(
     }
 
     private fun hideLinesAndDots() {
-        lines.forEach { it.isVisible = false }
+        lines.forEach { it.visibility = View.INVISIBLE }
         dots.forEach { it.isVisible = false }
     }
 

@@ -19,14 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/end_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.91" />
 
     <TextView
         android:id="@+id/temperature_5"
@@ -36,7 +36,8 @@
         android:textColor="@color/black"
         android:textSize="@dimen/thermometer_temperature_number_size"
         app:layout_constraintBottom_toBottomOf="@+id/thermometer"
-        app:layout_constraintEnd_toStartOf="@+id/start_guideline"
+        app:layout_constraintEnd_toStartOf="@id/temperature_10"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="@+id/start_guideline"
         app:layout_constraintTop_toTopOf="@+id/thermometer"
         tools:ignore="HardcodedText" />
@@ -179,8 +180,8 @@
         android:textColor="@color/black"
         android:textSize="@dimen/thermometer_temperature_number_size"
         app:layout_constraintBottom_toBottomOf="@+id/thermometer"
-        app:layout_constraintEnd_toStartOf="@+id/end_guideline"
-        app:layout_constraintStart_toStartOf="@+id/end_guideline"
+        app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+        app:layout_constraintStart_toEndOf="@+id/temperature_55"
         app:layout_constraintTop_toTopOf="@+id/thermometer"
         tools:ignore="HardcodedText" />
 
@@ -308,46 +309,50 @@
 
     <TextView
         android:id="@+id/label_sake_cold"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/sake_temperature_cold"
         android:textColor="@color/textPrimaryColor"
         android:textSize="@dimen/thermometer_temperature_label_size"
-        app:layout_constraintEnd_toStartOf="@+id/main_divider2"
-        app:layout_constraintStart_toEndOf="@+id/main_divider1"
+        app:layout_constraintEnd_toStartOf="@+id/temperature_15"
+        app:layout_constraintStart_toEndOf="@+id/temperature_5"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
 
     <TextView
         android:id="@+id/label_sake_normal"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/sake_temperature_normal"
         android:textColor="@color/textPrimaryColor"
         android:textSize="@dimen/thermometer_temperature_label_size"
-        app:layout_constraintEnd_toStartOf="@+id/main_divider3"
-        app:layout_constraintStart_toEndOf="@+id/main_divider2"
+        app:layout_constraintEnd_toStartOf="@+id/temperature_30"
+        app:layout_constraintStart_toEndOf="@+id/temperature_15"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
 
     <TextView
         android:id="@+id/label_sake_warm"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/sake_temperature_warm"
         android:textColor="@color/textPrimaryColor"
         android:textSize="@dimen/thermometer_temperature_label_size"
-        app:layout_constraintEnd_toStartOf="@+id/main_divider4"
-        app:layout_constraintStart_toEndOf="@+id/main_divider3"
+        app:layout_constraintEnd_toStartOf="@+id/temperature_45"
+        app:layout_constraintStart_toEndOf="@+id/temperature_30"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
 
     <TextView
         android:id="@+id/label_sake_hot"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/sake_temperature_hot"
         android:textColor="@color/textPrimaryColor"
         android:textSize="@dimen/thermometer_temperature_label_size"
-        app:layout_constraintEnd_toStartOf="@+id/main_divider5"
-        app:layout_constraintStart_toEndOf="@+id/main_divider4"
+        app:layout_constraintEnd_toStartOf="@+id/temperature_60"
+        app:layout_constraintStart_toEndOf="@+id/temperature_45"
         app:layout_constraintTop_toBottomOf="@+id/thermometer" />
 
     <ImageView
@@ -368,7 +373,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/thermometer_line_height"
         android:background="@color/colorPrimary"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
         app:layout_constraintEnd_toEndOf="@+id/main_divider2"
         app:layout_constraintStart_toStartOf="@+id/main_divider1"
@@ -393,7 +398,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/thermometer_line_height"
         android:background="@color/colorPrimary"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
         app:layout_constraintEnd_toEndOf="@+id/main_divider3"
         app:layout_constraintStart_toStartOf="@+id/main_divider2"
@@ -417,7 +422,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/thermometer_line_height"
         android:background="@color/colorPrimary"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
         app:layout_constraintEnd_toEndOf="@+id/main_divider4"
         app:layout_constraintStart_toStartOf="@+id/main_divider3"
@@ -441,7 +446,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/thermometer_line_height"
         android:background="@color/colorPrimary"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/sub_divider1_1"
         app:layout_constraintEnd_toEndOf="@+id/main_divider5"
         app:layout_constraintStart_toStartOf="@+id/main_divider4"
