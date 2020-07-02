@@ -18,17 +18,21 @@ class ThermometerView @JvmOverloads constructor(
     private val lines: List<View>
     private val dots: List<View>
 
-    var suitableTemperatures: Set<SuitableTemperature> = emptySet()
+    var suitableTemperatures: Set<SuitableTemperature>? = null
         set(value) {
+            field = value
             hideLinesAndDots()
-            value.forEach { temperature ->
+            if (value == null) return
+
+            val temperatures =
+                value.takeUnless { it.isEmpty() } ?: SuitableTemperature.values().toSet()
+            temperatures.forEach { temperature ->
                 temperature.toLineIndex()?.let { index -> lines[index].isVisible = true }
                 temperature.toDotIndexPair()?.let { (startIndex, endIndex) ->
                     dots[startIndex].isVisible = !dots[startIndex].isVisible
                     dots[endIndex].isVisible = !dots[endIndex].isVisible
                 }
             }
-            field = value
         }
 
     init {
@@ -66,5 +70,5 @@ class ThermometerView @JvmOverloads constructor(
 
 @BindingAdapter("suitableTemperatures")
 fun ThermometerView.bindSuitableTemperatures(suitableTemperatures: Set<SuitableTemperature>?) {
-    this.suitableTemperatures = suitableTemperatures ?: emptySet()
+    this.suitableTemperatures = suitableTemperatures
 }
