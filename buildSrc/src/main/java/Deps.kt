@@ -54,6 +54,7 @@ object Deps {
 
     object Firebase {
         const val analytics = "com.google.firebase:firebase-analytics:17.4.3"
+        const val auth = "com.google.firebase:firebase-auth:19.3.1"
         const val storage = "com.google.firebase:firebase-storage:19.1.1"
     }
 
