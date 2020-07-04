@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -31,5 +32,6 @@ android {
 dependencies {
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Firebase.auth)
-    api(Deps.inject)
+    api(Deps.Dagger.core)
+    kapt(Deps.Dagger.compiler)
 }
