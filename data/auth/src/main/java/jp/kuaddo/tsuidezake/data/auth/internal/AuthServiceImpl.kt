@@ -4,16 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import jp.kuaddo.tsuidezake.data.auth.AuthService
+import jp.kuaddo.tsuidezake.data.auth.internal.di.AuthenticationScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
-import java.util.concurrent.locks.ReentrantLock
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
-import kotlin.concurrent.withLock
 
-class AuthServiceImpl @Inject constructor(
+@AuthenticationScope
+internal class AuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthService {
     override var token: String? = null
@@ -26,7 +27,7 @@ class AuthServiceImpl @Inject constructor(
         get() = _initialized
     private val _initialized = MutableLiveData<Boolean>(false)
 
-    private val lock = ReentrantLock()
+    private val isAddedListener = AtomicBoolean(false)
 
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
         Timber.d("Received a FirebaseAuth update.")
@@ -50,8 +51,8 @@ class AuthServiceImpl @Inject constructor(
         }
     }
 
-    override fun startListening() = lock.withLock {
-        firebaseAuth.removeAuthStateListener(authStateListener)
+    override fun startListening() {
+        if (isAddedListener.getAndSet(true)) return
         firebaseAuth.addAuthStateListener(authStateListener)
     }
 }
