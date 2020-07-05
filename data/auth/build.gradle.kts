@@ -33,6 +33,7 @@ dependencies {
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     implementation(Deps.Firebase.auth)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)

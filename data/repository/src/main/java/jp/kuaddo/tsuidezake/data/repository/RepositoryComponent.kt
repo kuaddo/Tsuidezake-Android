@@ -30,7 +30,7 @@ interface RepositoryComponent {
             localDataComponent: LocalDataComponent =
                 DaggerLocalDataComponent.factory().create(applicationContext),
             remoteDataComponent: RemoteDataComponent =
-                DaggerRemoteDataComponent.create()
+                DaggerRemoteDataComponent.factory().create()
         ): RepositoryComponent
     }
 }

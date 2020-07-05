@@ -38,6 +38,7 @@ apollo {
 
 dependencies {
     implementation(project(":model"))
+    implementation(project(":data:auth"))
 
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)

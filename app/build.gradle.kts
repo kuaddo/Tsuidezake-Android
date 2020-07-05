@@ -112,6 +112,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
+    implementation(project(":data:auth"))
     implementation(project(":data:repository"))
     compileOnly(project(":data:local"))
     compileOnly(project(":data:remote"))

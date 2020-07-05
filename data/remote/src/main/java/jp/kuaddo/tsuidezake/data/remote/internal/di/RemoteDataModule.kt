@@ -26,9 +26,9 @@ internal abstract class RemoteDataModule {
 
         @Provides
         @RemoteDataScope
-        fun provideOkHttpClient(): OkHttpClient =
+        fun provideOkHttpClient(headerInterceptor: OAuthHeaderInterceptor): OkHttpClient =
             OkHttpClient.Builder()
-                .addInterceptor(OAuthHeaderInterceptor())
+                .addInterceptor(headerInterceptor)
                 .addInterceptor(
                     HttpLoggingInterceptor(
                         object : HttpLoggingInterceptor.Logger {

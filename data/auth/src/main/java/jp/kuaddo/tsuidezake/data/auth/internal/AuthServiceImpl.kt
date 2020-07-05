@@ -1,5 +1,7 @@
 package jp.kuaddo.tsuidezake.data.auth.internal
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import jp.kuaddo.tsuidezake.data.auth.AuthService
 import kotlinx.coroutines.CancellationException
@@ -8,14 +10,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
+import javax.inject.Inject
 import kotlin.concurrent.withLock
 
-class AuthServiceImpl(
+class AuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthService {
-    override val token: String?
-        get() = _token
-    private var _token: String? = null
+    override var token: String? = null
+        private set(value) {
+            field = value
+            _initialized.postValue(true)
+        }
+
+    override val initialized: LiveData<Boolean>
+        get() = _initialized
+    private val _initialized = MutableLiveData<Boolean>(false)
 
     private val lock = ReentrantLock()
 
@@ -32,7 +41,7 @@ class AuthServiceImpl(
                 .getOrNull()
                 ?.token
 
-            _token = tokenResult
+            token = tokenResult
             if (tokenResult != null) {
                 Timber.d("getIdToken() is successful. token = $tokenResult")
             } else {
