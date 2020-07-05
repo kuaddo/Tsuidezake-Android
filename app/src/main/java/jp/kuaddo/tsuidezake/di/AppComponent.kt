@@ -8,6 +8,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 import jp.kuaddo.tsuidezake.TsuidezakeApp
 import jp.kuaddo.tsuidezake.data.auth.AuthenticationComponent
 import jp.kuaddo.tsuidezake.data.auth.DaggerAuthenticationComponent
+import jp.kuaddo.tsuidezake.data.local.DaggerLocalDataComponent
+import jp.kuaddo.tsuidezake.data.remote.DaggerRemoteDataComponent
 import jp.kuaddo.tsuidezake.data.repository.DaggerRepositoryComponent
 import jp.kuaddo.tsuidezake.data.repository.RepositoryComponent
 import jp.kuaddo.tsuidezake.di.module.ActivityModule
@@ -37,8 +39,10 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
             @BindsInstance applicationContext: Context,
             authenticationComponent: AuthenticationComponent =
                 DaggerAuthenticationComponent.create(),
-            repositoryComponent: RepositoryComponent =
-                DaggerRepositoryComponent.factory().create(applicationContext)
+            repositoryComponent: RepositoryComponent = DaggerRepositoryComponent.factory().create(
+                DaggerLocalDataComponent.factory().create(application),
+                DaggerRemoteDataComponent.factory().create(authenticationComponent)
+            )
         ): AppComponent
     }
 
