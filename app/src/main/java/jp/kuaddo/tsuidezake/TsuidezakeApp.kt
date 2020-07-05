@@ -40,6 +40,7 @@ class TsuidezakeApp : DaggerApplication() {
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     authService.startListening()
+                    authService.signInAnonymously()
                 }
             }
         )

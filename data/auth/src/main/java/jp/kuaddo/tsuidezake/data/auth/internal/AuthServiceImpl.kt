@@ -7,6 +7,7 @@ import jp.kuaddo.tsuidezake.data.auth.AuthService
 import jp.kuaddo.tsuidezake.data.auth.internal.di.AuthenticationScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
@@ -28,6 +29,7 @@ internal class AuthServiceImpl @Inject constructor(
     private val _initialized = MutableLiveData<Boolean>(false)
 
     private val isAddedListener = AtomicBoolean(false)
+    private var signInJob: Job? = null
 
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
         Timber.d("Received a FirebaseAuth update.")
@@ -54,5 +56,13 @@ internal class AuthServiceImpl @Inject constructor(
     override fun startListening() {
         if (isAddedListener.getAndSet(true)) return
         firebaseAuth.addAuthStateListener(authStateListener)
+    }
+
+    override fun signInAnonymously() {
+        if (signInJob?.isCompleted == false && firebaseAuth.currentUser != null) return
+
+        signInJob = GlobalScope.launch {
+            firebaseAuth.signInAnonymously().await()
+        }
     }
 }
