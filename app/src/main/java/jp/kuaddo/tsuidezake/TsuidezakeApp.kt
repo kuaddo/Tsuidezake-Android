@@ -28,7 +28,7 @@ class TsuidezakeApp : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-        DaggerAppComponent.factory().create(this, applicationContext)
+        DaggerAppComponent.factory().create(this)
 
     private fun registerAuthService() {
         val request = NetworkRequest.Builder()

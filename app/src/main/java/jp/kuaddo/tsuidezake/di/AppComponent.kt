@@ -36,7 +36,7 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
     interface Factory {
         fun create(
             @BindsInstance application: TsuidezakeApp,
-            @BindsInstance applicationContext: Context,
+            @BindsInstance applicationContext: Context = application.applicationContext,
             authenticationComponent: AuthenticationComponent =
                 DaggerAuthenticationComponent.create(),
             repositoryComponent: RepositoryComponent = DaggerRepositoryComponent.factory().create(
