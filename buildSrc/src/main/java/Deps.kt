@@ -1,12 +1,12 @@
 object Deps {
     private const val kotlinVersion = "1.3.72"
-    private const val coroutinesVersion = "1.3.7"
+    private const val coroutinesVersion = "1.3.8"
     private const val navigationVersion = "2.3.0"
     private const val apolloVersion = "2.1.0"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.0.0"
+        const val android = "com.android.tools.build:gradle:4.0.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val gms = "com.google.gms:google-services:4.3.3"
         const val safeArgs =
@@ -34,7 +34,7 @@ object Deps {
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
-        const val coreKtx = "androidx.core:core-ktx:1.3.0"
+        const val coreKtx = "androidx.core:core-ktx:1.3.1"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
         const val material = "com.google.android.material:material:1.1.0"
 
@@ -53,13 +53,13 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:17.4.3"
+        const val analytics = "com.google.firebase:firebase-analytics:17.4.4"
         const val auth = "com.google.firebase:firebase-auth:19.3.1"
         const val storage = "com.google.firebase:firebase-storage:19.1.1"
     }
 
     object Dagger {
-        private const val version = "2.28.1"
+        private const val version = "2.28.3"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -112,7 +112,7 @@ object Deps {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
-    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:4.0.0"
+    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.0"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.4"
     const val inject = "javax.inject:javax.inject:1"
@@ -134,7 +134,7 @@ object Deps {
     }
 
     object Spek {
-        private const val version = "2.0.11"
+        private const val version = "2.0.12"
 
         const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
         const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
