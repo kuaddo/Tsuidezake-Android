@@ -11,7 +11,9 @@ import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import jp.kuaddo.tsuidezake.data.remote.type.FoodCategory as ApolloFoodCategory
 import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitableTemperature
@@ -21,7 +23,9 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 ) : TsuidezakeService {
 
     override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
-        apolloClient.query(SakeQuery(id)).toApiResponse { it.sake!!.toSakeDetail() }
+        withContext(Dispatchers.IO) {
+            apolloClient.query(SakeQuery(id)).toApiResponse { it.sake!!.toSakeDetail() }
+        }
 
     private suspend fun SakeQuery.Sake.toSakeDetail() = SakeDetail(
         id = id,
