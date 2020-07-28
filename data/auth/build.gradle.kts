@@ -5,7 +5,6 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
-    id("com.apollographql.apollo")
 }
 
 android {
@@ -30,25 +29,13 @@ android {
     }
 }
 
-apollo {
-    generateKotlinModels.set(true)
-    generateAsInternal.set(true)
-    sealedClassesForEnumsMatching.set(listOf(".*"))
-}
-
 dependencies {
-    implementation(project(":model"))
-    implementation(project(":data:auth"))
-
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
-    implementation(Deps.Firebase.storage)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Deps.Firebase.auth)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
-    implementation(Deps.OkHttp.core)
-    implementation(Deps.OkHttp.loggingInterceptor)
-    implementation(Deps.Apollo.runtime)
-    implementation(Deps.Apollo.coroutines)
     implementation(Deps.timber)
 }

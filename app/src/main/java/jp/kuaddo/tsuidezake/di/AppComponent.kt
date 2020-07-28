@@ -6,6 +6,10 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import jp.kuaddo.tsuidezake.TsuidezakeApp
+import jp.kuaddo.tsuidezake.data.auth.AuthenticationComponent
+import jp.kuaddo.tsuidezake.data.auth.DaggerAuthenticationComponent
+import jp.kuaddo.tsuidezake.data.local.DaggerLocalDataComponent
+import jp.kuaddo.tsuidezake.data.remote.DaggerRemoteDataComponent
 import jp.kuaddo.tsuidezake.data.repository.DaggerRepositoryComponent
 import jp.kuaddo.tsuidezake.data.repository.RepositoryComponent
 import jp.kuaddo.tsuidezake.di.module.ActivityModule
@@ -23,7 +27,8 @@ import jp.kuaddo.tsuidezake.di.module.ViewModelModule
         AppModule::class
     ],
     dependencies = [
-        RepositoryComponent::class
+        RepositoryComponent::class,
+        AuthenticationComponent::class
     ]
 )
 interface AppComponent : AndroidInjector<TsuidezakeApp> {
@@ -31,9 +36,13 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
     interface Factory {
         fun create(
             @BindsInstance application: TsuidezakeApp,
-            @BindsInstance applicationContext: Context,
-            repositoryComponent: RepositoryComponent =
-                DaggerRepositoryComponent.factory().create(applicationContext)
+            @BindsInstance applicationContext: Context = application.applicationContext,
+            authenticationComponent: AuthenticationComponent =
+                DaggerAuthenticationComponent.create(),
+            repositoryComponent: RepositoryComponent = DaggerRepositoryComponent.factory().create(
+                DaggerLocalDataComponent.factory().create(application),
+                DaggerRemoteDataComponent.factory().create(authenticationComponent)
+            )
         ): AppComponent
     }
 

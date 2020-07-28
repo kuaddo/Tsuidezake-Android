@@ -10,10 +10,10 @@ import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.util.concurrent.CancellationException
 import javax.inject.Inject
 import jp.kuaddo.tsuidezake.data.remote.type.FoodCategory as ApolloFoodCategory
 import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitableTemperature
@@ -38,18 +38,17 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
     )
 
-    private suspend fun getImageUri(firebaseImagePath: String?): Uri? {
-        val result = runCatching {
-            firebaseImagePath?.let { path ->
-                FirebaseStorage.getInstance()
-                    .getReferenceFromUrl(path)
-                    .downloadUrl
-                    .await()
-            }
+    private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
+        firebaseImagePath?.let { path ->
+            FirebaseStorage.getInstance()
+                .getReferenceFromUrl(path)
+                .downloadUrl
+                .await()
         }
-        result.throwCancellationException()
-        return result.getOrNull()
     }
+        .onFailure { if (it is CancellationException) throw it }
+        .getOrNull()
+
 
     private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
         ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
@@ -66,10 +65,5 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
         ApolloFoodCategory.SNACK -> FoodCategory.SNACK
         is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
-    }
-
-    // TODO: core moduleへの移動を検討する
-    private fun <T> Result<T>.throwCancellationException() {
-        exceptionOrNull()?.takeIf { it is CancellationException }?.let { throw it }
     }
 }
