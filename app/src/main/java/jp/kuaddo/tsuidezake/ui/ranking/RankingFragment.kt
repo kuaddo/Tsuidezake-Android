@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.viewpager2.widget.ViewPager2
 import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
@@ -26,10 +27,33 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
                 resources.getDimensionPixelOffset(R.dimen.recommended_item_page_margin)
 
             viewPager.adapter = recommendedAdapter
-            viewPager.offscreenPageLimit = 2
             viewPager.setPageTransformer { page, position ->
                 page.translationX = -position * (2 * offset + pageMargin)
             }
+
+            viewPager.offscreenPageLimit = 3
+            viewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                private var newPosition: Int? = null
+
+                override fun onPageSelected(position: Int) {
+                    newPosition = recommendedAdapter.getJumpPosition(position)
+                    if (newPosition != null) {
+                        viewPager.isUserInputEnabled = false
+                    }
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        newPosition?.let { position ->
+                            viewPager.setCurrentItem(position, false)
+                            newPosition = null
+                            viewPager.isUserInputEnabled = true
+                        }
+                    }
+                }
+            })
         }
 
         rankingAdapter = RankingAdapter(viewLifecycleOwner) { showSakeDetail() }
