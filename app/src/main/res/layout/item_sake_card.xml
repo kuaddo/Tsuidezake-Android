@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="drinkDetail"
-            type="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+            name="sakeName"
+            type="String" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:ellipsize="end"
-                android:text="@{drinkDetail.drink.name}"
+                android:text="@{sakeName}"
                 android:textColor="@color/textPrimaryColor"
                 android:textSize="16sp"
                 android:textStyle="bold"

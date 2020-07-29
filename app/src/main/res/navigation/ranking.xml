@@ -25,10 +25,7 @@
         android:id="@+id/drink_detail_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
         android:label="@string/detail">
-
-        <argument
-            android:name="drinkDetail"
-            app:argType="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+        <!-- TODO: pass sake id -->
     </fragment>
 
     <dialog

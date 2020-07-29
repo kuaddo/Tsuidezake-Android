@@ -17,7 +17,7 @@ class SakeCardItem(
     override fun getLayout(): Int = R.layout.item_sake_card
 
     override fun bind(viewBinding: ItemSakeCardBinding, position: Int) {
-        viewBinding.drinkDetail = drinkDetail
+        viewBinding.sakeName = drinkDetail.drink.name
         viewBinding.root.setOnClickListener { onClickItem() }
         viewBinding.executePendingBindings()
     }
