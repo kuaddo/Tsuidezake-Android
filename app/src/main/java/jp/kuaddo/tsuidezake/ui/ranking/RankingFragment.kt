@@ -2,6 +2,7 @@ package jp.kuaddo.tsuidezake.ui.ranking
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.viewpager2.widget.ViewPager2
@@ -12,6 +13,7 @@ import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.Sake
+import jp.kuaddo.tsuidezake.ui.common.AutoScroller
 
 class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
 
@@ -32,28 +34,12 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
             }
 
             viewPager.offscreenPageLimit = 3
+            viewPager.setUpAutoScroll(
+                viewLifecycleOwner,
+                AUTO_SCROLL_DURATION,
+                recommendedAdapter::getJumpPosition
+            )
             viewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                private var newPosition: Int? = null
-
-                override fun onPageSelected(position: Int) {
-                    newPosition = recommendedAdapter.getJumpPosition(position)
-                    if (newPosition != null) {
-                        viewPager.isUserInputEnabled = false
-                    }
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-                    super.onPageScrollStateChanged(state)
-                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                        newPosition?.let { position ->
-                            viewPager.setCurrentItem(position, false)
-                            newPosition = null
-                            viewPager.isUserInputEnabled = true
-                        }
-                    }
-                }
-            })
         }
 
         rankingAdapter = RankingAdapter(viewLifecycleOwner) { showSakeDetail() }
@@ -80,4 +66,16 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
 
     private fun showRecommendDrinkDialog() =
         findNavController().navigate(RankingFragmentDirections.actionRankingToSwipeSortingDialog())
+
+    companion object {
+        private const val AUTO_SCROLL_DURATION = 8000L
+
+        private fun ViewPager2.setUpAutoScroll(
+            lifecycleOwner: LifecycleOwner,
+            durationMillis: Long,
+            getJumpPosition: (position: Int) -> Int?
+        ) {
+            AutoScroller(lifecycleOwner, durationMillis, this, getJumpPosition)
+        }
+    }
 }
