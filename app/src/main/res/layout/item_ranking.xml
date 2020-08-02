@@ -23,6 +23,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="@{drink.rank &lt;= 3 ? @dimen/ranking_crown_padding : @dimen/ranking_oval_padding}"
                 android:src="@{drink.rank &lt;= 3 ? @drawable/ic_crown : @drawable/background_oval}"
                 android:tint="@color/colorAccent"
                 tools:src="@drawable/ic_crown" />
