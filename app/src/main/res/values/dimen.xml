@@ -8,4 +8,14 @@
     <dimen name="thermometer_divider_height">68dp</dimen>
     <dimen name="thermometer_dot_size">10dp</dimen>
     <dimen name="thermometer_line_height">4dp</dimen>
+
+    <dimen name="ranking_crown_padding">0dp</dimen>
+    <dimen name="ranking_oval_padding">4dp</dimen>
+    <dimen name="ranking_crown_top_margin">4dp</dimen>
+    <dimen name="ranking_oval_top_margin">0dp</dimen>
+
+    <!-- margin = offset + page_margin -->
+    <dimen name="recommended_item_margin">80dp</dimen>
+    <dimen name="recommended_item_offset">56dp</dimen>
+    <dimen name="recommended_item_page_margin">24dp</dimen>
 </resources>

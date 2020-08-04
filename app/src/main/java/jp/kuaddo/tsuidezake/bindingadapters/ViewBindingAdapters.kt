@@ -1,13 +1,9 @@
 package jp.kuaddo.tsuidezake.bindingadapters
 
-import android.content.res.ColorStateList
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.RippleDrawable
-import android.util.TypedValue
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.databinding.BindingAdapter
+import kotlin.math.roundToInt
 
 @BindingAdapter("visibleGone")
 fun View.bindVisibilityGone(isVisible: Boolean) {
@@ -24,30 +20,9 @@ fun View.bindEnabled(isEnabled: Boolean) {
     this.isEnabled = isEnabled
 }
 
-@BindingAdapter("rippleBackground", "rippleColor", requireAll = false)
-fun View.bindRipple(backgroundColor: Int, rippleColor: Int?) {
-    val id = TypedValue().let {
-        context.theme.resolveAttribute(android.R.attr.colorControlHighlight, it, true)
-        it.resourceId
+@BindingAdapter("android:layout_marginTop")
+fun View.bindMarginTop(topMargin: Float) {
+    layoutParams = (layoutParams as MarginLayoutParams).apply {
+        setMargins(leftMargin, topMargin.roundToInt(), rightMargin, bottomMargin)
     }
-    val defaultRippleColor = ResourcesCompat.getColor(resources, id, null)
-    background = RippleDrawable(
-        ColorStateList.valueOf(rippleColor ?: defaultRippleColor),
-        ColorDrawable(backgroundColor),
-        null
-    ).mutate()
-}
-
-@BindingAdapter("rippleBackground", "rippleColor", requireAll = false)
-fun View.bindRipple(backgroundDrawable: Drawable, rippleColor: Int?) {
-    val id = TypedValue().let {
-        context.theme.resolveAttribute(android.R.attr.colorControlHighlight, it, true)
-        it.resourceId
-    }
-    val defaultRippleColor = ResourcesCompat.getColor(resources, id, null)
-    background = RippleDrawable(
-        ColorStateList.valueOf(rippleColor ?: defaultRippleColor),
-        backgroundDrawable,
-        null
-    ).mutate()
 }

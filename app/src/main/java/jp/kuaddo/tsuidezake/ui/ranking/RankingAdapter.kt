@@ -15,7 +15,7 @@ class RankingAdapter(
     override fun createBinding(parent: ViewGroup): ItemRankingBinding =
         ItemRankingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-    override fun bind(binding: ItemRankingBinding, item: Drink) {
+    override fun bind(binding: ItemRankingBinding, item: Drink, position: Int) {
         binding.drink = item
         binding.root.setOnClickListener { onClickItem(item) }
     }

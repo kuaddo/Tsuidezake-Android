@@ -56,7 +56,7 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
             ""
         )
         return if (isGrid) {
-            WantToDrinkGridItem(drinkDetail) {
+            SakeCardItem(drinkDetail) {
                 showDrinkDetailFragment(drinkDetail)
             }
         } else {

@@ -3,21 +3,21 @@ package jp.kuaddo.tsuidezake.ui.want_to_drink
 import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import jp.kuaddo.tsuidezake.R
-import jp.kuaddo.tsuidezake.databinding.ItemWantToDrinkGridBinding
+import jp.kuaddo.tsuidezake.databinding.ItemSakeCardBinding
 import jp.kuaddo.tsuidezake.model.DrinkDetail
 
-class WantToDrinkGridItem(
+class SakeCardItem(
     private val drinkDetail: DrinkDetail,
     private val onClickItem: () -> Unit
-) : BindableItem<ItemWantToDrinkGridBinding>() {
+) : BindableItem<ItemSakeCardBinding>() {
 
-    override fun initializeViewBinding(view: View): ItemWantToDrinkGridBinding =
-        ItemWantToDrinkGridBinding.bind(view)
+    override fun initializeViewBinding(view: View): ItemSakeCardBinding =
+        ItemSakeCardBinding.bind(view)
 
-    override fun getLayout(): Int = R.layout.item_want_to_drink_grid
+    override fun getLayout(): Int = R.layout.item_sake_card
 
-    override fun bind(viewBinding: ItemWantToDrinkGridBinding, position: Int) {
-        viewBinding.drinkDetail = drinkDetail
+    override fun bind(viewBinding: ItemSakeCardBinding, position: Int) {
+        viewBinding.sakeName = drinkDetail.drink.name
         viewBinding.root.setOnClickListener { onClickItem() }
         viewBinding.executePendingBindings()
     }
