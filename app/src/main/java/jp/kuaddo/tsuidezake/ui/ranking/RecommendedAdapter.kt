@@ -1,7 +1,6 @@
 package jp.kuaddo.tsuidezake.ui.ranking
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import jp.kuaddo.tsuidezake.databinding.ItemRecommendedBinding
@@ -25,12 +24,7 @@ class RecommendedAdapter(
 
     override fun bind(binding: ItemRecommendedBinding, item: Sake, position: Int) {
         binding.sakeName = item.name
-        val isClickable = getClickable(position)
-        binding.root.setOnClickListener(
-            if (isClickable) View.OnClickListener { onClickItem(item) }
-            else null
-        )
-        binding.root.isClickable = isClickable
+        binding.root.setOnClickListener { onClickItem(item) }
     }
 
     /**
@@ -45,9 +39,6 @@ class RecommendedAdapter(
             else -> null
         }
     }
-
-    private fun getClickable(position: Int): Boolean =
-        position in DUMMY_OFFSET until currentList.size + DUMMY_OFFSET
 
     companion object {
         // 前後の要素をチラ見せするので、一つ余分にoffsetが必要
