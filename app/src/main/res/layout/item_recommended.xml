@@ -11,16 +11,16 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/recommended_item_margin"
+        android:layout_marginEnd="@dimen/recommended_item_margin">
 
         <include
             layout="@layout/item_sake_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/recommended_item_margin"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="@dimen/recommended_item_margin"
             android:layout_marginBottom="4dp"
             app:sakeName="@{sakeName}" />
     </FrameLayout>
