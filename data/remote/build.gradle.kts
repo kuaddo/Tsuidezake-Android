@@ -1,3 +1,4 @@
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -52,3 +53,64 @@ dependencies {
     implementation(Deps.Apollo.coroutines)
     implementation(Deps.timber)
 }
+
+tasks.register("updateGraphQLConfig") {
+    val apiKey: String by project
+    val email: String by project
+    val password: String by project
+
+    println(apiKey + email + password)
+    val token = getToken(apiKey, email, password)
+    if (token != null) {
+        replaceAuthorizationToken(
+            "src/main/graphql/jp/kuaddo/tsuidezake/data/remote/.graphqlconfig",
+            token
+        )
+        println(".graphqlconfig is successfully updated.")
+    } else {
+        println("getToken() is failed.")
+    }
+}
+
+fun replaceAuthorizationToken(path: String, token: String) {
+    val gson = com.google.gson.Gson()
+    val text = file(path).readText()
+    val json = gson.fromJson(text, com.google.gson.JsonObject::class.java)
+    json.getAsJsonObject("extensions")
+        .getAsJsonObject("endpoints")
+        .getAsJsonObject("Default GraphQL Endpoint")
+        .getAsJsonObject("headers")
+        .add("Authorization", com.google.gson.JsonPrimitive(token))
+    val jsonString = gson.toJson(json)
+    file(path).writeText(jsonString)
+}
+
+fun getToken(apiKey: String, email: String, password: String): String? {
+    val client = okhttp3.OkHttpClient()
+    val url =
+        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=$apiKey"
+    val body = "{\"email\": \"$email\", \"password\": \"$password\", \"returnSecureToken\": true}"
+        .toRequestBody()
+    val request = okhttp3.Request.Builder()
+        .url(url)
+        .header("Content-Type", "application/json")
+        .post(body)
+        .build()
+    val response = client.newCall(request).execute()
+    val result = response.body?.string() ?: return null
+
+    val gson = com.google.gson.Gson()
+    val parsedResult = gson.fromJson(result, GetTokenResult::class.java)
+    return parsedResult.idToken
+}
+
+class GetTokenResult(
+    val kind: String,
+    val localId: String,
+    val email: String,
+    val displayName: String,
+    val idToken: String,
+    val registered: Boolean,
+    val refreshToken: String,
+    val expiresIn: String
+)
