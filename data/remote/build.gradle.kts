@@ -55,14 +55,16 @@ dependencies {
 }
 
 tasks.register("updateGraphQLConfig") {
-    val apiKey: String by project
-    val email: String by project
-    val password: String by project
+    val apiKey: String? by project
+    val email: String? by project
+    val password: String? by project
+    apiKey ?: return@register
+    email ?: return@register
+    password ?: return@register
 
-    println(apiKey + email + password)
-    val token = getToken(apiKey, email, password)
+    val token = getToken(apiKey!!, email!!, password!!)
     if (token != null) {
-        replaceAuthorizationToken(
+        writeAuthorizationToken(
             "src/main/graphql/jp/kuaddo/tsuidezake/data/remote/.graphqlconfig",
             token
         )
@@ -72,17 +74,26 @@ tasks.register("updateGraphQLConfig") {
     }
 }
 
-fun replaceAuthorizationToken(path: String, token: String) {
-    val gson = com.google.gson.Gson()
-    val text = file(path).readText()
-    val json = gson.fromJson(text, com.google.gson.JsonObject::class.java)
-    json.getAsJsonObject("extensions")
-        .getAsJsonObject("endpoints")
-        .getAsJsonObject("Default GraphQL Endpoint")
-        .getAsJsonObject("headers")
-        .add("Authorization", com.google.gson.JsonPrimitive(token))
-    val jsonString = gson.toJson(json)
-    file(path).writeText(jsonString)
+fun writeAuthorizationToken(path: String, token: String) {
+    file(path).writeText(
+        """
+            {
+                "name": "Tsuidezake GraphQL Schema",
+                "schemaPath": "./schema.json",
+                "extensions": {
+                "endpoints": {
+                    "Default GraphQL Endpoint": {
+                        "url": "https://us-central1-tsuidezake.cloudfunctions.net/graphql",
+                        "introspect": true,
+                            "headers": {
+                              "Authorization": "$token"
+                            }
+                        }
+                    }
+                }
+            }
+        """.trimIndent()
+    )
 }
 
 fun getToken(apiKey: String, email: String, password: String): String? {
