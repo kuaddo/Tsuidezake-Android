@@ -14,7 +14,7 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     private val binding: FragmentItemRankingBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val rankingAdapter = RankingAdapter(viewLifecycleOwner) { showSakeDetail() }
+        val rankingAdapter = RankingItemAdapter(viewLifecycleOwner) { showSakeDetail() }
         binding.recyclerView.let { recyclerView ->
             recyclerView.adapter = rankingAdapter
             recyclerView.addItemDecoration(

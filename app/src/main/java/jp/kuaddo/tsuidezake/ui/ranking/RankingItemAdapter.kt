@@ -8,7 +8,7 @@ import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.ui.common.DataBoundListAdapter
 import jp.kuaddo.tsuidezake.ui.common.SimpleDiffUtil
 
-class RankingAdapter(
+class RankingItemAdapter(
     lifecycleOwner: LifecycleOwner,
     private val onClickItem: (content: Ranking.Content) -> Unit
 ) : DataBoundListAdapter<Ranking.Content, ItemRankingBinding>(lifecycleOwner, SimpleDiffUtil()) {
