@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.wada811.databinding.dataBinding
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentItemRankingBinding
-import jp.kuaddo.tsuidezake.model.Drink
+import jp.kuaddo.tsuidezake.model.Ranking
 
 class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     private val binding: FragmentItemRankingBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val rankingAdapter = RankingAdapter(viewLifecycleOwner) { showSakeDetail() }
+        val rankingAdapter = RankingItemAdapter(viewLifecycleOwner) { content ->
+            showSakeDetail(content.sakeId)
+        }
         binding.recyclerView.let { recyclerView ->
             recyclerView.adapter = rankingAdapter
             recyclerView.addItemDecoration(
@@ -22,20 +24,20 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
             )
         }
 
-        val sakes = arguments?.getParcelableArray(ARGUMENT_SAKES) ?: emptyArray()
-        rankingAdapter.submitList(sakes.map { it as Drink })
+        val contents = arguments?.getParcelableArray(ARGUMENT_CONTENTS) ?: emptyArray()
+        rankingAdapter.submitList(contents.filterIsInstance<Ranking.Content>())
     }
 
-    private fun showSakeDetail() = parentFragment?.findNavController()?.navigate(
-        RankingFragmentDirections.actionRankingToDrinkDetail()
+    private fun showSakeDetail(sakeId: Int) = parentFragment?.findNavController()?.navigate(
+        RankingFragmentDirections.actionRankingToDrinkDetail(sakeId)
     )
 
     companion object {
-        private const val ARGUMENT_SAKES = "argumentSakes"
+        private const val ARGUMENT_CONTENTS = "argumentContents"
 
-        fun newInstance(sakes: List<Drink>) = RankingItemFragment().apply {
+        fun newInstance(contents: List<Ranking.Content>) = RankingItemFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArray(ARGUMENT_SAKES, sakes.toTypedArray())
+                putParcelableArray(ARGUMENT_CONTENTS, contents.toTypedArray())
             }
         }
     }

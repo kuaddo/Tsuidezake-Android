@@ -15,10 +15,11 @@ class RankingStateAdapter(
     override fun getItemCount(): Int = rankings.size
 
     override fun createFragment(position: Int): Fragment =
-        RankingItemFragment.newInstance(rankings[position].sakes)
+        RankingItemFragment.newInstance(rankings[position].contents)
 
     fun submitList(rankings: List<Ranking>) {
         this.rankings.clear()
         this.rankings.addAll(rankings)
+        notifyDataSetChanged()
     }
 }

@@ -4,10 +4,12 @@ import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.storage.FirebaseStorage
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
+import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
+import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import kotlinx.coroutines.CancellationException
@@ -21,11 +23,31 @@ import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitab
 internal class TsuidezakeServiceImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : TsuidezakeService {
+    override suspend fun getRankings(): ApiResponse<List<Ranking>> = withContext(Dispatchers.IO) {
+        apolloClient.query(RankingsQuery()).toApiResponse { response ->
+            response.getRankings
+                .map { it.toRanking() }
+                .sortedBy(Ranking::displayOrder)
+        }
+    }
 
     override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
         withContext(Dispatchers.IO) {
             apolloClient.query(SakeQuery(id)).toApiResponse { it.sake!!.toSakeDetail() }
         }
+
+    private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
+        displayOrder = displayOrder,
+        category = category,
+        contents = contents.map { it.toContent() }
+    )
+
+    private suspend fun RankingsQuery.Content.toContent() = Ranking.Content(
+        rank = rank,
+        sakeId = sake.id,
+        name = sake.name,
+        imageUri = getImageUri(sake.imgPath)
+    )
 
     private suspend fun SakeQuery.Sake.toSakeDetail() = SakeDetail(
         id = id,

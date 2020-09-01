@@ -18,7 +18,7 @@ class DrinkDetailFragment : DaggerFragment(R.layout.fragment_drink_detail) {
     lateinit var viewModelFactory: DrinkDetailViewModel.Factory
 
     private val viewModel: DrinkDetailViewModel by assistedViewModels {
-        viewModelFactory.create(sakeId = 1) // TODO: argsで受け取ったidを利用する
+        viewModelFactory.create(sakeId = args.sakeId)
     }
     private val args by navArgs<DrinkDetailFragmentArgs>()
     private val binding: FragmentDrinkDetailBinding by dataBinding()
