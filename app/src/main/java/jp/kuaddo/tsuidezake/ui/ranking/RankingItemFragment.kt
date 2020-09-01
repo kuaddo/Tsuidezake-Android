@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.wada811.databinding.dataBinding
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentItemRankingBinding
-import jp.kuaddo.tsuidezake.model.Drink
 import jp.kuaddo.tsuidezake.model.Ranking
 
 class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
@@ -24,12 +23,7 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
         }
 
         val contents = arguments?.getParcelableArray(ARGUMENT_CONTENTS) ?: emptyArray()
-        // TODO: Fix to pass content directly.
-        val drinks = contents.map {
-            val content = it as Ranking.Content
-            Drink(content.rank, content.name, "")
-        }
-        rankingAdapter.submitList(drinks)
+        rankingAdapter.submitList(contents.filterIsInstance<Ranking.Content>())
     }
 
     private fun showSakeDetail() = parentFragment?.findNavController()?.navigate(
