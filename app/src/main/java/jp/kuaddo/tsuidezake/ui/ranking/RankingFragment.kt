@@ -12,7 +12,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.model.Drink
-import jp.kuaddo.tsuidezake.model.Ranking
+import jp.kuaddo.tsuidezake.model.ObsoleteRanking
 import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.ui.common.AutoScroller
 
@@ -51,7 +51,7 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
         )
         val sakes = (1..10).map { Drink(it, "獺祭$it", "日本酒") }
         val rankings = listOf("美味しいお酒", "アルコール強", "アルコール中", "アルコール弱", "hogehoge")
-            .map { category -> Ranking(category, sakes) }
+            .map { category -> ObsoleteRanking(category, sakes) }
         rankingStateAdapter.submitList(rankings)
         TabLayoutMediator(binding.tabLayout, binding.rankingViewPager) { tab, position ->
             tab.text = rankings[position].category
