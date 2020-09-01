@@ -48,8 +48,10 @@
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_marginStart="12dp"
+            android:padding="@{content.imageUri == null ? @dimen/ranking_default_image_padding : @dimen/ranking_loaded_image_padding}"
             android:scaleType="centerCrop"
-            android:src="@color/colorAccent" />
+            android:src="@drawable/ic_sake"
+            tools:padding="@dimen/ranking_default_image_padding" />
 
         <TextView
             android:layout_width="0dp"
