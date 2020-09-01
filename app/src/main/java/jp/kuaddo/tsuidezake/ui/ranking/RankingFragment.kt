@@ -28,7 +28,9 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
     private var rankingStateAdapter: RankingStateAdapter by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recommendedAdapter = RecommendedAdapter(viewLifecycleOwner) { showSakeDetail() }
+        recommendedAdapter = RecommendedAdapter(viewLifecycleOwner) { sake ->
+            showSakeDetail(sake.id)
+        }
         binding.recommendedViewPager.let { viewPager ->
             val offset = resources.getDimensionPixelOffset(R.dimen.recommended_item_offset)
             val pageMargin =
@@ -69,8 +71,8 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
         }
     }
 
-    private fun showSakeDetail() =
-        findNavController().navigate(RankingFragmentDirections.actionRankingToDrinkDetail())
+    private fun showSakeDetail(sakeId: Int) =
+        findNavController().navigate(RankingFragmentDirections.actionRankingToDrinkDetail(sakeId))
 
     private fun showRecommendDrinkDialog() =
         findNavController().navigate(RankingFragmentDirections.actionRankingToSwipeSortingDialog())

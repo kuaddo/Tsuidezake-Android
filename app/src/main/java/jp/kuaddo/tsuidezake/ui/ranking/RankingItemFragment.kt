@@ -14,7 +14,9 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     private val binding: FragmentItemRankingBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val rankingAdapter = RankingItemAdapter(viewLifecycleOwner) { showSakeDetail() }
+        val rankingAdapter = RankingItemAdapter(viewLifecycleOwner) { content ->
+            showSakeDetail(content.sakeId)
+        }
         binding.recyclerView.let { recyclerView ->
             recyclerView.adapter = rankingAdapter
             recyclerView.addItemDecoration(
@@ -26,8 +28,8 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
         rankingAdapter.submitList(contents.filterIsInstance<Ranking.Content>())
     }
 
-    private fun showSakeDetail() = parentFragment?.findNavController()?.navigate(
-        RankingFragmentDirections.actionRankingToDrinkDetail()
+    private fun showSakeDetail(sakeId: Int) = parentFragment?.findNavController()?.navigate(
+        RankingFragmentDirections.actionRankingToDrinkDetail(sakeId)
     )
 
     companion object {
