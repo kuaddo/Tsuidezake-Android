@@ -9,6 +9,7 @@ import com.wada811.databinding.dataBinding
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentItemRankingBinding
 import jp.kuaddo.tsuidezake.model.Drink
+import jp.kuaddo.tsuidezake.model.Ranking
 
 class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     private val binding: FragmentItemRankingBinding by dataBinding()
@@ -22,8 +23,13 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
             )
         }
 
-        val sakes = arguments?.getParcelableArray(ARGUMENT_SAKES) ?: emptyArray()
-        rankingAdapter.submitList(sakes.map { it as Drink })
+        val contents = arguments?.getParcelableArray(ARGUMENT_CONTENTS) ?: emptyArray()
+        // TODO: Fix to pass content directly.
+        val drinks = contents.map {
+            val content = it as Ranking.Content
+            Drink(content.rank, content.name, "")
+        }
+        rankingAdapter.submitList(drinks)
     }
 
     private fun showSakeDetail() = parentFragment?.findNavController()?.navigate(
@@ -31,11 +37,11 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     )
 
     companion object {
-        private const val ARGUMENT_SAKES = "argumentSakes"
+        private const val ARGUMENT_CONTENTS = "argumentContents"
 
-        fun newInstance(sakes: List<Drink>) = RankingItemFragment().apply {
+        fun newInstance(contents: List<Ranking.Content>) = RankingItemFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArray(ARGUMENT_SAKES, sakes.toTypedArray())
+                putParcelableArray(ARGUMENT_CONTENTS, contents.toTypedArray())
             }
         }
     }
