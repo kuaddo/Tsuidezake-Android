@@ -86,6 +86,6 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
     )
 
     private fun showDrinkDetailFragment(drinkDetail: DrinkDetail) = findNavController().navigate(
-        WantToDrinkFragmentDirections.actionWantToDrinkToDrinkDetail(drinkDetail)
+        WantToDrinkFragmentDirections.actionWantToDrinkToDrinkDetail(1) // dummy data
     )
 }

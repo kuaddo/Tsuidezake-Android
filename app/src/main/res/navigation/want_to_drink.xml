@@ -22,9 +22,8 @@
         android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
         android:label="@string/detail">
 
-        <!-- TODO: Pass sake id instead of DrinkDetail -->
         <argument
-            android:name="drinkDetail"
-            app:argType="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+            android:name="sakeId"
+            app:argType="integer" />
     </fragment>
 </navigation>
