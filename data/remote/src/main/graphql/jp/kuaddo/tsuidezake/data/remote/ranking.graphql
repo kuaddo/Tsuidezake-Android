@@ -1,0 +1,14 @@
+query RankingsQuery {
+  getRankings{
+    displayOrder
+    category
+    contents {
+      rank
+      sake {
+        id
+        name
+        imgPath
+      }
+    }
+  }
+}
