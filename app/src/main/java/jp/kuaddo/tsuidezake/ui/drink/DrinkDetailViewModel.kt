@@ -36,9 +36,12 @@ class DrinkDetailViewModel @AssistedInject constructor(
         get() = _isExpanded
     val isAddedToWith: LiveData<Boolean>
         get() = _isAddedToWish
+    val isAddedToTasted: LiveData<Boolean>
+        get() = _isAddedToTasted
 
     private val _isExpanded = MutableLiveData(false)
     private val _isAddedToWish = MutableLiveData(false)
+    private val _isAddedToTasted = MutableLiveData(false)
 
     fun switchExpandState() {
         _isExpanded.value = _isExpanded.value?.not() ?: true
@@ -48,6 +51,12 @@ class DrinkDetailViewModel @AssistedInject constructor(
         // TODO: show loading UI
         if (_isAddedToWish.value == true) removeSakeFromWishList()
         else addSakeToWishList()
+    }
+
+    fun toggleTastedState() = viewModelScope.launch {
+        // TODO: show loading UI
+        if (_isAddedToTasted.value == true) removeSakeFromTastedList()
+        else addSakeToTastedList()
     }
 
     private suspend fun addSakeToWishList() {
@@ -63,6 +72,22 @@ class DrinkDetailViewModel @AssistedInject constructor(
             is SuccessResource -> _isAddedToWish.value = false
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_wish_list_failed))
+        }
+    }
+
+    private suspend fun addSakeToTastedList() {
+        when (repository.addSakeToTastedList(sakeId)) {
+            is SuccessResource -> _isAddedToTasted.value = true
+            is ErrorResource ->
+                setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
+        }
+    }
+
+    private suspend fun removeSakeFromTastedList() {
+        when (repository.removeSakeFromTastedList(sakeId)) {
+            is SuccessResource -> _isAddedToTasted.value = false
+            is ErrorResource ->
+                setMessage(SnackbarMessageRes(R.string.sake_detail_remove_tasted_list_failed))
         }
     }
 

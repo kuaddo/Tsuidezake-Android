@@ -297,27 +297,30 @@
                 android:background="@color/divider" />
 
             <LinearLayout
-                android:id="@+id/tasted_switch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
+                android:onClick="@{() -> viewModel.toggleTastedState()}"
                 android:orientation="vertical">
 
                 <ImageView
+                    isEnabled="@{!viewModel.isAddedToTasted}"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_tasted"
-                    app:tint="@color/colorPrimary" />
+                    app:tint="@color/selector_enabled_color" />
 
                 <TextView
+                    isEnabled="@{!viewModel.isAddedToTasted}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:text="@string/sake_detail_add_tasted_list"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="@{viewModel.isAddedToTasted ? @string/sake_detail_remove_tasted_list : @string/sake_detail_add_tasted_list}"
+                    android:textColor="@color/selector_enabled_color"
+                    tools:text="@string/sake_detail_add_tasted_list" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
