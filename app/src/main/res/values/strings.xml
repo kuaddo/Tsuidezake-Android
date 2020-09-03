@@ -25,4 +25,6 @@
     <string name="sake_detail_remove_wish_list">呑みたいから削除</string>
     <string name="sake_detail_add_tasted_list">呑んだに追加</string>
     <string name="sake_detail_remove_tasted_list">呑んだから削除</string>
+    <string name="sake_detail_add_wish_list_failed">呑みたいに追加できませんでした</string>
+    <string name="sake_detail_remove_wish_list_failed">呑みたいから削除できませんでした</string>
 </resources>
