@@ -7,4 +7,9 @@ import jp.kuaddo.tsuidezake.model.SakeDetail
 interface Repository {
     suspend fun getRankings(): Resource<List<Ranking>>
     suspend fun getSakeDetail(id: Int): Resource<SakeDetail>
+
+    suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>>
+    suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>>
+    suspend fun addSakeToTastedList(id: Int): Resource<List<SakeDetail>>
+    suspend fun removeSakeFromTastedList(id: Int): Resource<List<SakeDetail>>
 }

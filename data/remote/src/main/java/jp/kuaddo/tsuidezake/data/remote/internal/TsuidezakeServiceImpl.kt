@@ -3,10 +3,15 @@ package jp.kuaddo.tsuidezake.data.remote.internal
 import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.storage.FirebaseStorage
+import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
+import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
+import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
+import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
+import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
@@ -33,7 +38,43 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 
     override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
         withContext(Dispatchers.IO) {
-            apolloClient.query(SakeQuery(id)).toApiResponse { it.sake!!.toSakeDetail() }
+            apolloClient.query(SakeQuery(id)).toApiResponse { response ->
+                response.sake!!.fragments
+                    .sakeDetailFragment
+                    .toSakeDetail()
+            }
+        }
+
+    override suspend fun addSakeToWishList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(AddSakeToWishListMutation(id)).toApiResponse { response ->
+                response.addWishSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
+
+    override suspend fun removeSakeFromWishList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(RemoveSakeFromWishListMutation(id)).toApiResponse { response ->
+                response.removeWishSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
+
+    override suspend fun addSakeToTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(AddSakeToTastedListMutation(id)).toApiResponse { response ->
+                response.addTastedSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
+
+    override suspend fun removeSakeFromTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(RemoveSakeFromTastedListMutation(id)).toApiResponse { response ->
+                response.removeTastedSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
         }
 
     private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
@@ -49,7 +90,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         imageUri = getImageUri(sake.imgPath)
     )
 
-    private suspend fun SakeQuery.Sake.toSakeDetail() = SakeDetail(
+    private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
         id = id,
         name = name,
         description = description,

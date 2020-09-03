@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.core.util.set
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -42,6 +43,11 @@ fun BottomNavigationView.setupWithNavController(
             navGraphId,
             containerId
         )
+
+        val childFragmentManager = navHostFragment.childFragmentManager
+        childFragmentManager.addOnBackStackChangedListener {
+            this.isVisible = childFragmentManager.backStackEntryCount == 0
+        }
 
         // Obtain its id
         val graphId = navHostFragment.navController.graph.id

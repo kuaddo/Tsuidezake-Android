@@ -11,239 +11,317 @@
             type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
     </data>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/drink_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="w,9:16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:uri="@{viewModel.sakeDetail.imageUri}"
-                tools:src="@color/colorAccent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/drink_name_text"
+                <ImageView
+                    android:id="@+id/drink_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="w,9:16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:uri="@{viewModel.sakeDetail.imageUri}"
+                    tools:src="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/drink_name_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.sakeDetail.name}"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/drink_image"
+                    tools:text="秘幻 吟醸酒" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tags_chip_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:chipSpacing="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/drink_name_text"
+                    app:layout_constraintStart_toStartOf="@+id/drink_name_text"
+                    app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
+                    app:singleSelection="true" />
+
+                <TextView
+                    android:id="@+id/description_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.sakeDetail.description}"
+                    android:textSize="14sp"
+                    app:isExpanded="@{viewModel.isExpanded}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tags_chip_group"
+                    tools:maxLines="3"
+                    tools:text="@tools:sample/lorem/random" />
+
+                <ImageView
+                    android:id="@+id/expand_text_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:onClick="@{v -> viewModel.switchExpandState()}"
+                    android:paddingTop="4dp"
+                    android:src="@{viewModel.isExpanded ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="@+id/description_text"
+                    app:layout_constraintTop_toBottomOf="@+id/description_text"
+                    tools:src="@drawable/ic_arrow_down" />
+
+                <TextView
+                    android:id="@+id/how_to_drink_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/sake_detail_how_to_drink"
+                    android:textColor="@color/textPrimaryColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expand_text_icon" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/divider"
+                    app:layout_constraintBottom_toBottomOf="@+id/how_to_drink_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/how_to_drink_text"
+                    app:layout_constraintTop_toTopOf="@+id/how_to_drink_text" />
+
+                <jp.kuaddo.tsuidezake.ui.custom.ThermometerView
+                    android:id="@+id/thermometer_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/how_to_drink_text"
+                    app:suitableTemperatures="@{viewModel.sakeDetail.suitableTemperatures}" />
+
+                <TextView
+                    android:id="@+id/recommended_appetizers_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/sake_detail_recommended_appetizers"
+                    android:textColor="@color/textPrimaryColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/thermometer_view" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/divider"
+                    app:layout_constraintBottom_toBottomOf="@+id/recommended_appetizers_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/recommended_appetizers_text"
+                    app:layout_constraintTop_toTopOf="@+id/recommended_appetizers_text" />
+
+                <ImageView
+                    android:id="@+id/appetizers_seafood_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/selector_rounded_rectangle_border"
+                    android:maxWidth="60dp"
+                    android:maxHeight="60dp"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_appetizers_seafood"
+                    android:tint="@color/selector_enabled_color"
+                    app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SEAFOOD)}"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/appetizers_meat_text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text" />
+
+                <ImageView
+                    android:id="@+id/appetizers_meat_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/selector_rounded_rectangle_border"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_appetizers_meat"
+                    android:tint="@color/selector_enabled_color"
+                    app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.MEAT)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/appetizers_dairy_text"
+                    app:layout_constraintStart_toEndOf="@+id/appetizers_seafood_text"
+                    app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
+
+                <ImageView
+                    android:id="@+id/appetizers_dairy_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/selector_rounded_rectangle_border"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_appetizers_dairy"
+                    android:tint="@color/selector_enabled_color"
+                    app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.DAIRY)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/appetizers_dry_text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toEndOf="@+id/appetizers_meat_text"
+                    app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
+
+                <ImageView
+                    android:id="@+id/appetizers_dry_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="48dp"
+                    android:background="@drawable/selector_rounded_rectangle_border"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_appetizers_dry"
+                    android:tint="@color/selector_enabled_color"
+                    app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SNACK)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toEndOf="@+id/appetizers_dairy_text"
+                    app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/sake_detail_let_us_drink_description"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appetizers_seafood_text" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/sake_detail_let_us_drink"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_sake"
+                    app:iconSize="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{viewModel.sakeDetail.name}"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drink_image"
-                tools:text="秘幻 吟醸酒" />
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.toggleWithState()}"
+                android:orientation="vertical">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/tags_chip_group"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:chipSpacing="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/drink_name_text"
-                app:layout_constraintStart_toStartOf="@+id/drink_name_text"
-                app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
-                app:singleSelection="true" />
+                <ImageView
+                    isEnabled="@{!viewModel.isAddedToWith}"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_sake"
+                    app:tint="@color/selector_enabled_color" />
 
-            <TextView
-                android:id="@+id/description_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{viewModel.sakeDetail.description}"
-                android:textSize="14sp"
-                app:isExpanded="@{viewModel.isExpanded}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tags_chip_group"
-                tools:maxLines="3"
-                tools:text="@tools:sample/lorem/random" />
-
-            <ImageView
-                android:id="@+id/expand_text_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:onClick="@{v -> viewModel.switchExpandState()}"
-                android:paddingTop="4dp"
-                android:src="@{viewModel.isExpanded ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
-                android:tint="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/description_text"
-                app:layout_constraintTop_toBottomOf="@+id/description_text"
-                tools:src="@drawable/ic_arrow_down" />
-
-            <TextView
-                android:id="@+id/how_to_drink_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/sake_detail_how_to_drink"
-                android:textColor="@color/textPrimaryColor"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expand_text_icon" />
+                <TextView
+                    isEnabled="@{!viewModel.isAddedToWith}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="@{viewModel.isAddedToWith ? @string/sake_detail_remove_wish_list : @string/sake_detail_add_wish_list}"
+                    android:textColor="@color/selector_enabled_color"
+                    tools:text="@string/sake_detail_add_wish_list" />
+            </LinearLayout>
 
             <View
-                android:id="@+id/divider1"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/divider"
-                app:layout_constraintBottom_toBottomOf="@+id/how_to_drink_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/how_to_drink_text"
-                app:layout_constraintTop_toTopOf="@+id/how_to_drink_text" />
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/divider" />
 
-            <jp.kuaddo.tsuidezake.ui.custom.ThermometerView
-                android:id="@+id/thermometer_view"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/how_to_drink_text"
-                app:suitableTemperatures="@{viewModel.sakeDetail.suitableTemperatures}" />
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.toggleTastedState()}"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/recommended_appetizers_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/sake_detail_recommended_appetizers"
-                android:textColor="@color/textPrimaryColor"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/thermometer_view" />
+                <ImageView
+                    isEnabled="@{!viewModel.isAddedToTasted}"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_tasted"
+                    app:tint="@color/selector_enabled_color" />
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/divider"
-                app:layout_constraintBottom_toBottomOf="@+id/recommended_appetizers_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/recommended_appetizers_text"
-                app:layout_constraintTop_toTopOf="@+id/recommended_appetizers_text" />
-
-            <ImageView
-                android:id="@+id/appetizers_seafood_text"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/selector_rounded_rectangle_border"
-                android:maxWidth="60dp"
-                android:maxHeight="60dp"
-                android:padding="6dp"
-                android:src="@drawable/ic_appetizers_seafood"
-                android:tint="@color/selector_enabled_color"
-                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SEAFOOD)}"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/appetizers_meat_text"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text" />
-
-            <ImageView
-                android:id="@+id/appetizers_meat_text"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/selector_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_appetizers_meat"
-                android:tint="@color/selector_enabled_color"
-                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.MEAT)}"
-                app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/appetizers_dairy_text"
-                app:layout_constraintStart_toEndOf="@+id/appetizers_seafood_text"
-                app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
-
-            <ImageView
-                android:id="@+id/appetizers_dairy_text"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/selector_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_appetizers_dairy"
-                android:tint="@color/selector_enabled_color"
-                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.DAIRY)}"
-                app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toStartOf="@+id/appetizers_dry_text"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toEndOf="@+id/appetizers_meat_text"
-                app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
-
-            <ImageView
-                android:id="@+id/appetizers_dry_text"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="48dp"
-                android:background="@drawable/selector_rounded_rectangle_border"
-                android:padding="6dp"
-                android:src="@drawable/ic_appetizers_dry"
-                android:tint="@color/selector_enabled_color"
-                app:isEnabled="@{viewModel.sakeDetail.goodFoodCategories.contains(FoodCategory.SNACK)}"
-                app:layout_constraintBottom_toBottomOf="@+id/appetizers_seafood_text"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toEndOf="@+id/appetizers_dairy_text"
-                app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/sake_detail_let_us_drink_description"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appetizers_seafood_text" />
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/sake_detail_let_us_drink"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:icon="@drawable/ic_sake"
-                app:iconSize="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <TextView
+                    isEnabled="@{!viewModel.isAddedToTasted}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="@{viewModel.isAddedToTasted ? @string/sake_detail_remove_tasted_list : @string/sake_detail_add_tasted_list}"
+                    android:textColor="@color/selector_enabled_color"
+                    tools:text="@string/sake_detail_add_tasted_list" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </layout>
