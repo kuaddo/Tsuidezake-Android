@@ -7,6 +7,7 @@ import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
+import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
@@ -33,7 +34,11 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 
     override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
         withContext(Dispatchers.IO) {
-            apolloClient.query(SakeQuery(id)).toApiResponse { it.sake!!.toSakeDetail() }
+            apolloClient.query(SakeQuery(id)).toApiResponse { response ->
+                response.sake!!.fragments
+                    .sakeDetailFragment
+                    .toSakeDetail()
+            }
         }
 
     private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
@@ -49,7 +54,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         imageUri = getImageUri(sake.imgPath)
     )
 
-    private suspend fun SakeQuery.Sake.toSakeDetail() = SakeDetail(
+    private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
         id = id,
         name = name,
         description = description,

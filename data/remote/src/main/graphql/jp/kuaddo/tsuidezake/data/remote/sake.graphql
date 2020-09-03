@@ -1,14 +1,30 @@
-query SakeQuery($id: Int!){
+query SakeQuery($id: Int!) {
   sake(id: $id) {
-    id
-    name
-    tags {
-      name
-    }
-    brewer
-    description
-    imgPath
-    suitableTemperatures
-    goodFoodCategories
+    ...sakeDetailFragment
   }
+}
+
+mutation AddSakeToWishList($id: Int!) {
+  addWishSake(id: $id) {
+    ...sakeDetailFragment
+  }
+}
+
+mutation RemoveSakeFromWishList($id: Int!) {
+  removeWishSake(id: $id) {
+    ...sakeDetailFragment
+  }
+}
+
+fragment sakeDetailFragment on Sake {
+  id
+  name
+  tags {
+    name
+  }
+  brewer
+  description
+  imgPath
+  suitableTemperatures
+  goodFoodCategories
 }
