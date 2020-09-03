@@ -3,9 +3,11 @@ package jp.kuaddo.tsuidezake.data.remote.internal
 import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.storage.FirebaseStorage
+import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
+import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
@@ -55,6 +57,22 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             apolloClient.mutate(RemoveSakeFromWishListMutation(id)).toApiResponse { response ->
                 response.removeWishSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
+
+    override suspend fun addSakeToTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(AddSakeToTastedListMutation(id)).toApiResponse { response ->
+                response.addTastedSake
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
+
+    override suspend fun removeSakeFromTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.mutate(RemoveSakeFromTastedListMutation(id)).toApiResponse { response ->
+                response.removeTastedSake
                     .map { it.fragments.sakeDetailFragment.toSakeDetail() }
             }
         }

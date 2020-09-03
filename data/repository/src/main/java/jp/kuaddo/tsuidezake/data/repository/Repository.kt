@@ -10,4 +10,6 @@ interface Repository {
 
     suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>>
     suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>>
+    suspend fun addSakeToTastedList(id: Int): Resource<List<SakeDetail>>
+    suspend fun removeSakeFromTastedList(id: Int): Resource<List<SakeDetail>>
 }

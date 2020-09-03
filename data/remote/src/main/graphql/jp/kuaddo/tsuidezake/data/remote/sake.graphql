@@ -16,6 +16,18 @@ mutation RemoveSakeFromWishList($id: Int!) {
   }
 }
 
+mutation AddSakeToTastedList($id: Int!) {
+  addTastedSake(id: $id) {
+    ...sakeDetailFragment
+  }
+}
+
+mutation RemoveSakeFromTastedList($id: Int!) {
+  removeTastedSake(id: $id) {
+    ...sakeDetailFragment
+  }
+}
+
 fragment sakeDetailFragment on Sake {
   id
   name
