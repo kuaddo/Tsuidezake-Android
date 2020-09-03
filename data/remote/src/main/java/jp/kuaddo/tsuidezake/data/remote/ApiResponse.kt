@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.remote
 
+import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.toDeferred
@@ -22,6 +23,21 @@ internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
 }
 
 internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
+    transform: suspend (T) -> R
+): ApiResponse<R> = runCatching {
+    when (val res = toDeferred().await().toApiResponse()) {
+        is SuccessResponse -> SuccessResponse(transform(res.data))
+        is ErrorResponse -> res
+    }
+}.fold(
+    onSuccess = { it },
+    onFailure = {
+        Timber.e(it)
+        ErrorResponse(it.message ?: UNKNOWN_ERROR_MESSAGE)
+    }
+)
+
+internal suspend fun <T : Any, R : Any> ApolloMutationCall<T>.toApiResponse(
     transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
     when (val res = toDeferred().await().toApiResponse()) {

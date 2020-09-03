@@ -23,6 +23,12 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getSakeDetail(id: Int): Resource<SakeDetail> =
         service.getSakeDetail(id).convertToResource()
 
+    override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
+        service.addSakeToWishList(id).convertToResource()
+
+    override suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>> =
+        service.removeSakeFromWishList(id).convertToResource()
+
     private fun <T : Any> ApiResponse<T>.convertToResource(): Resource<T> =
         when (this) {
             is SuccessResponse -> SuccessResource(data)
