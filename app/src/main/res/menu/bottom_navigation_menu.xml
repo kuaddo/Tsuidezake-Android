@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_clip"
-        android:icon="@drawable/ic_sake_record"
+        android:icon="@drawable/ic_tasted"
         android:title="@string/finish_drinking" />
 
     <item
