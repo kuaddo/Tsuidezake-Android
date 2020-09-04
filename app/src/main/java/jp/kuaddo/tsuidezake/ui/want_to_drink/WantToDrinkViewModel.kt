@@ -29,7 +29,6 @@ class WantToDrinkViewModel @Inject constructor(
     val groupedWishListWithMode: LiveData<Pair<GroupedWishList, Boolean>>
         get() = _groupedWishList.combineLatest(_isGridMode) { list, mode -> list to mode }
 
-
     private val _isRefreshing = MutableLiveData(false)
     private val _isGridMode = MutableLiveData(true)
     private val _groupedWishList = MutableLiveData<GroupedWishList>()

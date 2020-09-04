@@ -7,4 +7,3 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 fun SwipeRefreshLayout.bindIsRefreshing(isRefreshing: Boolean) {
     this.isRefreshing = isRefreshing
 }
-
