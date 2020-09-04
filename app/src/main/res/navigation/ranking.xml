@@ -24,7 +24,8 @@
     <fragment
         android:id="@+id/drink_detail_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
-        android:label="@string/detail">
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_drink_detail">
 
         <argument
             android:name="sakeId"
@@ -33,5 +34,6 @@
 
     <dialog
         android:id="@+id/swipe_sorting_dialog_fragment"
-        android:name="jp.kuaddo.tsuidezake.ui.ranking.SwipeSortingDialogFragment" />
+        android:name="jp.kuaddo.tsuidezake.ui.ranking.SwipeSortingDialogFragment"
+        tools:layout="@layout/dialog_swipe_sorting" />
 </navigation>
