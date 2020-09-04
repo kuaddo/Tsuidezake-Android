@@ -35,7 +35,7 @@ class WantToDrinkViewModel @Inject constructor(
     private val _groupedWishList = MutableLiveData<GroupedWishList>()
 
     init {
-        getWishList()
+        updateWishList()
     }
 
     fun switchRecyclerViewMode() {
@@ -44,11 +44,11 @@ class WantToDrinkViewModel @Inject constructor(
 
     fun refresh() = viewModelScope.launch {
         _isRefreshing.value = true
-        getWishList().join()
+        updateWishList().join()
         _isRefreshing.value = false
     }
 
-    private fun getWishList() = viewModelScope.launch {
+    private fun updateWishList() = viewModelScope.launch {
         when (val res = repository.getWishList()) {
             is SuccessResource -> _groupedWishList.value = res.data.groupBy { it.region }
             is ErrorResource -> setMessage(SnackbarMessageText(res.message))
