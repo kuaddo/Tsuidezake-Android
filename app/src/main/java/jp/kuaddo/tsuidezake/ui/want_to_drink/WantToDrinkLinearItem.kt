@@ -4,10 +4,10 @@ import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemWantToDrinkLinearBinding
-import jp.kuaddo.tsuidezake.model.DrinkDetail
+import jp.kuaddo.tsuidezake.model.SakeDetail
 
 class WantToDrinkLinearItem(
-    private val drinkDetail: DrinkDetail,
+    private val sakeDetail: SakeDetail,
     private val onClickItem: () -> Unit
 ) : BindableItem<ItemWantToDrinkLinearBinding>() {
 
@@ -17,7 +17,8 @@ class WantToDrinkLinearItem(
     override fun getLayout(): Int = R.layout.item_want_to_drink_linear
 
     override fun bind(viewBinding: ItemWantToDrinkLinearBinding, position: Int) {
-        viewBinding.drinkDetail = drinkDetail
+        viewBinding.name = sakeDetail.name
+        viewBinding.imageUri = sakeDetail.imageUri
         viewBinding.root.setOnClickListener { onClickItem() }
         viewBinding.executePendingBindings()
     }

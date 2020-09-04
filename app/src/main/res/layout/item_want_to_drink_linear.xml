@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="drinkDetail"
-            type="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+            name="name"
+            type="String" />
+
+        <variable
+            name="imageUri"
+            type="android.net.Uri" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,9 +32,10 @@
 
             <ImageView
                 android:id="@+id/drink_image"
+                uri="@{imageUri}"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
-                android:src="@color/colorAccent" />
+                tools:src="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/drink_name_text"
@@ -41,7 +46,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:text="@{drinkDetail.drink.name}"
+                android:text="@{name}"
                 android:textColor="@color/textPrimaryColor"
                 android:textSize="16sp"
                 android:textStyle="bold"

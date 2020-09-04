@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="sakeName"
+            name="name"
             type="String" />
+
+        <variable
+            name="imageUri"
+            type="android.net.Uri" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,13 +28,14 @@
 
             <ImageView
                 android:id="@+id/drink_image"
+                uri="@{imageUri}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@color/colorAccent"
                 app:layout_constraintDimensionRatio="w,9:16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/drink_name_text"
@@ -38,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:ellipsize="end"
-                android:text="@{sakeName}"
+                android:text="@{name}"
                 android:textColor="@color/textPrimaryColor"
                 android:textSize="16sp"
                 android:textStyle="bold"
