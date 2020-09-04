@@ -1,4 +1,5 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.widget.LinearLayout">
 
@@ -9,7 +10,7 @@
         android:layout_gravity="end"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_close"
-        android:tint="@color/black" />
+        app:tint="@color/black" />
 
     <FrameLayout
         android:id="@+id/card_container"

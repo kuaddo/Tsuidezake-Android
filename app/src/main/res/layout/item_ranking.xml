@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -26,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:padding="@{content.rank &lt;= 3 ? @dimen/ranking_crown_padding : @dimen/ranking_oval_padding}"
                 android:src="@{content.rank &lt;= 3 ? @drawable/ic_crown : @drawable/background_oval}"
-                android:tint="@color/colorAccent"
+                app:tint="@color/colorAccent"
                 tools:src="@drawable/ic_crown" />
 
             <TextView
