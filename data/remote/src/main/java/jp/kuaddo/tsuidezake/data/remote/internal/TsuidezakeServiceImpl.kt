@@ -11,6 +11,7 @@ import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
+import jp.kuaddo.tsuidezake.data.remote.WishListQuery
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
@@ -35,6 +36,14 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                 .sortedBy(Ranking::displayOrder)
         }
     }
+
+    override suspend fun getWishList(): ApiResponse<List<SakeDetail>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.query(WishListQuery()).toApiResponse { response ->
+                response.wishList
+                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+            }
+        }
 
     override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
         withContext(Dispatchers.IO) {
