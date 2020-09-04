@@ -33,11 +33,11 @@ object Deps {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0"
+        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.1"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.1"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
-        const val material = "com.google.android.material:material:1.2.0"
+        const val material = "com.google.android.material:material:1.2.1"
 
         object Lifecycle {
             private const val version = "2.2.0"
@@ -122,7 +122,7 @@ object Deps {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
-        const val assertJ = "org.assertj:assertj-core:3.16.1"
+        const val assertJ = "org.assertj:assertj-core:3.17.1"
         const val mockk = "io.mockk:mockk:1.10.0"
         const val threeTenBp = "org.threeten:threetenbp:1.4.4"
     }
