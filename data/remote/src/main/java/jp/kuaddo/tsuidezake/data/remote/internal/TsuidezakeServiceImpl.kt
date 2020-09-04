@@ -103,6 +103,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         id = id,
         name = name,
         description = description,
+        region = region,
         brewer = brewer,
         imageUri = getImageUri(imgPath),
         tags = tags.map { it.name!! }, // TODO: nonnull対応後に!!を消す
