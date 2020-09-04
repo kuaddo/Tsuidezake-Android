@@ -32,6 +32,7 @@ object Deps {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+        const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.1"

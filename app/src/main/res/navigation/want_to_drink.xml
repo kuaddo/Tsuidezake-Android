@@ -20,7 +20,8 @@
     <fragment
         android:id="@+id/drink_detail_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
-        android:label="@string/detail">
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_drink_detail">
 
         <argument
             android:name="sakeId"

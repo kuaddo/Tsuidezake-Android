@@ -9,6 +9,7 @@ data class SakeDetail(
     val id: Int,
     val name: String,
     val description: String?,
+    val region: String,
     val brewer: String?,
     val imageUri: Uri?,
     val tags: List<String>,

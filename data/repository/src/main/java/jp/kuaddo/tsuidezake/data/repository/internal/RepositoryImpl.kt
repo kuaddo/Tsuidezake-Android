@@ -20,6 +20,9 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getRankings(): Resource<List<Ranking>> =
         service.getRankings().convertToResource()
 
+    override suspend fun getWishList(): Resource<List<SakeDetail>> =
+        service.getWishList().convertToResource()
+
     override suspend fun getSakeDetail(id: Int): Resource<SakeDetail> =
         service.getSakeDetail(id).convertToResource()
 

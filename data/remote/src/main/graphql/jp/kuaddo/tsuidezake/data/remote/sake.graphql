@@ -4,6 +4,12 @@ query SakeQuery($id: Int!) {
   }
 }
 
+query WishListQuery {
+  wishList {
+    ...sakeDetailFragment
+  }
+}
+
 mutation AddSakeToWishList($id: Int!) {
   addWishSake(id: $id) {
     ...sakeDetailFragment
@@ -34,6 +40,7 @@ fragment sakeDetailFragment on Sake {
   tags {
     name
   }
+  region
   brewer
   description
   imgPath

@@ -4,10 +4,10 @@ import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemSakeCardBinding
-import jp.kuaddo.tsuidezake.model.DrinkDetail
+import jp.kuaddo.tsuidezake.model.SakeDetail
 
 class SakeCardItem(
-    private val drinkDetail: DrinkDetail,
+    private val sakeDetail: SakeDetail,
     private val onClickItem: () -> Unit
 ) : BindableItem<ItemSakeCardBinding>() {
 
@@ -17,7 +17,8 @@ class SakeCardItem(
     override fun getLayout(): Int = R.layout.item_sake_card
 
     override fun bind(viewBinding: ItemSakeCardBinding, position: Int) {
-        viewBinding.sakeName = drinkDetail.drink.name
+        viewBinding.name = sakeDetail.name
+        viewBinding.imageUri = sakeDetail.imageUri
         viewBinding.root.setOnClickListener { onClickItem() }
         viewBinding.executePendingBindings()
     }
