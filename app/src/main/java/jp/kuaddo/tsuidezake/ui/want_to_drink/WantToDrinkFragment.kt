@@ -17,12 +17,11 @@ import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentWantToDrinkBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
-import jp.kuaddo.tsuidezake.model.Drink
-import jp.kuaddo.tsuidezake.model.DrinkDetail
+import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
+import jp.kuaddo.tsuidezake.model.SakeDetail
 import javax.inject.Inject
 
 class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -38,32 +37,13 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
     }
 
     private fun observe() {
-        wantToDrinkViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
-            adapter.update(getGroups(isGrid))
-            adapter.spanCount = 2
-            binding.recyclerView.layoutManager = getLayoutManager(isGrid)
-        }
-    }
-
-    // TODO: remove sample data
-    private fun getWantToDrinkGridItem(
-        no: Int,
-        isGrid: Boolean
-    ): BindableItem<out ViewDataBinding> {
-        val drinkDetail = DrinkDetail(
-            Drink(no, "秘幻 吟醸酒 $no", "日本酒"),
-            no * 10000,
-            ""
-        )
-        return if (isGrid) {
-            SakeCardItem(drinkDetail) {
-                showDrinkDetailFragment(drinkDetail)
+        observeViewModelDelegate(wantToDrinkViewModel, viewLifecycleOwner)
+        wantToDrinkViewModel.groupedWishListWithMode
+            .observeNonNull(viewLifecycleOwner) { (groupedWishList, isGrid) ->
+                adapter.update(getGroups(groupedWishList, isGrid))
+                adapter.spanCount = 2
+                binding.recyclerView.layoutManager = getLayoutManager(isGrid)
             }
-        } else {
-            WantToDrinkLinearItem(drinkDetail) {
-                showDrinkDetailFragment(drinkDetail)
-            }
-        }
     }
 
     private fun getLayoutManager(isGrid: Boolean) = if (isGrid) {
@@ -74,18 +54,27 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
         LinearLayoutManager(requireContext())
     }
 
-    private fun getGroups(isGrid: Boolean) = listOf(
-        Section().apply {
-            setHeader(WantToDrinkHeaderItem("草津"))
-            addAll((1..9).map { getWantToDrinkGridItem(it, isGrid) })
-        },
-        Section().apply {
-            setHeader(WantToDrinkHeaderItem("伊香保"))
-            addAll((10..15).map { getWantToDrinkGridItem(it, isGrid) })
-        }
-    )
+    private fun getGroups(groupedWishList: GroupedWishList, isGrid: Boolean) =
+        groupedWishList.toSortedMap()
+            .map { (region, sakeList) ->
+                Section().apply {
+                    setHeader(WantToDrinkHeaderItem(region))
+                    addAll(sakeList.map { getWantToDrinkGridItem(it, isGrid) })
+                }
+            }
 
-    private fun showDrinkDetailFragment(drinkDetail: DrinkDetail) = findNavController().navigate(
-        WantToDrinkFragmentDirections.actionWantToDrinkToDrinkDetail(1) // dummy data
+    private fun getWantToDrinkGridItem(
+        sakeDetail: SakeDetail,
+        isGrid: Boolean
+    ): BindableItem<out ViewDataBinding> {
+        return if (isGrid) {
+            SakeCardItem(sakeDetail) { showDrinkDetailFragment(sakeDetail) }
+        } else {
+            WantToDrinkLinearItem(sakeDetail) { showDrinkDetailFragment(sakeDetail) }
+        }
+    }
+
+    private fun showDrinkDetailFragment(sakeDetail: SakeDetail) = findNavController().navigate(
+        WantToDrinkFragmentDirections.actionWantToDrinkToDrinkDetail(sakeDetail.id)
     )
 }
