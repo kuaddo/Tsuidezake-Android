@@ -124,6 +124,7 @@ dependencies {
 
     implementation(Deps.AndroidX.appCompat)
     implementation(Deps.AndroidX.recyclerView)
+    implementation(Deps.AndroidX.swipeRefresh)
     implementation(Deps.AndroidX.constraint)
     implementation(Deps.AndroidX.viewPager)
     implementation(Deps.AndroidX.coreKtx)

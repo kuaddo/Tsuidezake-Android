@@ -32,6 +32,7 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.wantToDrinkViewModel = wantToDrinkViewModel
         binding.recyclerView.adapter = adapter
+        binding.refreshLayout.setOnRefreshListener { wantToDrinkViewModel.refresh() }
 
         observe()
     }
