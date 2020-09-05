@@ -16,9 +16,9 @@
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
-            isRefreshing="@{wantToDrinkViewModel.isRefreshing}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:isRefreshing="@{wantToDrinkViewModel.isRefreshing}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"

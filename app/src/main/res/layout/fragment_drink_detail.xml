@@ -272,20 +272,20 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    isEnabled="@{!viewModel.isAddedToWith}"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_sake"
+                    app:isEnabled="@{!viewModel.isAddedToWith}"
                     app:tint="@color/selector_enabled_color" />
 
                 <TextView
-                    isEnabled="@{!viewModel.isAddedToWith}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:text="@{viewModel.isAddedToWith ? @string/sake_detail_remove_wish_list : @string/sake_detail_add_wish_list}"
                     android:textColor="@color/selector_enabled_color"
+                    app:isEnabled="@{!viewModel.isAddedToWith}"
                     tools:text="@string/sake_detail_add_wish_list" />
             </LinearLayout>
 
@@ -306,20 +306,20 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    isEnabled="@{!viewModel.isAddedToTasted}"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_tasted"
+                    app:isEnabled="@{!viewModel.isAddedToTasted}"
                     app:tint="@color/selector_enabled_color" />
 
                 <TextView
-                    isEnabled="@{!viewModel.isAddedToTasted}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:text="@{viewModel.isAddedToTasted ? @string/sake_detail_remove_tasted_list : @string/sake_detail_add_tasted_list}"
                     android:textColor="@color/selector_enabled_color"
+                    app:isEnabled="@{!viewModel.isAddedToTasted}"
                     tools:text="@string/sake_detail_add_tasted_list" />
             </LinearLayout>
         </LinearLayout>
