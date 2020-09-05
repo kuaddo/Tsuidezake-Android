@@ -137,7 +137,7 @@
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="@string/want_to_drink"
+                    android:text="@string/dialog_want_to_drink"
                     app:cornerRadius="0dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
