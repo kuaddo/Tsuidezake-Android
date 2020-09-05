@@ -39,7 +39,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@color/colorAccent" />
+                        android:src="@color/colorAccent"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/want_to_drink_icon"
@@ -49,7 +50,8 @@
                         android:layout_margin="8dp"
                         android:alpha="0"
                         android:src="@drawable/ic_dialog_want_to_drink"
-                        android:tint="#FF0000" />
+                        app:tint="#FF0000"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/do_not_want_to_drink_icon"
@@ -59,9 +61,10 @@
                         android:layout_margin="8dp"
                         android:alpha="0"
                         android:src="@drawable/ic_dialog_do_not_want_to_drink"
-                        android:tint="#0000FF"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#0000FF"
+                        tools:ignore="ContentDescription" />
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
 
@@ -134,7 +137,7 @@
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="@string/want_to_drink"
+                    android:text="@string/dialog_want_to_drink"
                     app:cornerRadius="0dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

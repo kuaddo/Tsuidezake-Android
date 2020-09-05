@@ -145,6 +145,7 @@ class SwipeSortingView @JvmOverloads constructor(
                     setRatioToIcon(getMoveDistanceRatio(v))
                 }
                 MotionEvent.ACTION_UP -> {
+                    v.performClick()
                     v.y -= downOffsetDp * density
                     v.alpha = 1.0f
                     setRatioToIcon(0f)

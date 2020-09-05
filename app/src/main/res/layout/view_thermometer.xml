@@ -14,7 +14,8 @@
         app:layout_constraintDimensionRatio="h,302:82"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -63,12 +64,13 @@
         android:layout_width="@dimen/thermometer_dot_size"
         android:layout_height="@dimen/thermometer_dot_size"
         android:src="@drawable/background_oval"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline"
+        app:tint="@color/colorPrimary"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
     <View
@@ -88,12 +90,13 @@
         android:layout_width="@dimen/thermometer_dot_size"
         android:layout_height="@dimen/thermometer_dot_size"
         android:src="@drawable/background_oval"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline"
+        app:tint="@color/colorPrimary"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
     <View
@@ -112,12 +115,13 @@
         android:layout_width="@dimen/thermometer_dot_size"
         android:layout_height="@dimen/thermometer_dot_size"
         android:src="@drawable/background_oval"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline30"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline"
+        app:tint="@color/colorPrimary"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
     <View
@@ -137,12 +141,13 @@
         android:layout_width="@dimen/thermometer_dot_size"
         android:layout_height="@dimen/thermometer_dot_size"
         android:src="@drawable/background_oval"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline45"
         app:layout_constraintStart_toStartOf="@+id/guideline45"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline"
+        app:tint="@color/colorPrimary"
+        tools:ignore="ContentDescription" />
 
     <View
         android:id="@+id/line4_5"
@@ -161,11 +166,12 @@
         android:layout_width="@dimen/thermometer_dot_size"
         android:layout_height="@dimen/thermometer_dot_size"
         android:src="@drawable/background_oval"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline60"
         app:layout_constraintStart_toStartOf="@+id/guideline60"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline"
+        app:tint="@color/colorPrimary"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

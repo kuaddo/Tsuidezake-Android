@@ -32,10 +32,11 @@
 
             <ImageView
                 android:id="@+id/drink_image"
-                uri="@{imageUri}"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
                 android:scaleType="centerCrop"
+                app:uri="@{imageUri}"
+                tools:ignore="ContentDescription"
                 tools:src="@color/colorAccent" />
 
             <TextView
