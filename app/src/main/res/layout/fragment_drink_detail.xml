@@ -275,7 +275,8 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:onClick="@{() -> viewModel.toggleWithState()}"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -310,7 +311,8 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:onClick="@{() -> viewModel.toggleTastedState()}"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="24dp"
