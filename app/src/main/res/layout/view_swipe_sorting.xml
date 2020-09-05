@@ -10,7 +10,8 @@
         android:layout_gravity="end"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_close"
-        app:tint="@color/black" />
+        app:tint="@color/black"
+        tools:ignore="ContentDescription" />
 
     <FrameLayout
         android:id="@+id/card_container"

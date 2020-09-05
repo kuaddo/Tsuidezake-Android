@@ -35,6 +35,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:uri="@{viewModel.sakeDetail.imageUri}"
+                    tools:ignore="ContentDescription"
                     tools:src="@color/colorAccent" />
 
                 <TextView
@@ -89,6 +90,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/description_text"
                     app:layout_constraintTop_toBottomOf="@+id/description_text"
                     app:tint="@color/colorPrimary"
+                    tools:ignore="ContentDescription"
                     tools:src="@drawable/ic_arrow_down" />
 
                 <TextView
@@ -169,7 +171,8 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recommended_appetizers_text"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/appetizers_meat_text"
@@ -186,7 +189,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/appetizers_dairy_text"
                     app:layout_constraintStart_toEndOf="@+id/appetizers_seafood_text"
                     app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/appetizers_dairy_text"
@@ -204,7 +208,8 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toEndOf="@+id/appetizers_meat_text"
                     app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/appetizers_dry_text"
@@ -222,7 +227,8 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toEndOf="@+id/appetizers_dairy_text"
                     app:layout_constraintTop_toTopOf="@+id/appetizers_seafood_text"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -277,7 +283,8 @@
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_sake"
                     app:isEnabled="@{!viewModel.isAddedToWith}"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -311,7 +318,8 @@
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_tasted"
                     app:isEnabled="@{!viewModel.isAddedToTasted}"
-                    app:tint="@color/selector_enabled_color" />
+                    app:tint="@color/selector_enabled_color"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"

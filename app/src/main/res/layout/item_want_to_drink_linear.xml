@@ -36,6 +36,7 @@
                 android:layout_height="68dp"
                 android:scaleType="centerCrop"
                 app:uri="@{imageUri}"
+                tools:ignore="ContentDescription"
                 tools:src="@color/colorAccent" />
 
             <TextView

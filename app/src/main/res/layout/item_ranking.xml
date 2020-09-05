@@ -28,6 +28,7 @@
                 android:padding="@{content.rank &lt;= 3 ? @dimen/ranking_crown_padding : @dimen/ranking_oval_padding}"
                 android:src="@{content.rank &lt;= 3 ? @drawable/ic_crown : @drawable/background_oval}"
                 app:tint="@color/colorAccent"
+                tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_crown" />
 
             <TextView
@@ -52,6 +53,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_sake"
             app:uri="@{content.imageUri}"
+            tools:ignore="ContentDescription"
             tools:padding="@dimen/ranking_default_image_padding" />
 
         <TextView
