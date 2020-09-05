@@ -35,7 +35,7 @@ object LauncherViewModelTest : Spek({
 
     describe("isInitialized") {
         it("should return true after 2 seconds.") {
-            every { authService.initialized } returns MutableLiveData<Boolean>(true)
+            every { authService.initialized } returns MutableLiveData(true)
             val isInitializedObserver = viewModel.isInitialized.observeAndGet()
 
             testDispatcher.advanceTimeBy(2000)

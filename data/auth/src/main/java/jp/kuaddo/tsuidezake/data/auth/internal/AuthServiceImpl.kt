@@ -26,7 +26,7 @@ internal class AuthServiceImpl @Inject constructor(
 
     override val initialized: LiveData<Boolean>
         get() = _initialized
-    private val _initialized = MutableLiveData<Boolean>(false)
+    private val _initialized = MutableLiveData(false)
 
     private val isAddedListener = AtomicBoolean(false)
     private var signInJob: Job? = null
