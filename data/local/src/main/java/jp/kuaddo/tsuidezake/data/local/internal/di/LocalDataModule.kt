@@ -7,6 +7,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.SharedPreferenceStorage
 
 @Module
 internal abstract class LocalDataModule {
+    @Suppress("unused")
     @Binds
     abstract fun bindPreferenceStorage(impl: SharedPreferenceStorage): PreferenceStorage
 }

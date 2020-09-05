@@ -13,6 +13,7 @@ import timber.log.Timber
 
 @Module
 internal abstract class RemoteDataModule {
+    @Suppress("unused")
     @Binds
     abstract fun bindTsuidezakeService(impl: TsuidezakeServiceImpl): TsuidezakeService
 

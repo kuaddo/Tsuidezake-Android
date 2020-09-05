@@ -9,6 +9,7 @@ import jp.kuaddo.tsuidezake.data.auth.internal.AuthServiceImpl
 
 @Module
 internal abstract class AuthenticationModule {
+    @Suppress("unused")
     @Binds
     @AuthenticationScope
     abstract fun bindAuthService(impl: AuthServiceImpl): AuthService
