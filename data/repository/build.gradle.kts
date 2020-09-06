@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -7,28 +5,7 @@ plugins {
     kotlin("kapt")
     id("com.github.ben-manes.versions")
 }
-
-android {
-    compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion(Deps.buildToolsVersion)
-    defaultConfig {
-        minSdkVersion(Versions.minSdkVersion)
-        targetSdkVersion(Versions.targetSdkVersion)
-        consumerProguardFiles("consumer-rules.pro")
-    }
-    buildFeatures {
-        buildConfig = false
-    }
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-}
+apply<CommonBuildPlugin>()
 
 dependencies {
     implementation(project(":model"))

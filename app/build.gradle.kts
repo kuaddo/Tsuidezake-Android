@@ -1,6 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -16,14 +15,11 @@ plugins {
     id("jacoco")
     id("deploygate")
 }
+apply<CommonBuildPlugin>()
 
 android {
-    compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion(Deps.buildToolsVersion)
     defaultConfig {
         applicationId = "jp.kuaddo.tsuidezake"
-        minSdkVersion(Versions.minSdkVersion)
-        targetSdkVersion(Versions.targetSdkVersion)
         versionCode = Versions.versionCode
         versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -73,20 +69,7 @@ android {
             )
         }
     }
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
     androidExtensions.isExperimental = true
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     lintOptions {
         disable("GoogleAppIndexingWarning")
     }
