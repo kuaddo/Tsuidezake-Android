@@ -122,7 +122,6 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         .onFailure { if (it is CancellationException) throw it }
         .getOrNull()
 
-
     private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
         ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
         ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
