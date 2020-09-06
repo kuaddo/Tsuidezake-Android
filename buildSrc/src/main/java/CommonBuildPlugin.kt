@@ -10,6 +10,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class CommonBuildPlugin : Plugin<Project> {
     override fun apply(target: Project) {
+        target.plugins.apply("com.github.ben-manes.versions")
+
         target.extensions.findByType(BaseExtension::class)?.apply {
             setCompileSdkVersion(Versions.compileSdkVersion)
             buildToolsVersion(Deps.buildToolsVersion)
@@ -17,11 +19,6 @@ class CommonBuildPlugin : Plugin<Project> {
                 minSdkVersion(Versions.minSdkVersion)
                 targetSdkVersion(Versions.targetSdkVersion)
                 consumerProguardFiles("consumer-rules.pro")
-            }
-            target.tasks.withType<KotlinCompile> {
-                kotlinOptions {
-                    jvmTarget = JavaVersion.VERSION_1_8.toString()
-                }
             }
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -43,5 +40,18 @@ class CommonBuildPlugin : Plugin<Project> {
                 }
             }
         }
+
+        target.tasks.withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
+            }
+        }
     }
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }

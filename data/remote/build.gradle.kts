@@ -1,3 +1,4 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import okhttp3.RequestBody.Companion.toRequestBody
 
 plugins {
@@ -5,7 +6,6 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
-    id("com.github.ben-manes.versions")
     id("com.apollographql.apollo")
 }
 apply<CommonBuildPlugin>()
@@ -31,6 +31,12 @@ dependencies {
     implementation(Deps.Apollo.runtime)
     implementation(Deps.Apollo.coroutines)
     implementation(Deps.timber)
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        isNonStable(candidate.version)
+    }
 }
 
 tasks.register("updateGraphQLConfig") {

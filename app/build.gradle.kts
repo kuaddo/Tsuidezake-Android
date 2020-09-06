@@ -11,7 +11,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.github.ben-manes.versions")
     id("jacoco")
     id("deploygate")
 }
@@ -211,13 +210,6 @@ ktlint {
     reporters {
         reporter(ReporterType.CHECKSTYLE)
     }
-}
-
-fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
-    return isStable.not()
 }
 
 fun com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions.all(block: Test.() -> Unit) =
