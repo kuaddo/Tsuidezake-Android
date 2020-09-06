@@ -1,11 +1,13 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("org.jlleitschuh.gradle.ktlint")
     id("com.apollographql.apollo")
 }
 apply<CommonBuildPlugin>()
@@ -36,6 +38,15 @@ dependencies {
 tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)
+    }
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
     }
 }
 
