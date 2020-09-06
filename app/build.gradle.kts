@@ -1,6 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -12,18 +11,14 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.github.ben-manes.versions")
     id("jacoco")
     id("deploygate")
 }
+apply<CommonBuildPlugin>()
 
 android {
-    compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion(Deps.buildToolsVersion)
     defaultConfig {
         applicationId = "jp.kuaddo.tsuidezake"
-        minSdkVersion(Versions.minSdkVersion)
-        targetSdkVersion(Versions.targetSdkVersion)
         versionCode = Versions.versionCode
         versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -73,20 +68,7 @@ android {
             )
         }
     }
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
     androidExtensions.isExperimental = true
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     lintOptions {
         disable("GoogleAppIndexingWarning")
     }
@@ -228,13 +210,6 @@ ktlint {
     reporters {
         reporter(ReporterType.CHECKSTYLE)
     }
-}
-
-fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
-    return isStable.not()
 }
 
 fun com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions.all(block: Test.() -> Unit) =

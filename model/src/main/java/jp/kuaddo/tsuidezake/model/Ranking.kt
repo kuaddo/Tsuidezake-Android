@@ -14,6 +14,6 @@ data class Ranking(
         val rank: Int,
         val sakeId: Int,
         val name: String,
-        val imageUri: Uri?,
+        val imageUri: Uri?
     ) : Parcelable
 }
