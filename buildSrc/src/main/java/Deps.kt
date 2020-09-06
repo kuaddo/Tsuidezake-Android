@@ -2,7 +2,7 @@ object Deps {
     private const val kotlinVersion = "1.4.0"
     private const val coroutinesVersion = "1.3.9"
     private const val navigationVersion = "2.3.0"
-    private const val apolloVersion = "2.1.0"
+    private const val apolloVersion = "2.3.1"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
@@ -55,8 +55,8 @@ object Deps {
 
     object Firebase {
         const val analytics = "com.google.firebase:firebase-analytics:17.5.0"
-        const val auth = "com.google.firebase:firebase-auth:19.3.1"
-        const val storage = "com.google.firebase:firebase-storage:19.1.1"
+        const val auth = "com.google.firebase:firebase-auth:19.3.2"
+        const val storage = "com.google.firebase:firebase-storage:19.2.0"
     }
 
     object Dagger {
@@ -79,7 +79,7 @@ object Deps {
     }
 
     object OkHttp {
-        private const val version = "4.7.2"
+        private const val version = "4.8.1"
 
         const val core = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
