@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
 }
 
@@ -38,4 +40,13 @@ dependencies {
     implementation(Deps.AndroidX.coreKtx)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+    }
 }

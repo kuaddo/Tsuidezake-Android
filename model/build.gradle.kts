@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    id("org.jlleitschuh.gradle.ktlint")
     id("com.github.ben-manes.versions")
 }
 
@@ -31,4 +33,13 @@ android {
 
 dependencies {
     implementation(Deps.Kotlin.stdlib)
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+    }
 }
