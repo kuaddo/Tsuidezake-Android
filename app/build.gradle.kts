@@ -69,9 +69,6 @@ android {
         }
     }
     androidExtensions.isExperimental = true
-    lintOptions {
-        disable("GoogleAppIndexingWarning")
-    }
     testOptions {
         unitTests.apply {
             all {

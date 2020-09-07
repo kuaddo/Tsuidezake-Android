@@ -24,6 +24,9 @@ class CommonBuildPlugin : Plugin<Project> {
                 sourceCompatibility = JavaVersion.VERSION_1_8
                 targetCompatibility = JavaVersion.VERSION_1_8
             }
+            lintOptions {
+                disable("GoogleAppIndexingWarning")
+            }
 
             @Suppress("UnstableApiUsage")
             when (this) {
