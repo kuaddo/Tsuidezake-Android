@@ -11,7 +11,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
-    id("jacoco")
     id("deploygate")
 }
 apply<CommonBuildPlugin>()
@@ -69,20 +68,7 @@ android {
         }
     }
     androidExtensions.isExperimental = true
-    lintOptions {
-        disable("GoogleAppIndexingWarning")
-    }
     testOptions {
-        unitTests.apply {
-            all {
-                extensions.configure(JacocoTaskExtension::class.java) {
-                    isIncludeNoLocationClasses = true
-                }
-                testLogging {
-                    setEvents(listOf("passed", "skipped", "failed", "standardOut", "standardError"))
-                }
-            }
-        }
         junitPlatform {
             filters {
                 includeEngines("spek2")
@@ -167,42 +153,6 @@ tasks.withType<DependencyUpdatesTask> {
     }
 }
 
-task("jacocoTestReport", JacocoReport::class) {
-    dependsOn("testDebugUnitTest")
-    reports {
-        xml.isEnabled = true
-        html.isEnabled = true
-        csv.isEnabled = false
-    }
-    sourceDirectories.setFrom("$projectDir/src/main/java")
-    classDirectories.setFrom(
-        fileTree(
-            "dir" to ".",
-            "includes" to listOf("**/tmp/kotlin-classes/debug/**"),
-            "excludes" to listOf(
-                // Android
-                "**/R.class",
-                "**/R$*.class",
-                "**/BuildConfig.*",
-                "**/Manifest*.*",
-                "**/*Test*.*",
-                "**/*Spec*.*",
-                "android/**/*.*",
-                "**/*Application.*",
-
-                // Dagger
-                "**/*Dagger*Component*.*",
-                "**/*Module.*",
-                "**/*Module$*.*",
-                "**/*MembersInjector*.*",
-                "**/*_Factory*.*",
-                "**/*Provide*Factory*.*"
-            )
-        )
-    )
-    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
-}
-
 ktlint {
     android.set(true)
     outputColorName.set("RED")
@@ -211,6 +161,3 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
     }
 }
-
-fun com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions.all(block: Test.() -> Unit) =
-    all(KotlinClosure1<Any, Test>({ (this as Test).apply(block) }, owner = this))
