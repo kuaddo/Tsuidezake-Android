@@ -10,7 +10,6 @@ plugins {
     kotlin("kapt")
     id("org.jlleitschuh.gradle.ktlint")
     id("de.mannodermaus.android-junit5")
-    id("jacoco")
     id("com.apollographql.apollo")
 }
 apply<CommonBuildPlugin>()
@@ -23,11 +22,6 @@ apollo {
 
 android {
     testOptions {
-        unitTests.all {
-            extensions.configure(JacocoTaskExtension::class.java) {
-                isIncludeNoLocationClasses = true
-            }
-        }
         junitPlatform {
             filters {
                 includeEngines("spek2")

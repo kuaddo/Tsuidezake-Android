@@ -11,7 +11,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
-    id("jacoco")
     id("deploygate")
 }
 apply<CommonBuildPlugin>()
@@ -70,11 +69,6 @@ android {
     }
     androidExtensions.isExperimental = true
     testOptions {
-        unitTests.all {
-            extensions.configure(JacocoTaskExtension::class.java) {
-                isIncludeNoLocationClasses = true
-            }
-        }
         junitPlatform {
             filters {
                 includeEngines("spek2")
@@ -157,42 +151,6 @@ tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)
     }
-}
-
-task("jacocoTestReport", JacocoReport::class) {
-    dependsOn("testDebugUnitTest")
-    reports {
-        xml.isEnabled = true
-        html.isEnabled = true
-        csv.isEnabled = false
-    }
-    sourceDirectories.setFrom("$projectDir/src/main/java")
-    classDirectories.setFrom(
-        fileTree(
-            "dir" to ".",
-            "includes" to listOf("**/tmp/kotlin-classes/debug/**"),
-            "excludes" to listOf(
-                // Android
-                "**/R.class",
-                "**/R$*.class",
-                "**/BuildConfig.*",
-                "**/Manifest*.*",
-                "**/*Test*.*",
-                "**/*Spec*.*",
-                "android/**/*.*",
-                "**/*Application.*",
-
-                // Dagger
-                "**/*Dagger*Component*.*",
-                "**/*Module.*",
-                "**/*Module$*.*",
-                "**/*MembersInjector*.*",
-                "**/*_Factory*.*",
-                "**/*Provide*Factory*.*"
-            )
-        )
-    )
-    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
 }
 
 ktlint {
