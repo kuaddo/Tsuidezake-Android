@@ -70,14 +70,9 @@ android {
     }
     androidExtensions.isExperimental = true
     testOptions {
-        unitTests.apply {
-            all {
-                extensions.configure(JacocoTaskExtension::class.java) {
-                    isIncludeNoLocationClasses = true
-                }
-                testLogging {
-                    setEvents(listOf("passed", "skipped", "failed", "standardOut", "standardError"))
-                }
+        unitTests.all {
+            extensions.configure(JacocoTaskExtension::class.java) {
+                isIncludeNoLocationClasses = true
             }
         }
         junitPlatform {
@@ -208,6 +203,3 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
     }
 }
-
-fun com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions.all(block: Test.() -> Unit) =
-    all(KotlinClosure1<Any, Test>({ (this as Test).apply(block) }, owner = this))

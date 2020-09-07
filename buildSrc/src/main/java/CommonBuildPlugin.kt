@@ -1,9 +1,12 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.KotlinClosure1
 import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -26,6 +29,11 @@ class CommonBuildPlugin : Plugin<Project> {
             }
             lintOptions {
                 disable("GoogleAppIndexingWarning")
+            }
+            testOptions {
+                unitTests.all {
+                    testLogging { setEvents(TEST_LOGGING_EVENTS) }
+                }
             }
 
             @Suppress("UnstableApiUsage")
@@ -50,6 +58,16 @@ class CommonBuildPlugin : Plugin<Project> {
             }
         }
     }
+
+    companion object {
+        private val TEST_LOGGING_EVENTS = listOf(
+            "passed",
+            "skipped",
+            "failed",
+            "standardOut",
+            "standardError"
+        )
+    }
 }
 
 fun isNonStable(version: String): Boolean {
@@ -58,3 +76,6 @@ fun isNonStable(version: String): Boolean {
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
 }
+
+fun UnitTestOptions.all(block: Test.() -> Unit) =
+    all(KotlinClosure1<Any, Test>({ (this as Test).apply(block) }, owner = this))
