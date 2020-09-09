@@ -27,7 +27,7 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
 
     private val wantToDrinkViewModel: WantToDrinkViewModel by viewModels { viewModelFactory }
     private val binding: FragmentWantToDrinkBinding by dataBinding()
-    private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val adapter = GroupAdapter<GroupieViewHolder>().apply { spanCount = 2 }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.wantToDrinkViewModel = wantToDrinkViewModel
@@ -42,9 +42,10 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
         wantToDrinkViewModel.groupedWishListWithMode
             .observeNonNull(viewLifecycleOwner) { (groupedWishList, isGrid) ->
                 adapter.update(getGroups(groupedWishList, isGrid))
-                adapter.spanCount = 2
-                binding.recyclerView.layoutManager = getLayoutManager(isGrid)
             }
+        wantToDrinkViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
+            binding.recyclerView.layoutManager = getLayoutManager(isGrid)
+        }
     }
 
     private fun getLayoutManager(isGrid: Boolean) = if (isGrid) {
@@ -69,9 +70,9 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
         isGrid: Boolean
     ): BindableItem<out ViewDataBinding> {
         return if (isGrid) {
-            SakeCardItem(sakeDetail) { showDrinkDetailFragment(sakeDetail) }
+            SakeCardItem(sakeDetail, ::showDrinkDetailFragment)
         } else {
-            WantToDrinkLinearItem(sakeDetail) { showDrinkDetailFragment(sakeDetail) }
+            WantToDrinkLinearItem(sakeDetail, ::showDrinkDetailFragment)
         }
     }
 
