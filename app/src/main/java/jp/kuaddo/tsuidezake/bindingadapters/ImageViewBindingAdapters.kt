@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.bindingadapters
 
-import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -8,17 +7,11 @@ import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
 import jp.kuaddo.tsuidezake.util.GlideApp
 
-@BindingAdapter("url")
-fun ImageView.bindImageUrl(url: String?) =
-    url?.let { GlideApp.with(context).load(it).into(this) }
-
 @BindingAdapter("uri")
-fun ImageView.bindImageUrl(uri: Uri?) =
-    uri?.let { GlideApp.with(context).load(it).into(this) }
-
-@BindingAdapter("bitmap")
-fun ImageView.bindImageBitmap(bitmap: Bitmap?) =
-    bitmap?.let { setImageBitmap(bitmap) }
+fun ImageView.bindImageUri(uri: Uri?) {
+    if (uri == null) setImageDrawable(null)
+    else GlideApp.with(context).load(uri).into(this)
+}
 
 @Suppress("unused")
 @BindingMethods(
