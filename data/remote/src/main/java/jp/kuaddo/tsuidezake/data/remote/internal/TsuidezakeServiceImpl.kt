@@ -42,6 +42,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
             apolloClient.query(WishListQuery()).toApiResponse { response ->
                 response.wishList
                     .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+                    .sortedBy { it.id }
             }
         }
 
