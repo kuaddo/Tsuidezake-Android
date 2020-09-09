@@ -5,10 +5,9 @@ import com.xwray.groupie.viewbinding.BindableItem
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemWantToDrinkHeaderBinding
 
-class WantToDrinkHeaderItem(
+data class WantToDrinkHeaderItem(
     private val areaName: String
-) : BindableItem<ItemWantToDrinkHeaderBinding>() {
-
+) : BindableItem<ItemWantToDrinkHeaderBinding>(areaName.hashCode().toLong()) {
     override fun initializeViewBinding(view: View): ItemWantToDrinkHeaderBinding =
         ItemWantToDrinkHeaderBinding.bind(view)
 

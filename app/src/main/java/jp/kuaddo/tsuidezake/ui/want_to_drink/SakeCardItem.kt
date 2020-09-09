@@ -6,11 +6,10 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemSakeCardBinding
 import jp.kuaddo.tsuidezake.model.SakeDetail
 
-class SakeCardItem(
+data class SakeCardItem(
     private val sakeDetail: SakeDetail,
-    private val onClickItem: () -> Unit
-) : BindableItem<ItemSakeCardBinding>() {
-
+    private val onClickItem: (SakeDetail) -> Unit
+) : BindableItem<ItemSakeCardBinding>(sakeDetail.id.toLong()) {
     override fun initializeViewBinding(view: View): ItemSakeCardBinding =
         ItemSakeCardBinding.bind(view)
 
@@ -19,7 +18,7 @@ class SakeCardItem(
     override fun bind(viewBinding: ItemSakeCardBinding, position: Int) {
         viewBinding.name = sakeDetail.name
         viewBinding.imageUri = sakeDetail.imageUri
-        viewBinding.root.setOnClickListener { onClickItem() }
+        viewBinding.root.setOnClickListener { onClickItem(sakeDetail) }
         viewBinding.executePendingBindings()
     }
 
