@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/wish_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.wish.WishFragment"
-        android:label="@string/want_to_drink"
+        android:label="@string/wish"
         tools:layout="@layout/fragment_wish">
 
         <action
