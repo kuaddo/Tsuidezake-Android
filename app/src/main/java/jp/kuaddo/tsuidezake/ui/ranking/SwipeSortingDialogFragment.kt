@@ -8,8 +8,7 @@ import androidx.fragment.app.DialogFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.DialogSwipeSortingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
-import jp.kuaddo.tsuidezake.model.Drink
-import jp.kuaddo.tsuidezake.model.DrinkDetail
+import jp.kuaddo.tsuidezake.model.SakeDetail
 
 class SwipeSortingDialogFragment : DialogFragment() {
 
@@ -35,16 +34,21 @@ class SwipeSortingDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.swipeSortingView.apply {
-            val drinks = (1..5).map { index ->
-                DrinkDetail(
-                    Drink(index, "獺祭", "日本酒"),
-                    10000 * index,
-                    "",
-                    tags = listOf("辛口", "初心者におすすめ", "コスパ良し")
+            val sakes = (1..5).map { index ->
+                SakeDetail(
+                    id = index,
+                    name = "獺祭$index",
+                    description = null,
+                    region = "草津",
+                    brewer = null,
+                    imageUri = null,
+                    tags = listOf("辛口", "初心者におすすめ", "コスパ良し"),
+                    suitableTemperatures = emptySet(),
+                    goodFoodCategories = emptySet()
                 )
             }
-            submitDrinks(drinks)
-            onLastDrinkRemoved = { dialog?.dismiss() }
+            submitSakes(sakes)
+            onLastSakeRemoved = { dialog?.dismiss() }
         }
     }
 }

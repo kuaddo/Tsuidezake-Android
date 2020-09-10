@@ -7,8 +7,8 @@
 
     <string name="price">¥%1$,d</string>
 
-    <string name="dialog_want_to_drink">呑みたい</string>
-    <string name="dialog_do_not_want_to_drink">そうでもない</string>
+    <string name="dialog_wish_button_text">呑みたい</string>
+    <string name="dialog_do_not_wish_button_text">そうでもない</string>
 
     <string name="ranking_recommended_to_you">あなたにおすすめ</string>
 
