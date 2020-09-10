@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.drink
+package jp.kuaddo.tsuidezake.ui.sake
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,7 @@ import jp.kuaddo.tsuidezake.util.SnackbarMessageRes
 import jp.kuaddo.tsuidezake.util.SnackbarMessageText
 import kotlinx.coroutines.launch
 
-class DrinkDetailViewModel @AssistedInject constructor(
+class SakeDetailViewModel @AssistedInject constructor(
     @Assisted private val sakeId: Int,
     private val repository: Repository,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
@@ -34,7 +34,7 @@ class DrinkDetailViewModel @AssistedInject constructor(
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
-    val isAddedToWith: LiveData<Boolean>
+    val isAddedToWish: LiveData<Boolean>
         get() = _isAddedToWish
     val isAddedToTasted: LiveData<Boolean>
         get() = _isAddedToTasted
@@ -47,7 +47,7 @@ class DrinkDetailViewModel @AssistedInject constructor(
         _isExpanded.value = _isExpanded.value?.not() ?: true
     }
 
-    fun toggleWithState() = viewModelScope.launch {
+    fun toggleWishState() = viewModelScope.launch {
         // TODO: show loading UI
         if (_isAddedToWish.value == true) removeSakeFromWishList()
         else addSakeToWishList()
@@ -93,6 +93,6 @@ class DrinkDetailViewModel @AssistedInject constructor(
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(sakeId: Int): DrinkDetailViewModel
+        fun create(sakeId: Int): SakeDetailViewModel
     }
 }

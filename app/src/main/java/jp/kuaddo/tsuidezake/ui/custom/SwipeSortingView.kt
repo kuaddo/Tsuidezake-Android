@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.google.android.material.chip.Chip
 import jp.kuaddo.tsuidezake.R
-import jp.kuaddo.tsuidezake.databinding.ViewRecommendDrinkBinding
-import jp.kuaddo.tsuidezake.model.DrinkDetail
+import jp.kuaddo.tsuidezake.databinding.ViewRecommendSakeBinding
+import jp.kuaddo.tsuidezake.model.SakeDetail
 import java.util.Queue
 import java.util.concurrent.ArrayBlockingQueue
 import kotlin.math.cos
@@ -26,42 +26,42 @@ class SwipeSortingView @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val closeButton: ImageView
     private val cardContainer: FrameLayout
-    private val bindingQueue: Queue<ViewRecommendDrinkBinding> = ArrayBlockingQueue(2)
-    private var nextDrinkIndex: Int = 0
+    private val bindingQueue: Queue<ViewRecommendSakeBinding> = ArrayBlockingQueue(2)
+    private var nextSakeIndex: Int = 0
 
-    private var drinks: List<DrinkDetail>? = null
-    var onLastDrinkRemoved: (() -> Unit)? = null
+    private var sakes: List<SakeDetail>? = null
+    var onLastSakeRemoved: (() -> Unit)? = null
 
     init {
         View.inflate(context, R.layout.view_swipe_sorting, this)
         closeButton = findViewById(R.id.close_button)
         cardContainer = findViewById(R.id.card_container)
 
-        closeButton.setOnClickListener { onLastDrinkRemoved?.invoke() }
+        closeButton.setOnClickListener { onLastSakeRemoved?.invoke() }
     }
 
-    fun submitDrinks(drinks: List<DrinkDetail>) {
-        this.drinks = drinks
-        if (drinks.isEmpty()) return
+    fun submitSakes(sakes: List<SakeDetail>) {
+        this.sakes = sakes
+        if (sakes.isEmpty()) return
 
-        initializeRecommendDrinkBinding(drinks[0])
-        if (drinks.size > 1) initializeRecommendDrinkBinding(drinks[1])
+        initializeRecommendSakeBinding(sakes[0])
+        if (sakes.size > 1) initializeRecommendSakeBinding(sakes[1])
         setOnTouchListener(FRONT)
-        nextDrinkIndex = minOf(2, drinks.size)
+        nextSakeIndex = minOf(2, sakes.size)
     }
 
     private fun replaceFront() {
-        val drinks = drinks ?: return
+        val sakes = sakes ?: return
         when {
-            nextDrinkIndex > drinks.size -> {
+            nextSakeIndex > sakes.size -> {
                 resetViewState(BACK)
-                onLastDrinkRemoved?.invoke()
+                onLastSakeRemoved?.invoke()
                 return
             }
-            nextDrinkIndex == drinks.size -> {
+            nextSakeIndex == sakes.size -> {
                 resetViewState(FRONT)
                 setOnTouchListener(BACK)
-                nextDrinkIndex++
+                nextSakeIndex++
                 return
             }
         }
@@ -69,28 +69,28 @@ class SwipeSortingView @JvmOverloads constructor(
         resetViewState(FRONT)
         setOnTouchListener(BACK)
         bindingQueue.poll()?.apply {
-            update(drinks[nextDrinkIndex++])
+            update(sakes[nextSakeIndex++])
             insertBinding(this)
         }
     }
 
-    private fun initializeRecommendDrinkBinding(drinkDetail: DrinkDetail) {
-        ViewRecommendDrinkBinding.inflate(layoutInflater).apply {
-            update(drinkDetail)
+    private fun initializeRecommendSakeBinding(sakeDetail: SakeDetail) {
+        ViewRecommendSakeBinding.inflate(layoutInflater).apply {
+            update(sakeDetail)
             insertBinding(this)
         }
     }
 
     private fun setOnTouchListener(index: Int) {
         val targetView = cardContainer.getChildAt(index)
-        val wantToDrink = targetView.findViewById<View>(R.id.want_to_drink_icon)
-        val doNotWantToDrink = targetView.findViewById<View>(R.id.do_not_want_to_drink_icon)
+        val wishIcon = targetView.findViewById<View>(R.id.wish_icon)
+        val doNotWishIcon = targetView.findViewById<View>(R.id.do_not_wish_icon)
         targetView.setOnTouchListener(
-            MovingAndRotationTouchListener(wantToDrink, doNotWantToDrink)
+            MovingAndRotationTouchListener(wishIcon, doNotWishIcon)
         )
     }
 
-    private fun insertBinding(binding: ViewRecommendDrinkBinding) {
+    private fun insertBinding(binding: ViewRecommendSakeBinding) {
         bindingQueue.offer(binding)
         cardContainer.addView(binding.root, BACK)
     }
@@ -103,21 +103,21 @@ class SwipeSortingView @JvmOverloads constructor(
         cardContainer.removeViewAt(index)
     }
 
-    private fun ViewRecommendDrinkBinding.update(drinkDetail: DrinkDetail) {
-        this.drinkDetail = drinkDetail
+    private fun ViewRecommendSakeBinding.update(sakeDetail: SakeDetail) {
+        this.sakeDetail = sakeDetail
         tagsChipGroup.let { chipGroup ->
             chipGroup.removeAllViews()
-            drinkDetail.tags.map { Chip(context).apply { text = it } }
+            sakeDetail.tags.map { Chip(context).apply { text = it } }
                 .forEach { chip -> chipGroup.addView(chip) }
         }
-        doNotWantToDrinkButton.setOnClickListener { replaceFront() }
-        wantToDrinkButton.setOnClickListener { replaceFront() }
+        doNotWishButton.setOnClickListener { replaceFront() }
+        wishButton.setOnClickListener { replaceFront() }
         executePendingBindings()
     }
 
     inner class MovingAndRotationTouchListener(
-        private val wantToDrinkIcon: View,
-        private val doNotWantToDrinkIcon: View,
+        private val wishIcon: View,
+        private val doNotWishIcon: View,
         private val movingScale: Float = 1.2f,
         private val rotationScale: Float = 0.03f,
         private val downOffsetDp: Int = 10,
@@ -167,8 +167,8 @@ class SwipeSortingView @JvmOverloads constructor(
 
         private fun setRatioToIcon(ratio: Float) {
             require(ratio in -1f..1f)
-            wantToDrinkIcon.alpha = maxOf(0f, minOf(ratio, 1f))
-            doNotWantToDrinkIcon.alpha = maxOf(0f, minOf(-ratio, 1f))
+            wishIcon.alpha = maxOf(0f, minOf(ratio, 1f))
+            doNotWishIcon.alpha = maxOf(0f, minOf(-ratio, 1f))
         }
     }
 

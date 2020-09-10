@@ -58,7 +58,7 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
             (1..7).map { Sake(it, "秘幻 吟醸酒 $it", null) }
         )
 
-        showRecommendDrinkDialog()
+        showRecommendSakeDialog()
         observe()
     }
 
@@ -72,9 +72,9 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
     }
 
     private fun showSakeDetail(sakeId: Int) =
-        findNavController().navigate(RankingFragmentDirections.actionRankingToDrinkDetail(sakeId))
+        findNavController().navigate(RankingFragmentDirections.actionRankingToSakeDetail(sakeId))
 
-    private fun showRecommendDrinkDialog() =
+    private fun showRecommendSakeDialog() =
         findNavController().navigate(RankingFragmentDirections.actionRankingToSwipeSortingDialog())
 
     companion object {

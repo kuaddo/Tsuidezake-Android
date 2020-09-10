@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="drinkDetail"
-            type="jp.kuaddo.tsuidezake.model.DrinkDetail" />
+            name="sakeDetail"
+            type="jp.kuaddo.tsuidezake.model.SakeDetail" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,7 +20,7 @@
             android:background="@color/white">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/drink_image_card"
+                android:id="@+id/sake_image_card"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -43,24 +43,24 @@
                         tools:ignore="ContentDescription" />
 
                     <ImageView
-                        android:id="@+id/want_to_drink_icon"
+                        android:id="@+id/wish_icon"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="top|start"
                         android:layout_margin="8dp"
                         android:alpha="0"
-                        android:src="@drawable/ic_dialog_want_to_drink"
+                        android:src="@drawable/ic_dialog_wish"
                         app:tint="#FF0000"
                         tools:ignore="ContentDescription" />
 
                     <ImageView
-                        android:id="@+id/do_not_want_to_drink_icon"
+                        android:id="@+id/do_not_wish_icon"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="top|end"
                         android:layout_margin="8dp"
                         android:alpha="0"
-                        android:src="@drawable/ic_dialog_do_not_want_to_drink"
+                        android:src="@drawable/ic_dialog_do_not_wish"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="#0000FF"
@@ -69,26 +69,26 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/drink_name_text"
+                android:id="@+id/sake_name_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{drinkDetail.drink.name}"
+                android:text="@{sakeDetail.name}"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/drink_price_text"
+                app:layout_constraintEnd_toStartOf="@+id/sake_price_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drink_image_card"
+                app:layout_constraintTop_toBottomOf="@+id/sake_image_card"
                 tools:text="獺祭" />
 
             <TextView
-                android:id="@+id/drink_price_text"
+                android:id="@+id/sake_price_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@{@string/price(drinkDetail.price)}"
-                app:layout_constraintBottom_toBottomOf="@+id/drink_name_text"
+                android:text="@{@string/price(12000)}"
+                app:layout_constraintBottom_toBottomOf="@+id/sake_name_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="¥12,000" />
 
@@ -98,9 +98,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:chipSpacing="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/drink_price_text"
-                app:layout_constraintStart_toStartOf="@+id/drink_name_text"
-                app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
+                app:layout_constraintEnd_toEndOf="@+id/sake_price_text"
+                app:layout_constraintStart_toStartOf="@+id/sake_name_text"
+                app:layout_constraintTop_toBottomOf="@+id/sake_name_text"
                 app:singleSelection="true" />
 
             <LinearLayout
@@ -115,13 +115,13 @@
                 app:layout_constraintTop_toBottomOf="@id/tags_chip_group">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/do_not_want_to_drink_button"
+                    android:id="@+id/do_not_wish_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="@string/dialog_do_not_want_to_drink"
+                    android:text="@string/dialog_do_not_wish_button_text"
                     app:cornerRadius="0dp" />
 
                 <View
@@ -131,13 +131,13 @@
                     android:background="@color/white" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/want_to_drink_button"
+                    android:id="@+id/wish_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="@string/dialog_want_to_drink"
+                    android:text="@string/dialog_wish_button_text"
                     app:cornerRadius="0dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

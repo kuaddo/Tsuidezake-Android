@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.want_to_drink
+package jp.kuaddo.tsuidezake.ui.wish
 
 import androidx.lifecycle.ViewModel
 import dagger.Binds
@@ -9,13 +9,13 @@ import jp.kuaddo.tsuidezake.di.ViewModelKey
 
 @Suppress("unused")
 @Module
-abstract class WantToDrinkModule {
+abstract class WishModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeWantToDrinkFragment(): WantToDrinkFragment
+    abstract fun contributeWishFragment(): WishFragment
 
     @Binds
     @IntoMap
-    @ViewModelKey(WantToDrinkViewModel::class)
-    abstract fun bindWantToDrinkViewModel(viewModel: WantToDrinkViewModel): ViewModel
+    @ViewModelKey(WishViewModel::class)
+    abstract fun bindWishViewModel(viewModel: WishViewModel): ViewModel
 }

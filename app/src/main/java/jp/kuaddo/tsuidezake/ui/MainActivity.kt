@@ -39,8 +39,8 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         val controller = binding.navView.setupWithNavController(
             navGraphIds = listOf(
                 R.navigation.ranking,
-                R.navigation.finish_drinking,
-                R.navigation.want_to_drink,
+                R.navigation.tasted,
+                R.navigation.wish,
                 R.navigation.my_page
             ),
             fragmentManager = supportFragmentManager,

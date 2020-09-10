@@ -29,7 +29,7 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
     }
 
     private fun showSakeDetail(sakeId: Int) = parentFragment?.findNavController()?.navigate(
-        RankingFragmentDirections.actionRankingToDrinkDetail(sakeId)
+        RankingFragmentDirections.actionRankingToSakeDetail(sakeId)
     )
 
     companion object {

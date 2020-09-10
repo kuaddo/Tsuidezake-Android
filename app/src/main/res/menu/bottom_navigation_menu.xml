@@ -6,14 +6,14 @@
         android:title="@string/ranking" />
 
     <item
-        android:id="@+id/menu_want_to_drink"
+        android:id="@+id/menu_wish"
         android:icon="@drawable/ic_sake"
-        android:title="@string/want_to_drink" />
+        android:title="@string/wish" />
 
     <item
-        android:id="@+id/menu_clip"
+        android:id="@+id/menu_tasted"
         android:icon="@drawable/ic_tasted"
-        android:title="@string/finish_drinking" />
+        android:title="@string/tasted" />
 
     <item
         android:id="@+id/menu_my_page"

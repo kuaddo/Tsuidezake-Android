@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailViewModel" />
+            type="jp.kuaddo.tsuidezake.ui.sake.SakeDetailViewModel" />
     </data>
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/drink_image"
+                    android:id="@+id/sake_image"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintDimensionRatio="w,9:16"
@@ -39,7 +39,7 @@
                     tools:src="@color/colorAccent" />
 
                 <TextView
-                    android:id="@+id/drink_name_text"
+                    android:id="@+id/sake_name_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -50,7 +50,7 @@
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/drink_image"
+                    app:layout_constraintTop_toBottomOf="@+id/sake_image"
                     tools:text="秘幻 吟醸酒" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -59,9 +59,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:chipSpacing="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/drink_name_text"
-                    app:layout_constraintStart_toStartOf="@+id/drink_name_text"
-                    app:layout_constraintTop_toBottomOf="@+id/drink_name_text"
+                    app:layout_constraintEnd_toEndOf="@+id/sake_name_text"
+                    app:layout_constraintStart_toStartOf="@+id/sake_name_text"
+                    app:layout_constraintTop_toBottomOf="@+id/sake_name_text"
                     app:singleSelection="true" />
 
                 <TextView
@@ -94,12 +94,12 @@
                     tools:src="@drawable/ic_arrow_down" />
 
                 <TextView
-                    android:id="@+id/how_to_drink_text"
+                    android:id="@+id/how_to_taste_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
-                    android:text="@string/sake_detail_how_to_drink"
+                    android:text="@string/sake_detail_how_to_taste"
                     android:textColor="@color/textPrimaryColor"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,10 +112,10 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="20dp"
                     android:background="@color/divider"
-                    app:layout_constraintBottom_toBottomOf="@+id/how_to_drink_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/how_to_taste_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/how_to_drink_text"
-                    app:layout_constraintTop_toTopOf="@+id/how_to_drink_text" />
+                    app:layout_constraintStart_toEndOf="@+id/how_to_taste_text"
+                    app:layout_constraintTop_toTopOf="@+id/how_to_taste_text" />
 
                 <jp.kuaddo.tsuidezake.ui.custom.ThermometerView
                     android:id="@+id/thermometer_view"
@@ -126,7 +126,7 @@
                     android:layout_marginEnd="32dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/how_to_drink_text"
+                    app:layout_constraintTop_toBottomOf="@id/how_to_taste_text"
                     app:suitableTemperatures="@{viewModel.sakeDetail.suitableTemperatures}" />
 
                 <TextView
@@ -235,7 +235,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/sake_detail_let_us_drink_description"
+                    android:text="@string/sake_detail_let_us_taste_description"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -248,7 +248,7 @@
                     android:layout_marginBottom="16dp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="@string/sake_detail_let_us_drink"
+                    android:text="@string/sake_detail_let_us_taste"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:icon="@drawable/ic_sake"
@@ -274,7 +274,7 @@
                 android:layout_weight="1"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
-                android:onClick="@{() -> viewModel.toggleWithState()}"
+                android:onClick="@{() -> viewModel.toggleWishState()}"
                 android:orientation="vertical"
                 tools:ignore="UseCompoundDrawables">
 
@@ -283,7 +283,7 @@
                     android:layout_height="24dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_sake"
-                    app:isEnabled="@{!viewModel.isAddedToWith}"
+                    app:isEnabled="@{!viewModel.isAddedToWish}"
                     app:tint="@color/selector_enabled_color"
                     tools:ignore="ContentDescription" />
 
@@ -291,9 +291,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:text="@{viewModel.isAddedToWith ? @string/sake_detail_remove_wish_list : @string/sake_detail_add_wish_list}"
+                    android:text="@{viewModel.isAddedToWish ? @string/sake_detail_remove_wish_list : @string/sake_detail_add_wish_list}"
                     android:textColor="@color/selector_enabled_color"
-                    app:isEnabled="@{!viewModel.isAddedToWith}"
+                    app:isEnabled="@{!viewModel.isAddedToWish}"
                     tools:text="@string/sake_detail_add_wish_list" />
             </LinearLayout>
 

@@ -1,21 +1,21 @@
 <resources>
     <string name="ranking">ランキング</string>
-    <string name="want_to_drink">呑みたい</string>
-    <string name="finish_drinking">呑んだ</string>
+    <string name="wish">呑みたい</string>
+    <string name="tasted">呑んだ</string>
     <string name="my_page">マイページ</string>
     <string name="detail">詳細</string>
 
     <string name="price">¥%1$,d</string>
 
-    <string name="dialog_want_to_drink">呑みたい</string>
-    <string name="dialog_do_not_want_to_drink">そうでもない</string>
+    <string name="dialog_wish_button_text">呑みたい</string>
+    <string name="dialog_do_not_wish_button_text">そうでもない</string>
 
     <string name="ranking_recommended_to_you">あなたにおすすめ</string>
 
-    <string name="sake_detail_how_to_drink">おすすめの呑み方</string>
+    <string name="sake_detail_how_to_taste">おすすめの呑み方</string>
     <string name="sake_detail_recommended_appetizers">おすすめのおつまみ</string>
-    <string name="sake_detail_let_us_drink">購入してお家で呑む</string>
-    <string name="sake_detail_let_us_drink_description">現地で呑めなかった・また呑みたい方はこちらから</string>
+    <string name="sake_detail_let_us_taste">購入してお家で呑む</string>
+    <string name="sake_detail_let_us_taste_description">現地で呑めなかった・また呑みたい方はこちらから</string>
     <string name="sake_detail_add_wish_list">呑みたいに追加</string>
     <string name="sake_detail_remove_wish_list">呑みたいから削除</string>
     <string name="sake_detail_add_tasted_list">呑んだに追加</string>

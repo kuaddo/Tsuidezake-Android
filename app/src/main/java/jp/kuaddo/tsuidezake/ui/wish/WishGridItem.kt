@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.want_to_drink
+package jp.kuaddo.tsuidezake.ui.wish
 
 import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
@@ -6,7 +6,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemSakeCardBinding
 import jp.kuaddo.tsuidezake.model.SakeDetail
 
-data class SakeCardItem(
+data class WishGridItem(
     private val sakeDetail: SakeDetail,
     private val onClickItem: (SakeDetail) -> Unit
 ) : BindableItem<ItemSakeCardBinding>(sakeDetail.id.toLong()) {

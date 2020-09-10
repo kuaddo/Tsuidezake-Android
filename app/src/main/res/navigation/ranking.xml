@@ -13,8 +13,8 @@
         tools:layout="@layout/fragment_ranking">
 
         <action
-            android:id="@+id/action_ranking_to_drink_detail"
-            app:destination="@id/drink_detail_fragment" />
+            android:id="@+id/action_ranking_to_sake_detail"
+            app:destination="@id/sake_detail_fragment" />
 
         <action
             android:id="@+id/action_ranking_to_swipe_sorting_dialog"
@@ -22,10 +22,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/drink_detail_fragment"
-        android:name="jp.kuaddo.tsuidezake.ui.drink.DrinkDetailFragment"
+        android:id="@+id/sake_detail_fragment"
+        android:name="jp.kuaddo.tsuidezake.ui.sake.SakeDetailFragment"
         android:label="@string/detail"
-        tools:layout="@layout/fragment_drink_detail">
+        tools:layout="@layout/fragment_sake_detail">
 
         <argument
             android:name="sakeId"

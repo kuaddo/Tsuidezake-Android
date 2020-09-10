@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu_clip"
+    android:id="@+id/menu_tasted"
     app:startDestination="@id/blank_fragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/blank_fragment"
         android:name="jp.kuaddo.tsuidezake.ui.BlankFragment"
-        android:label="@string/finish_drinking"
+        android:label="@string/tasted"
         tools:layout="@layout/fragment_blank" />
 </navigation>
