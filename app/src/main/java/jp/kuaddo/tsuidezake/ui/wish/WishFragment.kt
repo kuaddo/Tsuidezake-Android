@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.want_to_drink
+package jp.kuaddo.tsuidezake.ui.wish
 
 import android.os.Bundle
 import android.view.View
@@ -15,35 +15,35 @@ import com.xwray.groupie.Section
 import com.xwray.groupie.viewbinding.BindableItem
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
-import jp.kuaddo.tsuidezake.databinding.FragmentWantToDrinkBinding
+import jp.kuaddo.tsuidezake.databinding.FragmentWishBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import javax.inject.Inject
 
-class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
+class WishFragment : DaggerFragment(R.layout.fragment_wish) {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val wantToDrinkViewModel: WantToDrinkViewModel by viewModels { viewModelFactory }
-    private val binding: FragmentWantToDrinkBinding by dataBinding()
+    private val wishViewModel: WishViewModel by viewModels { viewModelFactory }
+    private val binding: FragmentWishBinding by dataBinding()
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { spanCount = 2 }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.wantToDrinkViewModel = wantToDrinkViewModel
+        binding.wishViewModel = wishViewModel
         binding.recyclerView.adapter = adapter
-        binding.refreshLayout.setOnRefreshListener { wantToDrinkViewModel.refresh() }
+        binding.refreshLayout.setOnRefreshListener { wishViewModel.refresh() }
 
         observe()
     }
 
     private fun observe() {
-        observeViewModelDelegate(wantToDrinkViewModel, viewLifecycleOwner)
-        wantToDrinkViewModel.groupedWishListWithMode
+        observeViewModelDelegate(wishViewModel, viewLifecycleOwner)
+        wishViewModel.groupedWishListWithMode
             .observeNonNull(viewLifecycleOwner) { (groupedWishList, isGrid) ->
                 adapter.update(getGroups(groupedWishList, isGrid))
             }
-        wantToDrinkViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
+        wishViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
             binding.recyclerView.layoutManager = getLayoutManager(isGrid)
         }
     }
@@ -60,23 +60,23 @@ class WantToDrinkFragment : DaggerFragment(R.layout.fragment_want_to_drink) {
         groupedWishList.toSortedMap()
             .map { (region, sakeList) ->
                 Section().apply {
-                    setHeader(WantToDrinkHeaderItem(region))
-                    addAll(sakeList.map { getWantToDrinkGridItem(it, isGrid) })
+                    setHeader(WishHeaderItem(region))
+                    addAll(sakeList.map { getWishGridItem(it, isGrid) })
                 }
             }
 
-    private fun getWantToDrinkGridItem(
+    private fun getWishGridItem(
         sakeDetail: SakeDetail,
         isGrid: Boolean
     ): BindableItem<out ViewDataBinding> {
         return if (isGrid) {
-            SakeCardItem(sakeDetail, ::showDrinkDetailFragment)
+            SakeCardItem(sakeDetail, ::showSakeDetailFragment)
         } else {
-            WantToDrinkLinearItem(sakeDetail, ::showDrinkDetailFragment)
+            WishLinearItem(sakeDetail, ::showSakeDetailFragment)
         }
     }
 
-    private fun showDrinkDetailFragment(sakeDetail: SakeDetail) = findNavController().navigate(
-        WantToDrinkFragmentDirections.actionWantToDrinkToDrinkDetail(sakeDetail.id)
+    private fun showSakeDetailFragment(sakeDetail: SakeDetail) = findNavController().navigate(
+        WishFragmentDirections.actionWishToSakeDetail(sakeDetail.id)
     )
 }

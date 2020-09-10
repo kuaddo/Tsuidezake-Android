@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.drink
+package jp.kuaddo.tsuidezake.ui.sake
 
 import android.os.Bundle
 import android.view.View
@@ -8,20 +8,20 @@ import com.google.android.material.chip.ChipGroup
 import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
-import jp.kuaddo.tsuidezake.databinding.FragmentDrinkDetailBinding
+import jp.kuaddo.tsuidezake.databinding.FragmentSakeDetailBinding
 import jp.kuaddo.tsuidezake.extensions.assistedViewModels
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import javax.inject.Inject
 
-class DrinkDetailFragment : DaggerFragment(R.layout.fragment_drink_detail) {
+class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
     @Inject
-    lateinit var viewModelFactory: DrinkDetailViewModel.Factory
+    lateinit var viewModelFactory: SakeDetailViewModel.Factory
 
-    private val viewModel: DrinkDetailViewModel by assistedViewModels {
+    private val viewModel: SakeDetailViewModel by assistedViewModels {
         viewModelFactory.create(sakeId = args.sakeId)
     }
-    private val args by navArgs<DrinkDetailFragmentArgs>()
-    private val binding: FragmentDrinkDetailBinding by dataBinding()
+    private val args by navArgs<SakeDetailFragmentArgs>()
+    private val binding: FragmentSakeDetailBinding by dataBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewModel = viewModel

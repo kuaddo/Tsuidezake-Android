@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.want_to_drink
+package jp.kuaddo.tsuidezake.ui.wish
 
 import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem

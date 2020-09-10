@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.want_to_drink
+package jp.kuaddo.tsuidezake.ui.wish
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 typealias GroupedWishList = Map<String, List<SakeDetail>>
 
-class WantToDrinkViewModel @Inject constructor(
+class WishViewModel @Inject constructor(
     private val repository: Repository,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
 ) : ViewModel(),

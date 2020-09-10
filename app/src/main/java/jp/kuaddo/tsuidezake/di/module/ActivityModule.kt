@@ -4,11 +4,11 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import jp.kuaddo.tsuidezake.di.ActivityScoped
 import jp.kuaddo.tsuidezake.ui.MainActivity
-import jp.kuaddo.tsuidezake.ui.drink.DrinkModule
+import jp.kuaddo.tsuidezake.ui.sake.SakeModule
 import jp.kuaddo.tsuidezake.ui.launcher.LauncherActivity
 import jp.kuaddo.tsuidezake.ui.launcher.LauncherModule
 import jp.kuaddo.tsuidezake.ui.ranking.RankingModule
-import jp.kuaddo.tsuidezake.ui.want_to_drink.WantToDrinkModule
+import jp.kuaddo.tsuidezake.ui.wish.WishModule
 
 @Suppress("unused")
 @Module
@@ -22,8 +22,8 @@ abstract class ActivityModule {
     @ContributesAndroidInjector(
         modules = [
             RankingModule::class,
-            WantToDrinkModule::class,
-            DrinkModule::class
+            WishModule::class,
+            SakeModule::class
         ]
     )
     abstract fun contributeMainActivity(): MainActivity

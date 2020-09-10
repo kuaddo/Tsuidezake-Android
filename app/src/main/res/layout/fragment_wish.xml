@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="wantToDrinkViewModel"
-            type="jp.kuaddo.tsuidezake.ui.want_to_drink.WantToDrinkViewModel" />
+            name="wishViewModel"
+            type="jp.kuaddo.tsuidezake.ui.wish.WishViewModel" />
     </data>
 
     <FrameLayout
@@ -18,7 +18,7 @@
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isRefreshing="@{wantToDrinkViewModel.isRefreshing}">
+            app:isRefreshing="@{wishViewModel.isRefreshing}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                tools:listitem="@layout/item_want_to_drink_linear" />
+                tools:listitem="@layout/item_wish_linear" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
@@ -37,7 +37,7 @@
             android:background="@drawable/background_rounded_rectangle_4dp"
             android:backgroundTint="@color/light_gray"
             android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{() -> wantToDrinkViewModel.switchRecyclerViewMode()}"
+            android:onClick="@{() -> wishViewModel.switchRecyclerViewMode()}"
             android:orientation="horizontal">
 
             <ImageView
@@ -45,7 +45,7 @@
                 android:layout_height="40dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_grid"
-                app:tint="@{wantToDrinkViewModel.isGridMode ? @color/colorPrimary : @color/white}"
+                app:tint="@{wishViewModel.isGridMode ? @color/colorPrimary : @color/white}"
                 tools:ignore="ContentDescription"
                 tools:tint="@color/colorPrimary" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="40dp"
                 android:padding="2dp"
                 android:src="@drawable/ic_list"
-                app:tint="@{wantToDrinkViewModel.isGridMode ? @color/white : @color/colorPrimary }"
+                app:tint="@{wishViewModel.isGridMode ? @color/white : @color/colorPrimary }"
                 tools:ignore="ContentDescription"
                 tools:tint="@color/white" />
         </LinearLayout>

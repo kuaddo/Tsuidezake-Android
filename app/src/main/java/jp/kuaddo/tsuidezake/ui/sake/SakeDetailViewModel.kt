@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.ui.drink
+package jp.kuaddo.tsuidezake.ui.sake
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,7 @@ import jp.kuaddo.tsuidezake.util.SnackbarMessageRes
 import jp.kuaddo.tsuidezake.util.SnackbarMessageText
 import kotlinx.coroutines.launch
 
-class DrinkDetailViewModel @AssistedInject constructor(
+class SakeDetailViewModel @AssistedInject constructor(
     @Assisted private val sakeId: Int,
     private val repository: Repository,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
@@ -93,6 +93,6 @@ class DrinkDetailViewModel @AssistedInject constructor(
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(sakeId: Int): DrinkDetailViewModel
+        fun create(sakeId: Int): SakeDetailViewModel
     }
 }
