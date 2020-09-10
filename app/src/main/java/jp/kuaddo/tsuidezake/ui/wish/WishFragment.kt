@@ -70,7 +70,7 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
         isGrid: Boolean
     ): BindableItem<out ViewDataBinding> {
         return if (isGrid) {
-            SakeCardItem(sakeDetail, ::showSakeDetailFragment)
+            WishGridItem(sakeDetail, ::showSakeDetailFragment)
         } else {
             WishLinearItem(sakeDetail, ::showSakeDetailFragment)
         }
