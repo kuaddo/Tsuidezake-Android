@@ -34,7 +34,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
-    val isAddedToWith: LiveData<Boolean>
+    val isAddedToWish: LiveData<Boolean>
         get() = _isAddedToWish
     val isAddedToTasted: LiveData<Boolean>
         get() = _isAddedToTasted
@@ -47,7 +47,7 @@ class SakeDetailViewModel @AssistedInject constructor(
         _isExpanded.value = _isExpanded.value?.not() ?: true
     }
 
-    fun toggleWithState() = viewModelScope.launch {
+    fun toggleWishState() = viewModelScope.launch {
         // TODO: show loading UI
         if (_isAddedToWish.value == true) removeSakeFromWishList()
         else addSakeToWishList()
