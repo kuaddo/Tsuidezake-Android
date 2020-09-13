@@ -1,0 +1,3 @@
+[submodule "submodules/GraphQLSchema"]
+	path = submodules/GraphQLSchema
+	url = git@github.com:kuaddo/TsuidezakeGraphQLSchema.git
