@@ -18,6 +18,13 @@ class RankingViewModel @Inject constructor(
     LoadingViewModelDelegate by loadingViewModelDelegate,
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
+    val recommendedSakes = liveData {
+        when (val res = repository.getRecommendedSakes()) {
+            is SuccessResource -> emit(res.data)
+            is ErrorResource -> setMessage(SnackbarMessageText(res.message))
+        }
+    }
+
     val rankings = liveData {
         when (val res = repository.getRankings()) {
             is SuccessResource -> emit(res.data)

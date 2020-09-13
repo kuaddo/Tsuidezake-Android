@@ -1,14 +1,24 @@
 query RankingsQuery {
-  getRankings{
+  getRankings {
     displayOrder
     category
     contents {
-      rank
-      sake {
-        id
-        name
-        imgPath
-      }
+      ...contentFragment
     }
+  }
+}
+
+query RecommendedSakeQuery {
+  getRecommendedSakes {
+    ...contentFragment
+  }
+}
+
+fragment contentFragment on RankingContent {
+  rank
+  sake {
+    id
+    name
+    imgPath
   }
 }

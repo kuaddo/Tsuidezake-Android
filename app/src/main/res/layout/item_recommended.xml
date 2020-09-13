@@ -5,8 +5,12 @@
     <data>
 
         <variable
-            name="sakeName"
+            name="name"
             type="String" />
+
+        <variable
+            name="imageUri"
+            type="android.net.Uri" />
     </data>
 
     <FrameLayout
@@ -22,7 +26,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            app:imageUri="@{null}"
-            app:name="@{sakeName}" />
+            app:imageUri="@{imageUri}"
+            app:name="@{name}" />
     </FrameLayout>
 </layout>

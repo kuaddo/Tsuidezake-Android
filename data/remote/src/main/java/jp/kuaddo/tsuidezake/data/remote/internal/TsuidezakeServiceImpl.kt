@@ -7,15 +7,18 @@ import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
+import jp.kuaddo.tsuidezake.data.remote.RecommendedSakeQuery
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.remote.WishListQuery
+import jp.kuaddo.tsuidezake.data.remote.fragment.ContentFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
+import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import kotlinx.coroutines.CancellationException
@@ -36,6 +39,16 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                 .sortedBy(Ranking::displayOrder)
         }
     }
+
+    override suspend fun getRecommendedSakes(): ApiResponse<List<Sake>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.query(RecommendedSakeQuery()).toApiResponse { response ->
+                response.getRecommendedSakes
+                    .map { it.fragments.contentFragment.toContent() }
+                    .sortedBy(Ranking.Content::rank)
+                    .map(Ranking.Content::toSake)
+            }
+        }
 
     override suspend fun getWishList(): ApiResponse<List<SakeDetail>> =
         withContext(Dispatchers.IO) {
@@ -86,57 +99,60 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                     .map { it.fragments.sakeDetailFragment.toSakeDetail() }
             }
         }
+}
 
-    private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
-        displayOrder = displayOrder,
-        category = category,
-        contents = contents.map { it.toContent() }
-    )
+private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
+    displayOrder = displayOrder,
+    category = category,
+    contents = contents.map { it.fragments.contentFragment.toContent() }
+        .sortedBy(Ranking.Content::rank)
+)
 
-    private suspend fun RankingsQuery.Content.toContent() = Ranking.Content(
-        rank = rank,
-        sakeId = sake.id,
-        name = sake.name,
-        imageUri = getImageUri(sake.imgPath)
-    )
+private suspend fun ContentFragment.toContent() = Ranking.Content(
+    rank = rank,
+    sakeId = sake.id,
+    name = sake.name,
+    imageUri = getImageUri(sake.imgPath)
+)
 
-    private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
-        id = id,
-        name = name,
-        description = description,
-        region = region,
-        brewer = brewer,
-        imageUri = getImageUri(imgPath),
-        tags = tags.map { it.name!! }, // TODO: nonnull対応後に!!を消す
-        suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
-        goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
-    )
+private fun Ranking.Content.toSake() = Sake(id = sakeId, name = name, imageUri = imageUri)
 
-    private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
-        firebaseImagePath?.let { path ->
-            FirebaseStorage.getInstance()
-                .getReferenceFromUrl(path)
-                .downloadUrl
-                .await()
-        }
+private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
+    id = id,
+    name = name,
+    description = description,
+    region = region,
+    brewer = brewer,
+    imageUri = getImageUri(imgPath),
+    tags = tags.map { it.name },
+    suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
+    goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
+)
+
+private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
+    firebaseImagePath?.let { path ->
+        FirebaseStorage.getInstance()
+            .getReferenceFromUrl(path)
+            .downloadUrl
+            .await()
     }
-        .onFailure { if (it is CancellationException) throw it }
-        .getOrNull()
+}
+    .onFailure { if (it is CancellationException) throw it }
+    .getOrNull()
 
-    private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
-        ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
-        ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
-        ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
-        ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
-        ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
-        is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
-    }
+private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
+    ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
+    ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
+    ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
+    ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
+    ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
+    is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
+}
 
-    private fun ApolloFoodCategory.toFoodCategory() = when (this) {
-        ApolloFoodCategory.MEAT -> FoodCategory.MEAT
-        ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
-        ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
-        ApolloFoodCategory.SNACK -> FoodCategory.SNACK
-        is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
-    }
+private fun ApolloFoodCategory.toFoodCategory() = when (this) {
+    ApolloFoodCategory.MEAT -> FoodCategory.MEAT
+    ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
+    ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
+    ApolloFoodCategory.SNACK -> FoodCategory.SNACK
+    is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
 }
