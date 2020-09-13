@@ -8,6 +8,12 @@ query RankingsQuery {
   }
 }
 
+query RecommendedSakeQuery {
+  getRecommendedSakes {
+    ...contentFragment
+  }
+}
+
 fragment contentFragment on RankingContent {
   rank
   sake {

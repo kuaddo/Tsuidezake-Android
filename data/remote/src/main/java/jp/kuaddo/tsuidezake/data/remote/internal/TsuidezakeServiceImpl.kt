@@ -7,6 +7,7 @@ import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
+import jp.kuaddo.tsuidezake.data.remote.RecommendedSakeQuery
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
@@ -17,6 +18,7 @@ import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
+import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import kotlinx.coroutines.CancellationException
@@ -37,6 +39,16 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                 .sortedBy(Ranking::displayOrder)
         }
     }
+
+    override suspend fun getRecommendedSakes(): ApiResponse<List<Sake>> =
+        withContext(Dispatchers.IO) {
+            apolloClient.query(RecommendedSakeQuery()).toApiResponse { response ->
+                response.getRecommendedSakes
+                    .map { it.fragments.contentFragment.toContent() }
+                    .sortedBy(Ranking.Content::rank)
+                    .map(Ranking.Content::toSake)
+            }
+        }
 
     override suspend fun getWishList(): ApiResponse<List<SakeDetail>> =
         withContext(Dispatchers.IO) {
@@ -92,6 +104,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         displayOrder = displayOrder,
         category = category,
         contents = contents.map { it.fragments.contentFragment.toContent() }
+            .sortedBy(Ranking.Content::rank)
     )
 
     private suspend fun ContentFragment.toContent() = Ranking.Content(
@@ -141,3 +154,5 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
     }
 }
+
+private fun Ranking.Content.toSake() = Sake(id = sakeId, name = name, imageUri = imageUri)
