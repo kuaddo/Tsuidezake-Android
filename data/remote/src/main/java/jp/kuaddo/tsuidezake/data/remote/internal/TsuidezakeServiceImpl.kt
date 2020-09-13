@@ -12,6 +12,7 @@ import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.remote.WishListQuery
+import jp.kuaddo.tsuidezake.data.remote.fragment.ContentFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
@@ -90,10 +91,10 @@ internal class TsuidezakeServiceImpl @Inject constructor(
     private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
         displayOrder = displayOrder,
         category = category,
-        contents = contents.map { it.toContent() }
+        contents = contents.map { it.fragments.contentFragment.toContent() }
     )
 
-    private suspend fun RankingsQuery.Content.toContent() = Ranking.Content(
+    private suspend fun ContentFragment.toContent() = Ranking.Content(
         rank = rank,
         sakeId = sake.id,
         name = sake.name,
