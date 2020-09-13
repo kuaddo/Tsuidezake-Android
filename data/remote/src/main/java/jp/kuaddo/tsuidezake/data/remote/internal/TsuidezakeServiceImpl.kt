@@ -107,7 +107,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
         region = region,
         brewer = brewer,
         imageUri = getImageUri(imgPath),
-        tags = tags.map { it.name!! }, // TODO: nonnull対応後に!!を消す
+        tags = tags.map { it.name },
         suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
         goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
     )
