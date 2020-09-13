@@ -99,60 +99,60 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                     .map { it.fragments.sakeDetailFragment.toSakeDetail() }
             }
         }
-
-    private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
-        displayOrder = displayOrder,
-        category = category,
-        contents = contents.map { it.fragments.contentFragment.toContent() }
-            .sortedBy(Ranking.Content::rank)
-    )
-
-    private suspend fun ContentFragment.toContent() = Ranking.Content(
-        rank = rank,
-        sakeId = sake.id,
-        name = sake.name,
-        imageUri = getImageUri(sake.imgPath)
-    )
-
-    private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
-        id = id,
-        name = name,
-        description = description,
-        region = region,
-        brewer = brewer,
-        imageUri = getImageUri(imgPath),
-        tags = tags.map { it.name },
-        suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
-        goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
-    )
-
-    private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
-        firebaseImagePath?.let { path ->
-            FirebaseStorage.getInstance()
-                .getReferenceFromUrl(path)
-                .downloadUrl
-                .await()
-        }
-    }
-        .onFailure { if (it is CancellationException) throw it }
-        .getOrNull()
-
-    private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
-        ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
-        ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
-        ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
-        ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
-        ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
-        is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
-    }
-
-    private fun ApolloFoodCategory.toFoodCategory() = when (this) {
-        ApolloFoodCategory.MEAT -> FoodCategory.MEAT
-        ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
-        ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
-        ApolloFoodCategory.SNACK -> FoodCategory.SNACK
-        is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
-    }
 }
 
+private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
+    displayOrder = displayOrder,
+    category = category,
+    contents = contents.map { it.fragments.contentFragment.toContent() }
+        .sortedBy(Ranking.Content::rank)
+)
+
+private suspend fun ContentFragment.toContent() = Ranking.Content(
+    rank = rank,
+    sakeId = sake.id,
+    name = sake.name,
+    imageUri = getImageUri(sake.imgPath)
+)
+
 private fun Ranking.Content.toSake() = Sake(id = sakeId, name = name, imageUri = imageUri)
+
+private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
+    id = id,
+    name = name,
+    description = description,
+    region = region,
+    brewer = brewer,
+    imageUri = getImageUri(imgPath),
+    tags = tags.map { it.name },
+    suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
+    goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
+)
+
+private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
+    firebaseImagePath?.let { path ->
+        FirebaseStorage.getInstance()
+            .getReferenceFromUrl(path)
+            .downloadUrl
+            .await()
+    }
+}
+    .onFailure { if (it is CancellationException) throw it }
+    .getOrNull()
+
+private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
+    ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
+    ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
+    ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
+    ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
+    ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
+    is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
+}
+
+private fun ApolloFoodCategory.toFoodCategory() = when (this) {
+    ApolloFoodCategory.MEAT -> FoodCategory.MEAT
+    ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
+    ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
+    ApolloFoodCategory.SNACK -> FoodCategory.SNACK
+    is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
+}
