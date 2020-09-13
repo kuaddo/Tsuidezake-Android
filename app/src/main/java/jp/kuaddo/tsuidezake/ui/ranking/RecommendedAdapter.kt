@@ -12,7 +12,11 @@ class RecommendedAdapter(
     lifecycleOwner: LifecycleOwner,
     private val onClickItem: (sake: Sake) -> Unit
 ) : DataBoundListAdapter<Sake, ItemRecommendedBinding>(lifecycleOwner, Sake.diffUtil) {
-    override fun getItemCount(): Int = DUMMY_OFFSET + super.getItemCount() + DUMMY_OFFSET
+    override fun getItemCount(): Int = if (super.getItemCount() < 2) {
+        super.getItemCount()
+    } else {
+        DUMMY_OFFSET + super.getItemCount() + DUMMY_OFFSET
+    }
 
     override fun getItem(position: Int): Sake {
         val actualSize = currentList.size

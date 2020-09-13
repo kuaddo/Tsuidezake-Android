@@ -14,7 +14,6 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
-import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.ui.common.AutoScroller
 import javax.inject.Inject
 
@@ -53,16 +52,14 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
         rankingStateAdapter = RankingStateAdapter(childFragmentManager, viewLifecycleOwner)
         binding.rankingViewPager.adapter = rankingStateAdapter
 
-        // TODO: remove sample data
-        recommendedAdapter.submitList(
-            (1..7).map { Sake(it, "秘幻 吟醸酒 $it", null) }
-        )
-
-        showRecommendSakeDialog()
         observe()
     }
 
     private fun observe() {
+        viewModel.recommendedSakes.observeNonNull(viewLifecycleOwner) {
+            recommendedAdapter.submitList(it)
+            showRecommendSakeDialog()
+        }
         viewModel.rankings.observeNonNull(viewLifecycleOwner) { rankings ->
             rankingStateAdapter.submitList(rankings)
             TabLayoutMediator(binding.tabLayout, binding.rankingViewPager) { tab, position ->
