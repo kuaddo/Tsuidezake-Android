@@ -27,7 +27,8 @@ class RecommendedAdapter(
         ItemRecommendedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
     override fun bind(binding: ItemRecommendedBinding, item: Sake, position: Int) {
-        binding.sakeName = item.name
+        binding.name = item.name
+        binding.imageUri = item.imageUri
         binding.root.setOnClickListener { onClickItem(item) }
     }
 
