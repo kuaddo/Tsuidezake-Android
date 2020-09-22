@@ -21,6 +21,8 @@ sealed class Resource<out T> {
         LoadingResource -> LoadingResource
     }
 
+    fun ignoreData(): Resource<Unit> = map { Unit }
+
     fun dataOrNull(): T? = when (this) {
         is SuccessResource -> data
         is ErrorResource -> data
