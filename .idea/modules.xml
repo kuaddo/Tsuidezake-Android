@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/auth/auth.iml" filepath="$PROJECT_DIR$/.idea/modules/data/auth/auth.iml" group="Tsuidezake-Android/data/auth" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="Tsuidezake-Android/core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/data.iml" group="Tsuidezake-Android/data" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/domain.iml" group="Tsuidezake-Android/domain" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/local/local.iml" filepath="$PROJECT_DIR$/.idea/modules/data/local/local.iml" group="Tsuidezake-Android/data/local" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/model.iml" group="Tsuidezake-Android/model" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" filepath="$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" group="Tsuidezake-Android/data/remote" />
