@@ -18,7 +18,6 @@ import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.toApiResponse
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
-import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import kotlinx.coroutines.CancellationException
@@ -34,19 +33,15 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 ) : TsuidezakeService {
     override suspend fun getRankings(): ApiResponse<List<Ranking>> = withContext(Dispatchers.IO) {
         apolloClient.query(RankingsQuery()).toApiResponse { response ->
-            response.getRankings
-                .map { it.toRanking() }
-                .sortedBy(Ranking::displayOrder)
+            response.getRankings.map { it.toRanking() }
         }
     }
 
-    override suspend fun getRecommendedSakes(): ApiResponse<List<Sake>> =
+    override suspend fun getRecommendedSakes(): ApiResponse<List<Ranking.Content>> =
         withContext(Dispatchers.IO) {
             apolloClient.query(RecommendedSakeQuery()).toApiResponse { response ->
                 response.getRecommendedSakes
                     .map { it.fragments.contentFragment.toContent() }
-                    .sortedBy(Ranking.Content::rank)
-                    .map(Ranking.Content::toSake)
             }
         }
 
@@ -55,7 +50,6 @@ internal class TsuidezakeServiceImpl @Inject constructor(
             apolloClient.query(WishListQuery()).toApiResponse { response ->
                 response.wishList
                     .map { it.fragments.sakeDetailFragment.toSakeDetail() }
-                    .sortedBy { it.id }
             }
         }
 
@@ -105,7 +99,6 @@ private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
     displayOrder = displayOrder,
     category = category,
     contents = contents.map { it.fragments.contentFragment.toContent() }
-        .sortedBy(Ranking.Content::rank)
 )
 
 private suspend fun ContentFragment.toContent() = Ranking.Content(
@@ -114,8 +107,6 @@ private suspend fun ContentFragment.toContent() = Ranking.Content(
     name = sake.name,
     imageUri = getImageUri(sake.imgPath)
 )
-
-private fun Ranking.Content.toSake() = Sake(id = sakeId, name = name, imageUri = imageUri)
 
 private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
     id = id,

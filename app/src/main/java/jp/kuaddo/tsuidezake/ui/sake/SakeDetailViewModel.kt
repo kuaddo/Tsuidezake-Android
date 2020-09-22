@@ -8,8 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import jp.kuaddo.tsuidezake.R
-import jp.kuaddo.tsuidezake.data.repository.Repository
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
+import jp.kuaddo.tsuidezake.domain.AddSakeToTastedListUseCase
+import jp.kuaddo.tsuidezake.domain.AddSakeToWishListUseCase
+import jp.kuaddo.tsuidezake.domain.GetSakeDetailUseCase
+import jp.kuaddo.tsuidezake.domain.RemoveSakeFromTastedListUseCase
+import jp.kuaddo.tsuidezake.domain.RemoveSakeFromWishListUseCase
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
@@ -19,13 +23,17 @@ import kotlinx.coroutines.launch
 
 class SakeDetailViewModel @AssistedInject constructor(
     @Assisted private val sakeId: Int,
-    private val repository: Repository,
+    private val getSakeDetailUseCase: GetSakeDetailUseCase,
+    private val addSakeToWishListUseCase: AddSakeToWishListUseCase,
+    private val removeSakeFromWishListUseCase: RemoveSakeFromWishListUseCase,
+    private val addSakeToTastedListUseCase: AddSakeToTastedListUseCase,
+    private val removeSakeFromTastedListUseCase: RemoveSakeFromTastedListUseCase,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
 ) : ViewModel(),
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
     val sakeDetail: LiveData<SakeDetail> = liveData {
-        when (val res = repository.getSakeDetail(sakeId)) {
+        when (val res = getSakeDetailUseCase(sakeId)) {
             is SuccessResource -> emit(res.data)
             is ErrorResource -> setMessage(SnackbarMessageText(res.message))
         }
@@ -60,7 +68,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     private suspend fun addSakeToWishList() {
-        when (repository.addSakeToWishList(sakeId)) {
+        when (addSakeToWishListUseCase(sakeId)) {
             is SuccessResource -> _isAddedToWish.value = true
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_wish_list_failed))
@@ -68,7 +76,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     private suspend fun removeSakeFromWishList() {
-        when (repository.removeSakeFromWishList(sakeId)) {
+        when (removeSakeFromWishListUseCase(sakeId)) {
             is SuccessResource -> _isAddedToWish.value = false
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_wish_list_failed))
@@ -76,7 +84,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     private suspend fun addSakeToTastedList() {
-        when (repository.addSakeToTastedList(sakeId)) {
+        when (addSakeToTastedListUseCase(sakeId)) {
             is SuccessResource -> _isAddedToTasted.value = true
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
@@ -84,7 +92,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     private suspend fun removeSakeFromTastedList() {
-        when (repository.removeSakeFromTastedList(sakeId)) {
+        when (removeSakeFromTastedListUseCase(sakeId)) {
             is SuccessResource -> _isAddedToTasted.value = false
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_tasted_list_failed))

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.kuaddo.tsuidezake.data.repository.Repository
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
+import jp.kuaddo.tsuidezake.domain.GetWishListUseCase
+import jp.kuaddo.tsuidezake.domain.invoke
 import jp.kuaddo.tsuidezake.extensions.combineLatest
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.SakeDetail
@@ -17,7 +18,7 @@ import javax.inject.Inject
 typealias GroupedWishList = Map<String, List<SakeDetail>>
 
 class WishViewModel @Inject constructor(
-    private val repository: Repository,
+    private val getWishListUseCase: GetWishListUseCase,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
 ) : ViewModel(),
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
@@ -48,7 +49,7 @@ class WishViewModel @Inject constructor(
     }
 
     private fun updateWishList() = viewModelScope.launch {
-        when (val res = repository.getWishList()) {
+        when (val res = getWishListUseCase()) {
             is SuccessResource -> _groupedWishList.value = res.data.groupBy { it.region }
             is ErrorResource -> setMessage(SnackbarMessageText(res.message))
         }

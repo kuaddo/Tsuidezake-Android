@@ -2,6 +2,7 @@ include(
     ":app",
     ":core",
     ":model",
+    ":domain",
     ":data:auth",
     ":data:local",
     ":data:remote",

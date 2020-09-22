@@ -9,7 +9,6 @@ import jp.kuaddo.tsuidezake.data.repository.Repository
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource
-import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
 import javax.inject.Inject
@@ -21,7 +20,7 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getRankings(): Resource<List<Ranking>> =
         service.getRankings().convertToResource()
 
-    override suspend fun getRecommendedSakes(): Resource<List<Sake>> =
+    override suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>> =
         service.getRecommendedSakes().convertToResource()
 
     override suspend fun getWishList(): Resource<List<SakeDetail>> =

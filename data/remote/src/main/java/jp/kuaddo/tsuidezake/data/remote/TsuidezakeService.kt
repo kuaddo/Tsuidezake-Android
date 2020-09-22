@@ -1,12 +1,11 @@
 package jp.kuaddo.tsuidezake.data.remote
 
 import jp.kuaddo.tsuidezake.model.Ranking
-import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.model.SakeDetail
 
 interface TsuidezakeService {
     suspend fun getRankings(): ApiResponse<List<Ranking>>
-    suspend fun getRecommendedSakes(): ApiResponse<List<Sake>>
+    suspend fun getRecommendedSakes(): ApiResponse<List<Ranking.Content>>
     suspend fun getWishList(): ApiResponse<List<SakeDetail>>
     suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail>
 
