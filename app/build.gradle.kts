@@ -80,6 +80,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
+    implementation(project(":domain"))
     implementation(project(":data:auth"))
     implementation(project(":data:local"))
     implementation(project(":data:remote"))

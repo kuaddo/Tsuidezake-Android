@@ -31,3 +31,5 @@ abstract class UseCase<in P, R>(
         private const val UNKNOWN_ERROR_MESSAGE = "Unknown error"
     }
 }
+
+suspend operator fun <R> UseCase<Unit, R>.invoke(): Resource<R> = this(Unit)
