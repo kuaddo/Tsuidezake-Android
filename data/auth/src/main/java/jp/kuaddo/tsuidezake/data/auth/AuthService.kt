@@ -5,6 +5,5 @@ import androidx.lifecycle.LiveData
 interface AuthService {
     val initialized: LiveData<Boolean>
 
-    fun startListening()
     fun signInAnonymously()
 }

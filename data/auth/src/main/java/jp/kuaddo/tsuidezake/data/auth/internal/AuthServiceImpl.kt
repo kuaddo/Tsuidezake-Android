@@ -54,16 +54,14 @@ internal class AuthServiceImpl @Inject constructor(
         }
     }
 
-    override fun startListening() {
-        if (isAddedListener.getAndSet(true)) return
-        firebaseAuth.addAuthStateListener(authStateListener)
-    }
-
     override fun signInAnonymously() {
-        if (signInJob?.isCompleted == false && firebaseAuth.currentUser != null) return
-
-        signInJob = GlobalScope.launch {
-            firebaseAuth.signInAnonymously().await()
+        if (!isAddedListener.getAndSet(true)) {
+            firebaseAuth.addAuthStateListener(authStateListener)
+        }
+        if (firebaseAuth.currentUser == null && signInJob?.isCompleted != false) {
+            signInJob = GlobalScope.launch {
+                firebaseAuth.signInAnonymously().await()
+            }
         }
     }
 }
