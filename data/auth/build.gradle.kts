@@ -11,6 +11,7 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":data:remote"))
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)

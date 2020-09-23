@@ -6,10 +6,10 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import jp.kuaddo.tsuidezake.TsuidezakeApp
-import jp.kuaddo.tsuidezake.data.auth.AuthService
 import jp.kuaddo.tsuidezake.data.auth.AuthenticationComponent
 import jp.kuaddo.tsuidezake.data.auth.DaggerAuthenticationComponent
 import jp.kuaddo.tsuidezake.data.local.DaggerLocalDataComponent
+import jp.kuaddo.tsuidezake.data.remote.AuthToken
 import jp.kuaddo.tsuidezake.data.remote.DaggerRemoteDataComponent
 import jp.kuaddo.tsuidezake.data.repository.DaggerRepositoryComponent
 import jp.kuaddo.tsuidezake.data.repository.RepositoryComponent
@@ -42,7 +42,7 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
             authenticationComponent: AuthenticationComponent = createAuthenticationComponent(),
             repositoryComponent: RepositoryComponent = createRepositoryComponent(
                 applicationContext,
-                authenticationComponent.authService
+                authenticationComponent.authToken
             )
         ): AppComponent
     }
@@ -52,14 +52,14 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
 
 private fun createAuthenticationComponent() = DaggerAuthenticationComponent.create()
 
-private fun createRepositoryComponent(applicationContext: Context, authService: AuthService) =
+private fun createRepositoryComponent(applicationContext: Context, authToken: AuthToken) =
     DaggerRepositoryComponent.factory().create(
         createLocalDataComponent(applicationContext).preferenceStorage,
-        createRemoteDataComponent(authService).tsuidezakeService
+        createRemoteDataComponent(authToken).tsuidezakeService
     )
 
 private fun createLocalDataComponent(applicationContext: Context) =
     DaggerLocalDataComponent.factory().create(applicationContext)
 
-private fun createRemoteDataComponent(authService: AuthService) =
-    DaggerRemoteDataComponent.factory().create(authService)
+private fun createRemoteDataComponent(authToken: AuthToken) =
+    DaggerRemoteDataComponent.factory().create(authToken)

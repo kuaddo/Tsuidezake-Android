@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import jp.kuaddo.tsuidezake.data.auth.AuthService
 import jp.kuaddo.tsuidezake.data.auth.internal.di.AuthenticationScope
+import jp.kuaddo.tsuidezake.data.remote.AuthToken
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @AuthenticationScope
 internal class AuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-) : AuthService {
+) : AuthToken, AuthService {
     override var token: String? = null
         private set(value) {
             field = value

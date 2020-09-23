@@ -6,9 +6,15 @@ import dagger.Module
 import dagger.Provides
 import jp.kuaddo.tsuidezake.data.auth.AuthService
 import jp.kuaddo.tsuidezake.data.auth.internal.AuthServiceImpl
+import jp.kuaddo.tsuidezake.data.remote.AuthToken
 
 @Module
 internal abstract class AuthenticationModule {
+    @Suppress("unused")
+    @Binds
+    @AuthenticationScope
+    abstract fun bindAuthToken(impl: AuthServiceImpl): AuthToken
+
     @Suppress("unused")
     @Binds
     @AuthenticationScope
