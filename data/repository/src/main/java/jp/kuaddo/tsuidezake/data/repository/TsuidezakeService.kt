@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.data.remote
+package jp.kuaddo.tsuidezake.data.repository
 
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail

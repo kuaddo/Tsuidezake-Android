@@ -4,9 +4,9 @@ import com.apollographql.apollo.ApolloClient
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.remote.internal.OAuthHeaderInterceptor
 import jp.kuaddo.tsuidezake.data.remote.internal.TsuidezakeServiceImpl
+import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber

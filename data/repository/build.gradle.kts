@@ -13,8 +13,6 @@ apply<CommonBuildPlugin>()
 dependencies {
     implementation(project(":model"))
     implementation(project(":domain"))
-    implementation(project(":data:remote"))
-    compileOnly(project(":data:auth"))
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     api(Deps.Dagger.core)

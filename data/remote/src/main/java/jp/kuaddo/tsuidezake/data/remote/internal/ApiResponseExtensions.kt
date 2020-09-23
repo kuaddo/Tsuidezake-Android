@@ -1,17 +1,14 @@
-package jp.kuaddo.tsuidezake.data.remote
+package jp.kuaddo.tsuidezake.data.remote.internal
 
 import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.toDeferred
+import jp.kuaddo.tsuidezake.data.repository.ApiResponse
+import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
+import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
 import kotlinx.coroutines.CancellationException
 import timber.log.Timber
-
-sealed class ApiResponse<out T : Any>
-
-data class SuccessResponse<T : Any>(val data: T) : ApiResponse<T>()
-
-data class ErrorResponse(val message: String) : ApiResponse<Nothing>()
 
 internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
     if (data != null) return SuccessResponse(data!!)

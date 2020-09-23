@@ -1,10 +1,10 @@
 package jp.kuaddo.tsuidezake.data.repository.internal
 
-import jp.kuaddo.tsuidezake.data.remote.ApiResponse
-import jp.kuaddo.tsuidezake.data.remote.ErrorResponse
-import jp.kuaddo.tsuidezake.data.remote.SuccessResponse
-import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
+import jp.kuaddo.tsuidezake.data.repository.ApiResponse
+import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
 import jp.kuaddo.tsuidezake.data.repository.PreferenceStorage
+import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
+import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
 import jp.kuaddo.tsuidezake.domain.Repository
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.Ranking

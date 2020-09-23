@@ -2,7 +2,6 @@ package jp.kuaddo.tsuidezake.data.repository
 
 import dagger.BindsInstance
 import dagger.Component
-import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
 import jp.kuaddo.tsuidezake.data.repository.internal.di.RepositoryModule
 import jp.kuaddo.tsuidezake.data.repository.internal.di.RepositoryScope
 import jp.kuaddo.tsuidezake.domain.Repository
