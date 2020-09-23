@@ -8,9 +8,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.di.LocalDataScope
 
 @LocalDataScope
 @Component(
-    modules = [
-        LocalDataModule::class
-    ]
+    modules = [LocalDataModule::class]
 )
 interface LocalDataComponent {
     val preferenceStorage: PreferenceStorage
