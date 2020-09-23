@@ -5,7 +5,7 @@ import jp.kuaddo.tsuidezake.data.remote.ApiResponse
 import jp.kuaddo.tsuidezake.data.remote.ErrorResponse
 import jp.kuaddo.tsuidezake.data.remote.SuccessResponse
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeService
-import jp.kuaddo.tsuidezake.data.repository.Repository
+import jp.kuaddo.tsuidezake.domain.Repository
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource

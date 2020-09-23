@@ -12,6 +12,7 @@ apply<CommonBuildPlugin>()
 
 dependencies {
     implementation(project(":model"))
+    implementation(project(":domain"))
     implementation(project(":data:local"))
     implementation(project(":data:remote"))
     compileOnly(project(":data:auth"))

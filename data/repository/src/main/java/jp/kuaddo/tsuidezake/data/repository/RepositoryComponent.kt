@@ -5,6 +5,7 @@ import jp.kuaddo.tsuidezake.data.local.LocalDataComponent
 import jp.kuaddo.tsuidezake.data.remote.RemoteDataComponent
 import jp.kuaddo.tsuidezake.data.repository.internal.di.RepositoryModule
 import jp.kuaddo.tsuidezake.data.repository.internal.di.RepositoryScope
+import jp.kuaddo.tsuidezake.domain.Repository
 
 @RepositoryScope
 @Component(

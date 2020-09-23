@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.data.repository
+package jp.kuaddo.tsuidezake.domain
 
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource
