@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import jp.kuaddo.tsuidezake.data.local.internal.di.LocalDataModule
 import jp.kuaddo.tsuidezake.data.local.internal.di.LocalDataScope
+import jp.kuaddo.tsuidezake.data.repository.PreferenceStorage
 
 @LocalDataScope
 @Component(
