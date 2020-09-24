@@ -14,7 +14,8 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":domain"))
     implementation(Deps.Kotlin.stdlib)
-    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Deps.Kotlin.coroutinesCore)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx) // TODO: remove
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 }

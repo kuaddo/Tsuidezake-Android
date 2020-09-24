@@ -8,7 +8,7 @@ import androidx.core.content.getSystemService
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import jp.kuaddo.tsuidezake.data.auth.AuthService
+import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.di.DaggerAppComponent
 import timber.log.Timber
 import javax.inject.Inject

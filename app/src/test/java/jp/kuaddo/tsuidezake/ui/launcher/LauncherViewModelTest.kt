@@ -8,7 +8,7 @@ import io.mockk.verify
 import io.mockk.verifySequence
 import jp.kuaddo.tsuidezake.applyArchTaskExecutor
 import jp.kuaddo.tsuidezake.applyTestDispatcher
-import jp.kuaddo.tsuidezake.data.auth.AuthService
+import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.observeAndGet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay

@@ -3,8 +3,9 @@ package jp.kuaddo.tsuidezake.ui.launcher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import jp.kuaddo.tsuidezake.data.auth.AuthService
+import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.delegate.LoadingViewModelDelegate
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.extensions.combineLatest
@@ -21,7 +22,7 @@ class LauncherViewModel @Inject constructor(
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
     val isInitialized: LiveData<Boolean>
-        get() = authService.initialized
+        get() = authService.initialized.asLiveData()
             .combineLatest(initializeTimeIntervalFinished) { authInitialized, intervalFinished ->
                 authInitialized && intervalFinished
             }
