@@ -5,16 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.delegate.LoadingViewModelDelegate
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
+import jp.kuaddo.tsuidezake.domain.IsAccountInitializedUseCase
+import jp.kuaddo.tsuidezake.domain.invoke
 import jp.kuaddo.tsuidezake.extensions.combineLatest
 import jp.kuaddo.tsuidezake.extensions.setValueIfNew
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class LauncherViewModel @Inject constructor(
-    private val authService: AuthService,
+    private val isAccountInitializedUseCase: IsAccountInitializedUseCase,
     loadingViewModelDelegate: LoadingViewModelDelegate,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
 ) : ViewModel(),
@@ -22,7 +23,7 @@ class LauncherViewModel @Inject constructor(
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
     val isInitialized: LiveData<Boolean>
-        get() = authService.initialized.asLiveData()
+        get() = isAccountInitializedUseCase().asLiveData()
             .combineLatest(initializeTimeIntervalFinished) { authInitialized, intervalFinished ->
                 authInitialized && intervalFinished
             }

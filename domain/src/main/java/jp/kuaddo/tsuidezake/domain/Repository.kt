@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     val isAccountInitialized: Flow<Boolean>
 
-    fun signInAnonymously()
+    suspend fun signInAnonymously(): Boolean
 
     suspend fun getRankings(): Resource<List<Ranking>>
     suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>>

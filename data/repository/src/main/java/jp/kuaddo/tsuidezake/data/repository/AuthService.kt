@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 interface AuthService {
     val initialized: Flow<Boolean>
 
-    fun signInAnonymously()
+    suspend fun signInAnonymously(): Boolean
 }

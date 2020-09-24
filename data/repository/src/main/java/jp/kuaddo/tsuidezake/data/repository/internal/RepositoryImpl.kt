@@ -18,11 +18,11 @@ import javax.inject.Inject
 internal class RepositoryImpl @Inject constructor(
     private val preferenceStorage: PreferenceStorage,
     private val authService: AuthService,
-    private val tsuidezakeService: TsuidezakeService,
+    private val tsuidezakeService: TsuidezakeService
 ) : Repository {
     override val isAccountInitialized: Flow<Boolean> = authService.initialized
 
-    override fun signInAnonymously() = authService.signInAnonymously()
+    override suspend fun signInAnonymously(): Boolean = authService.signInAnonymously()
 
     override suspend fun getRankings(): Resource<List<Ranking>> =
         tsuidezakeService.getRankings().convertToResource()

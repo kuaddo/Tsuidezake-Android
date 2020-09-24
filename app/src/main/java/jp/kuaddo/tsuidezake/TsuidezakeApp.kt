@@ -8,14 +8,17 @@ import androidx.core.content.getSystemService
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.di.DaggerAppComponent
+import jp.kuaddo.tsuidezake.domain.SignInAnonymouslyUseCase
+import jp.kuaddo.tsuidezake.domain.invoke
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 class TsuidezakeApp : DaggerApplication() {
     @Inject
-    lateinit var authService: AuthService
+    lateinit var signInAnonymouslyUseCase: SignInAnonymouslyUseCase
 
     override fun onCreate() {
         super.onCreate()
@@ -39,7 +42,7 @@ class TsuidezakeApp : DaggerApplication() {
             object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
-                    authService.signInAnonymously()
+                    GlobalScope.launch { signInAnonymouslyUseCase() }
                 }
             }
         )
