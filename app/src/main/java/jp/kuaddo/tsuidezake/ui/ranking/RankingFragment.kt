@@ -46,7 +46,6 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
                 AUTO_SCROLL_DURATION,
                 recommendedAdapter::getJumpPosition
             )
-            viewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
         }
 
         rankingStateAdapter = RankingStateAdapter(childFragmentManager, viewLifecycleOwner)
@@ -57,7 +56,11 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
 
     private fun observe() {
         viewModel.recommendedSakes.observeNonNull(viewLifecycleOwner) {
+            val isInitialLoading = recommendedAdapter.itemCount == 0
             recommendedAdapter.submitList(it)
+            if (isInitialLoading) {
+                binding.recommendedViewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
+            }
             showRecommendSakeDialog()
         }
         viewModel.rankings.observeNonNull(viewLifecycleOwner) { rankings ->
