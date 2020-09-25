@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.domain
 
-import jp.kuaddo.tsuidezake.data.repository.Repository
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource
 import jp.kuaddo.tsuidezake.model.Sake

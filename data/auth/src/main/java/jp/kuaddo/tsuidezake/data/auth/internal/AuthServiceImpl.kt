@@ -1,35 +1,37 @@
 package jp.kuaddo.tsuidezake.data.auth.internal
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import jp.kuaddo.tsuidezake.data.auth.AuthService
 import jp.kuaddo.tsuidezake.data.auth.internal.di.AuthenticationScope
+import jp.kuaddo.tsuidezake.data.remote.AuthToken
+import jp.kuaddo.tsuidezake.data.repository.AuthService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
+@Suppress("EXPERIMENTAL_API_USAGE")
 @AuthenticationScope
 internal class AuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-) : AuthService {
+) : AuthToken, AuthService {
     override var token: String? = null
         private set(value) {
             field = value
-            _initialized.postValue(true)
+            _initialized.value = true
         }
 
-    override val initialized: LiveData<Boolean>
-        get() = _initialized
-    private val _initialized = MutableLiveData(false)
+    private val _initialized = MutableStateFlow(false)
+    override val initialized: Flow<Boolean> = _initialized
 
     private val isAddedListener = AtomicBoolean(false)
-    private var signInJob: Job? = null
+    private val signInMutex = Mutex()
 
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
         Timber.d("Received a FirebaseAuth update.")
@@ -53,16 +55,15 @@ internal class AuthServiceImpl @Inject constructor(
         }
     }
 
-    override fun startListening() {
-        if (isAddedListener.getAndSet(true)) return
-        firebaseAuth.addAuthStateListener(authStateListener)
-    }
-
-    override fun signInAnonymously() {
-        if (signInJob?.isCompleted == false && firebaseAuth.currentUser != null) return
-
-        signInJob = GlobalScope.launch {
-            firebaseAuth.signInAnonymously().await()
+    override suspend fun signInAnonymously(): Boolean = signInMutex.withLock {
+        if (!isAddedListener.getAndSet(true)) {
+            firebaseAuth.addAuthStateListener(authStateListener)
+        }
+        if (firebaseAuth.currentUser == null) {
+            val result = firebaseAuth.signInAnonymously().await()
+            result.user != null
+        } else {
+            true
         }
     }
 }

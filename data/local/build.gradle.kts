@@ -11,11 +11,11 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
-    implementation(project(":core"))
     implementation(project(":model"))
-
+    implementation(project(":data:repository"))
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.coreKtx)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 }

@@ -1,33 +1,33 @@
 package jp.kuaddo.tsuidezake.ui.launcher
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifySequence
 import jp.kuaddo.tsuidezake.applyArchTaskExecutor
 import jp.kuaddo.tsuidezake.applyTestDispatcher
-import jp.kuaddo.tsuidezake.data.auth.AuthService
+import jp.kuaddo.tsuidezake.domain.IsAccountInitializedUseCase
+import jp.kuaddo.tsuidezake.domain.invoke
 import jp.kuaddo.tsuidezake.observeAndGet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 @ExperimentalCoroutinesApi
 object LauncherViewModelTest : Spek({
-
     val testDispatcher = TestCoroutineDispatcher()
 
     applyArchTaskExecutor()
     applyTestDispatcher(testDispatcher)
 
-    val authService by memoized { mockk<AuthService>() }
+    val isAccountInitializedUseCase by memoized { mockk<IsAccountInitializedUseCase>() }
     val viewModel by memoized {
         LauncherViewModel(
-            authService,
+            isAccountInitializedUseCase,
             mockk(relaxed = true),
             mockk(relaxed = true)
         )
@@ -35,7 +35,7 @@ object LauncherViewModelTest : Spek({
 
     describe("isInitialized") {
         it("should return true after 2 seconds.") {
-            every { authService.initialized } returns MutableLiveData(true)
+            every { isAccountInitializedUseCase.invoke() } returns flowOf(true)
             val isInitializedObserver = viewModel.isInitialized.observeAndGet()
 
             testDispatcher.advanceTimeBy(2000)
@@ -46,7 +46,7 @@ object LauncherViewModelTest : Spek({
         }
 
         it("should return true after authService is initialized") {
-            every { authService.initialized } returns liveData {
+            every { isAccountInitializedUseCase.invoke() } returns flow {
                 emit(false)
                 delay(3000)
                 emit(true)

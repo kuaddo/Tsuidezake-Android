@@ -1,4 +1,4 @@
-package jp.kuaddo.tsuidezake.data.local
+package jp.kuaddo.tsuidezake.data.repository
 
 import androidx.lifecycle.LiveData
 

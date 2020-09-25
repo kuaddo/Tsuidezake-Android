@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
-import jp.kuaddo.tsuidezake.data.local.PreferenceStorage
+import jp.kuaddo.tsuidezake.data.repository.PreferenceStorage
 import javax.inject.Inject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
