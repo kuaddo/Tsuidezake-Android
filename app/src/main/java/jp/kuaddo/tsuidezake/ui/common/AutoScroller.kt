@@ -48,18 +48,12 @@ class AutoScroller(
         }
     }
 
-    private var currentPosition = viewPager.currentItem
+    private var currentPosition = 0
     private var scrollJob: Job? = null
 
     init {
         viewPager.registerOnPageChangeCallback(infinityScrollCallback)
         lifecycleOwner.lifecycle.addObserver(this)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    @Suppress("unused")
-    private fun initializePosition() {
-        currentPosition = viewPager.currentItem
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
