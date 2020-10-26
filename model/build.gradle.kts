@@ -17,6 +17,7 @@ tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)
     }
+    outputFormatter = dependencyUpdatesFormatter
 }
 
 ktlint {
