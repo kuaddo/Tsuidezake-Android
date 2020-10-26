@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" group="Tsuidezake-Android" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android_buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android_buildSrc.iml" group="Tsuidezake-Android/Tsuidezake-Android_buildSrc" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Tsuidezake-Android/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/auth/auth.iml" filepath="$PROJECT_DIR$/.idea/modules/data/auth/auth.iml" group="Tsuidezake-Android/data/auth" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="Tsuidezake-Android/core" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/data.iml" group="Tsuidezake-Android/data" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/domain.iml" group="Tsuidezake-Android/domain" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/local/local.iml" filepath="$PROJECT_DIR$/.idea/modules/data/local/local.iml" group="Tsuidezake-Android/data/local" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/model.iml" group="Tsuidezake-Android/model" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" filepath="$PROJECT_DIR$/.idea/modules/data/remote/remote.iml" group="Tsuidezake-Android/data/remote" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/repository/repository.iml" filepath="$PROJECT_DIR$/.idea/modules/data/repository/repository.iml" group="Tsuidezake-Android/data/repository" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Tsuidezake-Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Tsuidezake-Android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Tsuidezake-Android.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/Tsuidezake-Android.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/Tsuidezake-Android.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Tsuidezake-Android.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Tsuidezake-Android.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/auth/Tsuidezake-Android.data.auth.iml" filepath="$PROJECT_DIR$/.idea/modules/data/auth/Tsuidezake-Android.data.auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/local/Tsuidezake-Android.data.local.iml" filepath="$PROJECT_DIR$/.idea/modules/data/local/Tsuidezake-Android.data.local.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/remote/Tsuidezake-Android.data.remote.iml" filepath="$PROJECT_DIR$/.idea/modules/data/remote/Tsuidezake-Android.data.remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/repository/Tsuidezake-Android.data.repository.iml" filepath="$PROJECT_DIR$/.idea/modules/data/repository/Tsuidezake-Android.data.repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/Tsuidezake-Android.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/Tsuidezake-Android.domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/Tsuidezake-Android.model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/Tsuidezake-Android.model.iml" />
     </modules>
   </component>
 </project>
