@@ -163,3 +163,7 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
     }
 }
+
+tasks.register<DependencyUpdatesReportMergerTask>("mergeDependencyUpdatesReports") {
+    projectRootDirPath = projectDir.parent
+}
