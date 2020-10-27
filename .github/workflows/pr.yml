@@ -63,7 +63,9 @@ jobs:
           gem install bundler
           bundle install
       - name: Gradle Versions Plugin
-        run: ./gradlew dependencyUpdate
+        run: |
+          ./gradlew dependencyUpdate
+          ./gradlew mergeDependencyUpdatesReports
       - name: Run danger
         run: danger
         env:
