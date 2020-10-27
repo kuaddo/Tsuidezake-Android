@@ -2,13 +2,15 @@
 warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 
 # Gradle Versions Plugin
-File.open("app/build/dependencyUpdates/merged_report.md", "r") do |f|
+if File.exist?("app/build/dependencyUpdates/merged_report.md")
+  File.open("app/build/dependencyUpdates/merged_report.md", "r") do |f|
     contents = f.read()
     if contents.empty?
         message("All libraries are up to date.")
     else
         markdown(contents)
     end
+  end
 end
 
 # ktlint
