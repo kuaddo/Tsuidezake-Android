@@ -1,12 +1,12 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions
+import groovy.lang.Closure
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
-import org.gradle.kotlin.dsl.KotlinClosure1
+import org.gradle.kotlin.dsl.closureOf
 import org.gradle.kotlin.dsl.fileTree
 import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.task
@@ -36,12 +36,13 @@ class CommonBuildPlugin : Plugin<Project> {
                 disable("GoogleAppIndexingWarning")
             }
             testOptions {
-                unitTests.all {
+                @Suppress("UNCHECKED_CAST")
+                unitTests.all(closureOf<Test> {
                     testLogging { setEvents(TEST_LOGGING_EVENTS) }
                     extensions.configure(JacocoTaskExtension::class.java) {
                         isIncludeNoLocationClasses = true
                     }
-                }
+                } as Closure<Test>)
             }
 
             @Suppress("UnstableApiUsage")
@@ -104,9 +105,6 @@ class CommonBuildPlugin : Plugin<Project> {
         }
     }
 
-    private fun UnitTestOptions.all(block: Test.() -> Unit) =
-        all(KotlinClosure1<Any, Test>({ (this as Test).apply(block) }, owner = this))
-
     companion object {
         private val TEST_LOGGING_EVENTS = listOf(
             "passed",
@@ -117,6 +115,8 @@ class CommonBuildPlugin : Plugin<Project> {
         )
     }
 }
+
+const val dependencyUpdatesFormatter = "json"
 
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }

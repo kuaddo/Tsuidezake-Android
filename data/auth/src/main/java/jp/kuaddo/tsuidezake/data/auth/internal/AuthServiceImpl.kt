@@ -16,7 +16,6 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 @AuthenticationScope
 internal class AuthServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth

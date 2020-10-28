@@ -152,6 +152,7 @@ tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)
     }
+    outputFormatter = dependencyUpdatesFormatter
 }
 
 ktlint {
@@ -161,4 +162,8 @@ ktlint {
     reporters {
         reporter(ReporterType.CHECKSTYLE)
     }
+}
+
+tasks.register<DependencyUpdatesReportMergerTask>("mergeDependencyUpdatesReports") {
+    projectRootDirPath = projectDir.parent
 }
