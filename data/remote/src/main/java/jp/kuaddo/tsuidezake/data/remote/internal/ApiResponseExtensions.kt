@@ -3,7 +3,7 @@ package jp.kuaddo.tsuidezake.data.remote.internal
 import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.coroutines.toDeferred
+import com.apollographql.apollo.coroutines.await
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
 import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
@@ -23,7 +23,7 @@ internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
 internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
     transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
-    when (val res = toDeferred().await().toApiResponse()) {
+    when (val res = await().toApiResponse()) {
         is SuccessResponse -> SuccessResponse(transform(res.data))
         is ErrorResponse -> res
     }
@@ -40,7 +40,7 @@ internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
 internal suspend fun <T : Any, R : Any> ApolloMutationCall<T>.toApiResponse(
     transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
-    when (val res = toDeferred().await().toApiResponse()) {
+    when (val res = await().toApiResponse()) {
         is SuccessResponse -> SuccessResponse(transform(res.data))
         is ErrorResponse -> res
     }

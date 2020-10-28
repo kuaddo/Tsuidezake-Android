@@ -1,8 +1,8 @@
 object Deps {
-    private const val kotlinVersion = "1.4.0"
-    private const val coroutinesVersion = "1.3.9"
-    private const val navigationVersion = "2.3.0"
-    private const val apolloVersion = "2.3.1"
+    private const val kotlinVersion = "1.4.10"
+    private const val coroutinesVersion = "1.4.0"
+    private const val navigationVersion = "2.3.1"
+    private const val apolloVersion = "2.4.1"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
@@ -33,9 +33,9 @@ object Deps {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.1"
+        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.2"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
-        const val coreKtx = "androidx.core:core-ktx:1.3.1"
+        const val coreKtx = "androidx.core:core-ktx:1.3.2"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
         const val material = "com.google.android.material:material:1.2.1"
 
@@ -54,13 +54,13 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:17.5.0"
-        const val auth = "com.google.firebase:firebase-auth:19.3.2"
+        const val analytics = "com.google.firebase:firebase-analytics:18.0.0"
+        const val auth = "com.google.firebase:firebase-auth:20.0.0"
         const val storage = "com.google.firebase:firebase-storage:19.2.0"
     }
 
     object Dagger {
-        private const val version = "2.28.3"
+        private const val version = "2.29.1"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -69,7 +69,7 @@ object Deps {
         const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
 
         object AssistedInject {
-            private const val version = "0.5.2"
+            private const val version = "0.6.0"
 
             const val annotations =
                 "com.squareup.inject:assisted-inject-annotations-dagger2:$version"
@@ -79,7 +79,7 @@ object Deps {
     }
 
     object OkHttp {
-        private const val version = "4.8.1"
+        private const val version = "4.9.0"
 
         const val core = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
@@ -112,30 +112,30 @@ object Deps {
     }
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
-    const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
+    const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.0"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.0"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.4"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.5"
     const val inject = "javax.inject:javax.inject:1"
 
     object Test {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
-        const val assertJ = "org.assertj:assertj-core:3.17.1"
-        const val mockk = "io.mockk:mockk:1.10.0"
-        const val threeTenBp = "org.threeten:threetenbp:1.4.4"
+        const val assertJ = "org.assertj:assertj-core:3.18.0"
+        const val mockk = "io.mockk:mockk:1.10.2"
+        const val threeTenBp = "org.threeten:threetenbp:1.5.0"
     }
 
     object JUnit {
-        private const val version = "5.6.2"
+        private const val version = "5.7.0"
 
         const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
         const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
     }
 
     object Spek {
-        private const val version = "2.0.12"
+        private const val version = "2.0.13"
 
         const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
         const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
