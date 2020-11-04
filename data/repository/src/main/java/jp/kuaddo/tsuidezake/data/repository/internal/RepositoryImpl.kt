@@ -12,6 +12,7 @@ import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
+import jp.kuaddo.tsuidezake.model.UserSake
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -35,6 +36,9 @@ internal class RepositoryImpl @Inject constructor(
 
     override suspend fun getSakeDetail(id: Int): Resource<SakeDetail> =
         tsuidezakeService.getSakeDetail(id).convertToResource()
+
+    override suspend fun getUserSake(id: Int): Resource<UserSake> =
+        tsuidezakeService.getUserSake(id).convertToResource()
 
     override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
         tsuidezakeService.addSakeToWishList(id).convertToResource()
