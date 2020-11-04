@@ -3,7 +3,6 @@ package jp.kuaddo.tsuidezake.ui.sake
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -11,7 +10,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.AddSakeToTastedListUseCase
 import jp.kuaddo.tsuidezake.domain.AddSakeToWishListUseCase
-import jp.kuaddo.tsuidezake.domain.GetSakeDetailUseCase
+import jp.kuaddo.tsuidezake.domain.GetUserSakeUseCase
 import jp.kuaddo.tsuidezake.domain.RemoveSakeFromTastedListUseCase
 import jp.kuaddo.tsuidezake.domain.RemoveSakeFromWishListUseCase
 import jp.kuaddo.tsuidezake.model.ErrorResource
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class SakeDetailViewModel @AssistedInject constructor(
     @Assisted private val sakeId: Int,
-    private val getSakeDetailUseCase: GetSakeDetailUseCase,
+    private val getUserSakeUseCase: GetUserSakeUseCase,
     private val addSakeToWishListUseCase: AddSakeToWishListUseCase,
     private val removeSakeFromWishListUseCase: RemoveSakeFromWishListUseCase,
     private val addSakeToTastedListUseCase: AddSakeToTastedListUseCase,
@@ -32,12 +31,8 @@ class SakeDetailViewModel @AssistedInject constructor(
 ) : ViewModel(),
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
-    val sakeDetail: LiveData<SakeDetail> = liveData {
-        when (val res = getSakeDetailUseCase(sakeId)) {
-            is SuccessResource -> emit(res.data)
-            is ErrorResource -> setMessage(SnackbarMessageText(res.message))
-        }
-    }
+    private val _sakeDetail = MutableLiveData<SakeDetail>()
+    val sakeDetail: LiveData<SakeDetail> = _sakeDetail
 
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
@@ -50,6 +45,20 @@ class SakeDetailViewModel @AssistedInject constructor(
     private val _isExpanded = MutableLiveData(false)
     private val _isAddedToWish = MutableLiveData(false)
     private val _isAddedToTasted = MutableLiveData(false)
+
+    init {
+        viewModelScope.launch {
+            when (val res = getUserSakeUseCase(sakeId)) {
+                is SuccessResource -> {
+                    val userSake = res.data
+                    _sakeDetail.value = userSake.sakeDetail
+                    _isAddedToWish.value = userSake.isAddedToWish
+                    _isAddedToTasted.value = userSake.isAddedToTasted
+                }
+                is ErrorResource -> setMessage(SnackbarMessageText(res.message))
+            }
+        }
+    }
 
     fun switchExpandState() {
         _isExpanded.value = _isExpanded.value?.not() ?: true
