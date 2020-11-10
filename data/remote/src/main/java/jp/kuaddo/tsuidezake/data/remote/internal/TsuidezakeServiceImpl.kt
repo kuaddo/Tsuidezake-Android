@@ -10,6 +10,7 @@ import jp.kuaddo.tsuidezake.data.remote.RecommendedSakeQuery
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
+import jp.kuaddo.tsuidezake.data.remote.UserSakeQuery
 import jp.kuaddo.tsuidezake.data.remote.WishListQuery
 import jp.kuaddo.tsuidezake.data.remote.fragment.ContentFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
@@ -19,6 +20,7 @@ import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
+import jp.kuaddo.tsuidezake.model.UserSake
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -58,6 +60,20 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                 response.sake!!.fragments
                     .sakeDetailFragment
                     .toSakeDetail()
+            }
+        }
+
+    override suspend fun getUserSake(id: Int): ApiResponse<UserSake> =
+        withContext(Dispatchers.IO) {
+            apolloClient.query(UserSakeQuery(id)).toApiResponse { response ->
+                val sakeDetail = response.getUserSake!!.sake.fragments
+                    .sakeDetailFragment
+                    .toSakeDetail()
+                UserSake(
+                    sakeDetail,
+                    isAddedToWish = response.getUserSake.isWished,
+                    isAddedToTasted = response.getUserSake.isTasted
+                )
             }
         }
 

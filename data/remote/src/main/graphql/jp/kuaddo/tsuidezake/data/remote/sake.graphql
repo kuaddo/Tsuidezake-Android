@@ -4,6 +4,16 @@ query SakeQuery($id: Int!) {
   }
 }
 
+query UserSakeQuery($id: Int!) {
+  getUserSake(id: $id) {
+    sake {
+      ...sakeDetailFragment
+    }
+    isTasted
+    isWished
+  }
+}
+
 query WishListQuery {
   wishList {
     ...sakeDetailFragment
