@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.ui.sake
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -16,6 +17,7 @@ import jp.kuaddo.tsuidezake.domain.RemoveSakeFromWishListUseCase
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
+import jp.kuaddo.tsuidezake.model.UserSake
 import jp.kuaddo.tsuidezake.util.SnackbarMessageRes
 import jp.kuaddo.tsuidezake.util.SnackbarMessageText
 import kotlinx.coroutines.launch
@@ -31,30 +33,21 @@ class SakeDetailViewModel @AssistedInject constructor(
 ) : ViewModel(),
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
-    private val _sakeDetail = MutableLiveData<SakeDetail>()
-    val sakeDetail: LiveData<SakeDetail> = _sakeDetail
+    private val userSake = MutableLiveData<UserSake>()
+    val sakeDetail: LiveData<SakeDetail> = userSake.map(UserSake::sakeDetail)
+    val isAddedToWish: LiveData<Boolean> = userSake.map(UserSake::isAddedToWish)
+    val isAddedToTasted: LiveData<Boolean> = userSake.map(UserSake::isAddedToTasted)
 
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
-    val isAddedToWish: LiveData<Boolean>
-        get() = _isAddedToWish
-    val isAddedToTasted: LiveData<Boolean>
-        get() = _isAddedToTasted
 
     private val _isExpanded = MutableLiveData(false)
-    private val _isAddedToWish = MutableLiveData(false)
-    private val _isAddedToTasted = MutableLiveData(false)
 
     init {
         viewModelScope.launch {
             when (val res = getUserSakeUseCase(sakeId)) {
-                is SuccessResource -> {
-                    val userSake = res.data
-                    _sakeDetail.value = userSake.sakeDetail
-                    _isAddedToWish.value = userSake.isAddedToWish
-                    _isAddedToTasted.value = userSake.isAddedToTasted
-                }
+                is SuccessResource -> userSake.value = res.data
                 is ErrorResource -> setMessage(SnackbarMessageText(res.message))
             }
         }
@@ -66,19 +59,19 @@ class SakeDetailViewModel @AssistedInject constructor(
 
     fun toggleWishState() = viewModelScope.launch {
         // TODO: show loading UI
-        if (_isAddedToWish.value == true) removeSakeFromWishList()
+        if (isAddedToWish.value == true) removeSakeFromWishList()
         else addSakeToWishList()
     }
 
     fun toggleTastedState() = viewModelScope.launch {
         // TODO: show loading UI
-        if (_isAddedToTasted.value == true) removeSakeFromTastedList()
+        if (isAddedToTasted.value == true) removeSakeFromTastedList()
         else addSakeToTastedList()
     }
 
     private suspend fun addSakeToWishList() {
         when (addSakeToWishListUseCase(sakeId)) {
-            is SuccessResource -> _isAddedToWish.value = true
+            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToWish = true)
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_wish_list_failed))
         }
@@ -86,7 +79,7 @@ class SakeDetailViewModel @AssistedInject constructor(
 
     private suspend fun removeSakeFromWishList() {
         when (removeSakeFromWishListUseCase(sakeId)) {
-            is SuccessResource -> _isAddedToWish.value = false
+            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToWish = false)
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_wish_list_failed))
         }
@@ -94,7 +87,7 @@ class SakeDetailViewModel @AssistedInject constructor(
 
     private suspend fun addSakeToTastedList() {
         when (addSakeToTastedListUseCase(sakeId)) {
-            is SuccessResource -> _isAddedToTasted.value = true
+            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = true)
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
         }
@@ -102,7 +95,7 @@ class SakeDetailViewModel @AssistedInject constructor(
 
     private suspend fun removeSakeFromTastedList() {
         when (removeSakeFromTastedListUseCase(sakeId)) {
-            is SuccessResource -> _isAddedToTasted.value = false
+            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = false)
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_tasted_list_failed))
         }
