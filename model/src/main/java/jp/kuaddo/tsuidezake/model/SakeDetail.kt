@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.model
 
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -11,7 +10,7 @@ data class SakeDetail(
     val description: String?,
     val region: String,
     val brewer: String?,
-    val imageUri: Uri?,
+    val imageUri: String?,
     val tags: List<String>,
     val suitableTemperatures: Set<SuitableTemperature>,
     val goodFoodCategories: Set<FoodCategory>

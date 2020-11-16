@@ -10,7 +10,7 @@
 
         <variable
             name="imageUri"
-            type="android.net.Uri" />
+            type="String" />
     </data>
 
     <FrameLayout

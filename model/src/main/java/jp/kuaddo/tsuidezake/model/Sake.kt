@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.model
 
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -8,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Sake(
     val id: Int,
     val name: String,
-    val imageUri: Uri?
+    val imageUri: String?
 ) : Parcelable {
     companion object
 }

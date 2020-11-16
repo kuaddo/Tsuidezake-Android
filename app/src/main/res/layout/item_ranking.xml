@@ -52,7 +52,7 @@
             android:padding="@{content.imageUri == null ? @dimen/ranking_default_image_padding : @dimen/ranking_loaded_image_padding}"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_sake"
-            app:uri="@{content.imageUri}"
+            app:uriString="@{content.imageUri}"
             tools:ignore="ContentDescription"
             tools:padding="@dimen/ranking_default_image_padding" />
 

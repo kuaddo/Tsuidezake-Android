@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.data.remote.internal
 
-import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.storage.FirebaseStorage
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
@@ -135,7 +134,7 @@ private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
     goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
 )
 
-private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
+private suspend fun getImageUri(firebaseImagePath: String?): String? = runCatching {
     firebaseImagePath?.let { path ->
         FirebaseStorage.getInstance()
             .getReferenceFromUrl(path)
@@ -145,6 +144,7 @@ private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching 
 }
     .onFailure { if (it is CancellationException) throw it }
     .getOrNull()
+    ?.toString()
 
 private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
     ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
