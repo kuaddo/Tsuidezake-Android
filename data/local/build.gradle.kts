@@ -16,8 +16,17 @@ dependencies {
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.coreKtx)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Deps.AndroidX.Room.runtime)
+    implementation(Deps.AndroidX.Room.ktx)
+    kapt(Deps.AndroidX.Room.compiler)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+
+    testImplementation(Deps.JUnit.jupiterApi)
+    testImplementation(Deps.JUnit.jupiterEngine)
+    testImplementation(Deps.Spek.dslJvm)
+    testImplementation(Deps.Spek.junit5)
+    testImplementation(Deps.Test.assertJ)
 }
 
 tasks.withType<DependencyUpdatesTask> {
