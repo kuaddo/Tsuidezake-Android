@@ -10,6 +10,16 @@ plugins {
 }
 apply<CommonBuildPlugin>()
 
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                argument("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(project(":model"))
     implementation(project(":data:repository"))
