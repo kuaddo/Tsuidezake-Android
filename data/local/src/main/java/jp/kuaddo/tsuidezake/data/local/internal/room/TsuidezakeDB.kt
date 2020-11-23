@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import jp.kuaddo.tsuidezake.data.local.internal.room.converter.FoodCategorySetConverters
 import jp.kuaddo.tsuidezake.data.local.internal.room.converter.SuitableTemperatureSetConverters
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 
 @Database(
@@ -19,6 +20,8 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
     FoodCategorySetConverters::class
 )
 internal abstract class TsuidezakeDB : RoomDatabase() {
+    abstract fun sakeDao(): SakeDao
+
     companion object {
         private const val dbName = "tsuidezake.db"
 
