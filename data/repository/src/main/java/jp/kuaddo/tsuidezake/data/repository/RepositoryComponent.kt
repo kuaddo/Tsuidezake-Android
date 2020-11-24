@@ -17,6 +17,7 @@ interface RepositoryComponent {
     interface Factory {
         fun create(
             @BindsInstance preferenceStorage: PreferenceStorage,
+            @BindsInstance localDataSource: LocalDataSource,
             @BindsInstance tsuidezakeService: TsuidezakeService,
             @BindsInstance authService: AuthService
         ): RepositoryComponent

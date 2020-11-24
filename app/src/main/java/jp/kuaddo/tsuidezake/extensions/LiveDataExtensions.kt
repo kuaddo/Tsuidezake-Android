@@ -12,6 +12,10 @@ fun <T> MutableLiveData<T>.setValueIfNew(newValue: T) {
     if (this.value != newValue) value = newValue
 }
 
+fun <T> MutableLiveData<T>.setValueIfNewAndNotNull(newValue: T?) {
+    if (this.value != newValue && newValue != null) value = newValue
+}
+
 fun <T> MutableLiveData<T>.postValueIfNew(newValue: T) {
     if (this.value != newValue) postValue(newValue)
 }

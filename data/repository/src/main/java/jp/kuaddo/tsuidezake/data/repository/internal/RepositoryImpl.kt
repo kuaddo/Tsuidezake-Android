@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.data.repository.internal
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
+import jp.kuaddo.tsuidezake.data.repository.LocalDataSource
 import jp.kuaddo.tsuidezake.data.repository.PreferenceStorage
 import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
 import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 internal class RepositoryImpl @Inject constructor(
     private val preferenceStorage: PreferenceStorage,
+    private val localDataSource: LocalDataSource,
     private val authService: AuthService,
     private val tsuidezakeService: TsuidezakeService
 ) : Repository {
@@ -37,8 +39,18 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getSakeDetail(id: Int): Resource<SakeDetail> =
         tsuidezakeService.getSakeDetail(id).convertToResource()
 
-    override suspend fun getUserSake(id: Int): Resource<UserSake> =
-        tsuidezakeService.getUserSake(id).convertToResource()
+    override fun getUserSake(
+        id: Int
+    ): Flow<Resource<UserSake>> = object : NetworkBoundResource<UserSake, UserSake>() {
+        override fun loadFromDb(): Flow<UserSake?> = localDataSource.loadUserSakeFlow(id)
+
+        // TODO: キャッシュの生存期間を考える
+        override fun shouldFetch(data: UserSake?): Boolean = true
+
+        override suspend fun callApi(): ApiResponse<UserSake> = tsuidezakeService.getUserSake(id)
+
+        override suspend fun saveApiResult(item: UserSake) = localDataSource.saveUserSake(item)
+    }.getResultFlow()
 
     override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
         tsuidezakeService.addSakeToWishList(id).convertToResource()

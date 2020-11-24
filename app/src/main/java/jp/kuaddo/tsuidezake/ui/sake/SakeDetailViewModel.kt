@@ -14,12 +14,16 @@ import jp.kuaddo.tsuidezake.domain.AddSakeToWishListUseCase
 import jp.kuaddo.tsuidezake.domain.GetUserSakeUseCase
 import jp.kuaddo.tsuidezake.domain.RemoveSakeFromTastedListUseCase
 import jp.kuaddo.tsuidezake.domain.RemoveSakeFromWishListUseCase
+import jp.kuaddo.tsuidezake.extensions.setValueIfNew
+import jp.kuaddo.tsuidezake.extensions.setValueIfNewAndNotNull
 import jp.kuaddo.tsuidezake.model.ErrorResource
+import jp.kuaddo.tsuidezake.model.LoadingResource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
 import jp.kuaddo.tsuidezake.model.UserSake
 import jp.kuaddo.tsuidezake.util.SnackbarMessageRes
 import jp.kuaddo.tsuidezake.util.SnackbarMessageText
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SakeDetailViewModel @AssistedInject constructor(
@@ -46,9 +50,20 @@ class SakeDetailViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
-            when (val res = getUserSakeUseCase(sakeId)) {
-                is SuccessResource -> userSake.value = res.data
-                is ErrorResource -> setMessage(SnackbarMessageText(res.message))
+            var isFirstError = true
+            getUserSakeUseCase(sakeId).collect { res ->
+                when (res) {
+                    is SuccessResource -> userSake.setValueIfNew(res.data)
+                    is ErrorResource -> {
+                        if (isFirstError) setMessage(SnackbarMessageText(res.message))
+                        isFirstError = false
+                        userSake.setValueIfNewAndNotNull(res.data)
+                    }
+                    is LoadingResource -> {
+                        // TODO: show loading UI
+                        userSake.setValueIfNewAndNotNull(res.data)
+                    }
+                }
             }
         }
     }
