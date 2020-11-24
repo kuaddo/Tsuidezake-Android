@@ -32,7 +32,7 @@ class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
         viewModel.sakeDetail.observeNonNull(viewLifecycleOwner) { sakeDetail ->
             binding.tagsChipGroup.let { chipGroup ->
                 chipGroup.removeAllViews()
-                sakeDetail.tags.forEach { text -> chipGroup.addTagChip(text) }
+                sakeDetail.tags.forEach { tag -> chipGroup.addTagChip(tag.name) }
             }
         }
     }

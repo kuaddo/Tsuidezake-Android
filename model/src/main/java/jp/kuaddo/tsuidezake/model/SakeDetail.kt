@@ -11,7 +11,7 @@ data class SakeDetail(
     val region: String,
     val brewer: String?,
     val imageUri: String?,
-    val tags: List<String>,
+    val tags: List<Tag>,
     val suitableTemperatures: Set<SuitableTemperature>,
     val goodFoodCategories: Set<FoodCategory>
 ) : Parcelable

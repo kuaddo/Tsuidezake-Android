@@ -48,6 +48,7 @@ fragment sakeDetailFragment on Sake {
   id
   name
   tags {
+    id
     name
   }
   region
