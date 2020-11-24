@@ -1,60 +1,60 @@
 query SakeQuery($id: Int!) {
-  sake(id: $id) {
-    ...sakeDetailFragment
-  }
+    sake(id: $id) {
+        ...sakeDetailFragment
+    }
 }
 
 query UserSakeQuery($id: Int!) {
-  getUserSake(id: $id) {
-    sake {
-      ...sakeDetailFragment
+    getUserSake(id: $id) {
+        sake {
+            ...sakeDetailFragment
+        }
+        isTasted
+        isWished
     }
-    isTasted
-    isWished
-  }
 }
 
 query WishListQuery {
-  wishList {
-    ...sakeDetailFragment
-  }
+    wishList {
+        ...sakeDetailFragment
+    }
 }
 
 mutation AddSakeToWishList($id: Int!) {
-  addWishSake(id: $id) {
-    ...sakeDetailFragment
-  }
+    addWishSake(id: $id) {
+        ...sakeDetailFragment
+    }
 }
 
 mutation RemoveSakeFromWishList($id: Int!) {
-  removeWishSake(id: $id) {
-    ...sakeDetailFragment
-  }
+    removeWishSake(id: $id) {
+        ...sakeDetailFragment
+    }
 }
 
 mutation AddSakeToTastedList($id: Int!) {
-  addTastedSake(id: $id) {
-    ...sakeDetailFragment
-  }
+    addTastedSake(id: $id) {
+        ...sakeDetailFragment
+    }
 }
 
 mutation RemoveSakeFromTastedList($id: Int!) {
-  removeTastedSake(id: $id) {
-    ...sakeDetailFragment
-  }
+    removeTastedSake(id: $id) {
+        ...sakeDetailFragment
+    }
 }
 
 fragment sakeDetailFragment on Sake {
-  id
-  name
-  tags {
     id
     name
-  }
-  region
-  brewer
-  description
-  imgPath
-  suitableTemperatures
-  goodFoodCategories
+    tags {
+        id
+        name
+    }
+    region
+    brewer
+    description
+    imgPath
+    suitableTemperatures
+    goodFoodCategories
 }
