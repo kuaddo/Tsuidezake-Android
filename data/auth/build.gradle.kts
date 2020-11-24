@@ -4,7 +4,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("org.jlleitschuh.gradle.ktlint")
 }
