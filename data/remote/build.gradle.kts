@@ -19,12 +19,8 @@ apollo {
 }
 
 android {
-    testOptions {
-        junitPlatform {
-            filters {
-                includeEngines("spek2")
-            }
-        }
+    testOptions.junitPlatform.filters {
+        includeEngines("spek2")
     }
 }
 

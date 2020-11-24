@@ -6,16 +6,16 @@ object Deps {
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.0.1"
+        const val android = "com.android.tools.build:gradle:4.1.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        const val gms = "com.google.gms:google-services:4.3.3"
+        const val gms = "com.google.gms:google-services:4.3.4"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
-        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.5.1.0"
-        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.28.0"
-        const val deployGate = "com.deploygate:gradle:2.2.0"
+        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
+        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+        const val deployGate = "com.deploygate:gradle:2.3.0"
     }
 
     object Kotlin {
