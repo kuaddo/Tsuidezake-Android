@@ -9,6 +9,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.DialogSwipeSortingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.model.SakeDetail
+import jp.kuaddo.tsuidezake.model.Tag
 
 class SwipeSortingDialogFragment : DialogFragment() {
 
@@ -34,6 +35,8 @@ class SwipeSortingDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.swipeSortingView.apply {
+            val tags = listOf("辛口", "初心者におすすめ", "コスパ良し")
+                .mapIndexed { index, name -> Tag(id = index, name = name) }
             val sakes = (1..5).map { index ->
                 SakeDetail(
                     id = index,
@@ -42,7 +45,7 @@ class SwipeSortingDialogFragment : DialogFragment() {
                     region = "草津",
                     brewer = null,
                     imageUri = null,
-                    tags = listOf("辛口", "初心者におすすめ", "コスパ良し"),
+                    tags = tags,
                     suitableTemperatures = emptySet(),
                     goodFoodCategories = emptySet()
                 )

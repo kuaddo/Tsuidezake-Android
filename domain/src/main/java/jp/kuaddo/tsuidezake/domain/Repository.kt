@@ -15,7 +15,7 @@ interface Repository {
     suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>>
     suspend fun getWishList(): Resource<List<SakeDetail>>
     suspend fun getSakeDetail(id: Int): Resource<SakeDetail>
-    suspend fun getUserSake(id: Int): Resource<UserSake>
+    fun getUserSake(id: Int): Flow<Resource<UserSake>>
 
     suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>>
     suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>>

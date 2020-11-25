@@ -43,17 +43,20 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
     private var _value: T? = null
 
     init {
-        fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        val observer = object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 fragment.viewLifecycleOwnerLiveData.observeNonNull(fragment) { viewLifecycleOwner ->
-                    viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-                        override fun onDestroy(owner: LifecycleOwner) {
-                            _value = null
+                    viewLifecycleOwner.lifecycle.addObserver(
+                        object : DefaultLifecycleObserver {
+                            override fun onDestroy(owner: LifecycleOwner) {
+                                _value = null
+                            }
                         }
-                    })
+                    )
                 }
             }
-        })
+        }
+        fragment.lifecycle.addObserver(observer)
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {

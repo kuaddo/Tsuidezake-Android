@@ -47,8 +47,10 @@ interface AppComponent : AndroidInjector<TsuidezakeApp> {
 
 private fun createRepositoryComponent(applicationContext: Context): RepositoryComponent {
     val authenticationComponent = createAuthenticationComponent()
+    val localDataComponent = createLocalDataComponent(applicationContext)
     return DaggerRepositoryComponent.factory().create(
-        createLocalDataComponent(applicationContext).preferenceStorage,
+        localDataComponent.preferenceStorage,
+        localDataComponent.localDataSource,
         createRemoteDataComponent(authenticationComponent.authToken).tsuidezakeService,
         authenticationComponent.authService
     )

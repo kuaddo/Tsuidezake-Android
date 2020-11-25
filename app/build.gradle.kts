@@ -5,7 +5,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
@@ -67,13 +66,8 @@ android {
             )
         }
     }
-    androidExtensions.isExperimental = true
-    testOptions {
-        junitPlatform {
-            filters {
-                includeEngines("spek2")
-            }
-        }
+    testOptions.junitPlatform.filters {
+        includeEngines("spek2")
     }
 }
 

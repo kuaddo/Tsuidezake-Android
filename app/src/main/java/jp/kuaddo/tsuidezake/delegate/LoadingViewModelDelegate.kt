@@ -39,6 +39,7 @@ class MediatorLoadingViewModelDelegate : LoadingViewModelDelegate {
         addLoadingSource(isViewModelLoading)
     }
 
+    // TODO: 複数のloadingを考える
     override fun startViewModelLoading() {
         isViewModelLoading.value = true
     }

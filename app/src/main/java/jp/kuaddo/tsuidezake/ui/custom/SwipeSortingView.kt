@@ -107,7 +107,7 @@ class SwipeSortingView @JvmOverloads constructor(
         this.sakeDetail = sakeDetail
         tagsChipGroup.let { chipGroup ->
             chipGroup.removeAllViews()
-            sakeDetail.tags.map { Chip(context).apply { text = it } }
+            sakeDetail.tags.map { Chip(context).apply { text = it.name } }
                 .forEach { chip -> chipGroup.addView(chip) }
         }
         doNotWishButton.setOnClickListener { replaceFront() }

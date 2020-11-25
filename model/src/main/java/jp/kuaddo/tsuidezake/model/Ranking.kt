@@ -1,8 +1,7 @@
 package jp.kuaddo.tsuidezake.model
 
-import android.net.Uri
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 data class Ranking(
     val displayOrder: Int,
@@ -14,6 +13,6 @@ data class Ranking(
         val rank: Int,
         val sakeId: Int,
         val name: String,
-        val imageUri: Uri?
+        val imageUri: String?
     ) : Parcelable
 }

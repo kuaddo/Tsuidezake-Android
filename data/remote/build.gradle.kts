@@ -5,7 +5,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("org.jlleitschuh.gradle.ktlint")
     id("de.mannodermaus.android-junit5")
@@ -20,12 +19,8 @@ apollo {
 }
 
 android {
-    testOptions {
-        junitPlatform {
-            filters {
-                includeEngines("spek2")
-            }
-        }
+    testOptions.junitPlatform.filters {
+        includeEngines("spek2")
     }
 }
 

@@ -7,10 +7,10 @@ import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
 import jp.kuaddo.tsuidezake.util.GlideApp
 
-@BindingAdapter("uri")
-fun ImageView.bindImageUri(uri: Uri?) {
-    if (uri == null) setImageDrawable(null)
-    else GlideApp.with(context).load(uri).into(this)
+@BindingAdapter("uriString")
+fun ImageView.bindImageUri(uriString: String?) {
+    if (uriString == null) setImageDrawable(null)
+    else GlideApp.with(context).load(Uri.parse(uriString)).into(this)
 }
 
 @Suppress("unused")

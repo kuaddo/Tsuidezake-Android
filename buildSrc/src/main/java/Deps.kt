@@ -1,21 +1,21 @@
 object Deps {
-    private const val kotlinVersion = "1.4.10"
-    private const val coroutinesVersion = "1.4.0"
+    private const val kotlinVersion = "1.4.20"
+    private const val coroutinesVersion = "1.4.1"
     private const val navigationVersion = "2.3.1"
-    private const val apolloVersion = "2.4.1"
+    private const val apolloVersion = "2.4.5"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.0.1"
+        const val android = "com.android.tools.build:gradle:4.1.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        const val gms = "com.google.gms:google-services:4.3.3"
+        const val gms = "com.google.gms:google-services:4.3.4"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
-        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.5.1.0"
-        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.28.0"
-        const val deployGate = "com.deploygate:gradle:2.2.0"
+        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
+        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+        const val deployGate = "com.deploygate:gradle:2.3.0"
     }
 
     object Kotlin {
@@ -33,7 +33,7 @@ object Deps {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.2"
+        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.2"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.5"
@@ -51,16 +51,24 @@ object Deps {
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
         }
+
+        object Room {
+            private const val version = "2.2.5"
+
+            const val runtime = "androidx.room:room-runtime:$version"
+            const val compiler = "androidx.room:room-compiler:$version"
+            const val ktx = "androidx.room:room-ktx:$version"
+        }
     }
 
     object Firebase {
         const val analytics = "com.google.firebase:firebase-analytics:18.0.0"
-        const val auth = "com.google.firebase:firebase-auth:20.0.0"
+        const val auth = "com.google.firebase:firebase-auth:20.0.1"
         const val storage = "com.google.firebase:firebase-storage:19.2.0"
     }
 
     object Dagger {
-        private const val version = "2.29.1"
+        private const val version = "2.30.1"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -122,7 +130,7 @@ object Deps {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
-        const val assertJ = "org.assertj:assertj-core:3.18.0"
+        const val assertJ = "org.assertj:assertj-core:3.18.1"
         const val mockk = "io.mockk:mockk:1.10.2"
         const val threeTenBp = "org.threeten:threetenbp:1.5.0"
     }
@@ -135,7 +143,7 @@ object Deps {
     }
 
     object Spek {
-        private const val version = "2.0.13"
+        private const val version = "2.0.14"
 
         const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
         const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"

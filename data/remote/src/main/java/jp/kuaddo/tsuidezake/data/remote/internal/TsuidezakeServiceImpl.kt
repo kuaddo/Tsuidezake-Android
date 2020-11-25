@@ -1,6 +1,5 @@
 package jp.kuaddo.tsuidezake.data.remote.internal
 
-import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.google.firebase.storage.FirebaseStorage
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
@@ -20,12 +19,14 @@ import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
+import jp.kuaddo.tsuidezake.model.Tag
 import jp.kuaddo.tsuidezake.model.UserSake
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment.Tag as ApolloTag
 import jp.kuaddo.tsuidezake.data.remote.type.FoodCategory as ApolloFoodCategory
 import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitableTemperature
 
@@ -130,12 +131,12 @@ private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
     region = region,
     brewer = brewer,
     imageUri = getImageUri(imgPath),
-    tags = tags.map { it.name },
+    tags = tags.map { it.toTag() },
     suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
     goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
 )
 
-private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching {
+private suspend fun getImageUri(firebaseImagePath: String?): String? = runCatching {
     firebaseImagePath?.let { path ->
         FirebaseStorage.getInstance()
             .getReferenceFromUrl(path)
@@ -145,6 +146,10 @@ private suspend fun getImageUri(firebaseImagePath: String?): Uri? = runCatching 
 }
     .onFailure { if (it is CancellationException) throw it }
     .getOrNull()
+    ?.toString()
+
+// TODO: Schemaが直ったら!!を消す
+private fun ApolloTag.toTag() = Tag(id = id!!, name = name)
 
 private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
     ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT

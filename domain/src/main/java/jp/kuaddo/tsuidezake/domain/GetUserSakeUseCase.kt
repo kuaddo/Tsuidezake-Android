@@ -2,11 +2,12 @@ package jp.kuaddo.tsuidezake.domain
 
 import jp.kuaddo.tsuidezake.model.Resource
 import jp.kuaddo.tsuidezake.model.UserSake
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetUserSakeUseCase @Inject constructor(
     private val repository: Repository
-) : UseCase<Int, UserSake>() {
-    override suspend fun execute(parameter: Int): Resource<UserSake> =
+) : FlowUseCase<Int, Resource<UserSake>>() {
+    override fun execute(parameter: Int): Flow<Resource<UserSake>> =
         repository.getUserSake(parameter)
 }
