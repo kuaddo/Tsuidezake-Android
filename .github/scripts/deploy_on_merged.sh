@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "DEPLOY_MESSAGE = $PR_TITLE" >> $GITHUB_ENV
+echo "DEPLOY_MESSAGE=$PR_TITLE" >> $GITHUB_ENV
 curl \
   -F "token=$DEPLOY_GATE_TOKEN" \
   -F "file=@app/build/outputs/apk/debug/app-debug.apk" \
