@@ -9,12 +9,13 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.ColumnNames
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.Companion.TABLE_NAME
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
+import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomSake
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface SakeDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id")
-    fun findById(id: Int): Flow<SakeEntity?>
+    fun findById(id: Int): Flow<RoomSake?>
 
     @Query("SELECT EXISTS(SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id)")
     suspend fun hasRow(id: Int): Boolean

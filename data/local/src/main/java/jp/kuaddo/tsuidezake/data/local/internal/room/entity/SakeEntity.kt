@@ -23,7 +23,6 @@ internal data class SakeEntity(
     val brewer: String?,
     @ColumnInfo(name = ColumnNames.IMAGE_URI)
     val imageUri: String?,
-//    @Ignore val tags: List<String>, // TODO: Save tag
     @ColumnInfo(name = ColumnNames.SUITABLE_TEMPERATURES)
     val suitableTemperatures: Set<SuitableTemperature>,
     @ColumnInfo(name = ColumnNames.GOOD_FOOD_CATEGORIES)
@@ -33,22 +32,6 @@ internal data class SakeEntity(
     @ColumnInfo(name = ColumnNames.IS_ADDED_TO_TASTED, defaultValue = "false")
     val isAddedToTasted: Boolean
 ) {
-    fun toUserSake() = UserSake(
-        sakeDetail = SakeDetail(
-            id = id,
-            name = name,
-            description = description,
-            region = region,
-            brewer = brewer,
-            imageUri = imageUri,
-            tags = emptyList(), // TODO: Replace
-            suitableTemperatures = suitableTemperatures,
-            goodFoodCategories = goodFoodCategories
-        ),
-        isAddedToWish = isAddedToWish,
-        isAddedToTasted = isAddedToTasted
-    )
-
     object ColumnNames {
         const val ID = "id"
         const val NAME = "name"
@@ -83,7 +66,6 @@ internal data class SakeEntity(
     }
 }
 
-@Entity
 internal data class SakeUpdate(
     @PrimaryKey @ColumnInfo(name = SakeEntity.ColumnNames.ID)
     val id: Int,
@@ -97,7 +79,6 @@ internal data class SakeUpdate(
     val brewer: String?,
     @ColumnInfo(name = SakeEntity.ColumnNames.IMAGE_URI)
     val imageUri: String?,
-//    @Ignore val tags: List<String>, // TODO: Save tag
     @ColumnInfo(name = SakeEntity.ColumnNames.SUITABLE_TEMPERATURES)
     val suitableTemperatures: Set<SuitableTemperature>,
     @ColumnInfo(name = SakeEntity.ColumnNames.GOOD_FOOD_CATEGORIES)
