@@ -1,5 +1,7 @@
 package jp.kuaddo.tsuidezake.data.local.internal
 
+import androidx.room.withTransaction
+import jp.kuaddo.tsuidezake.data.local.internal.room.TsuidezakeDB
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class LocalDataSourceImpl @Inject constructor(
+    private val db: TsuidezakeDB,
     private val sakeDao: SakeDao
 ) : LocalDataSource {
     override fun loadUserSakeFlow(sakeId: Int): Flow<UserSake?> =
@@ -19,6 +22,11 @@ internal class LocalDataSourceImpl @Inject constructor(
     override suspend fun saveUserSake(userSake: UserSake) =
         sakeDao.upsert(SakeEntity.of(userSake))
 
-    override suspend fun saveSakeDetail(sakeDetail: SakeDetail) =
-        sakeDao.upsert(SakeUpdate.of(sakeDetail))
+    override suspend fun saveSakeDetail(sakeDetail: SakeDetail) {
+        val update = SakeUpdate.of(sakeDetail)
+        db.withTransaction {
+            if (sakeDao.hasRow(sakeDetail.id)) sakeDao.update(update)
+            else sakeDao.insert(update)
+        }
+    }
 }
