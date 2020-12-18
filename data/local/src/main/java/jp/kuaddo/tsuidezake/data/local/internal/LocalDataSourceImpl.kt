@@ -46,8 +46,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(sakeDetail)
 
         db.withTransaction {
-            if (sakeDao.hasRow(sakeDetail.id)) sakeDao.update(sakeUpdate)
-            else sakeDao.insert(sakeUpdate)
+            sakeDao.upsert(sakeUpdate)
             tagDao.upsert(tagEntities)
             sakeTagDao.upsert(sakeTagCrossRefs)
         }
