@@ -17,14 +17,14 @@ internal interface SakeDao {
     fun findById(id: Int): Flow<SakeEntity?>
 
     @Query("SELECT EXISTS(SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id)")
-    fun hasRow(id: Int): Boolean
+    suspend fun hasRow(id: Int): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(sakeEntity: SakeEntity)
+    suspend fun upsert(sakeEntity: SakeEntity)
 
     @Insert(entity = SakeEntity::class)
-    fun insert(sakeUpdate: SakeUpdate)
+    suspend fun insert(sakeUpdate: SakeUpdate)
 
     @Update(entity = SakeEntity::class)
-    fun update(sakeUpdate: SakeUpdate)
+    suspend fun update(sakeUpdate: SakeUpdate)
 }
