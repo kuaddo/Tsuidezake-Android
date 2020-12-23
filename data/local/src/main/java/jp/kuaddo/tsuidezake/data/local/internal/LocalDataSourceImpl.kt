@@ -28,6 +28,9 @@ internal class LocalDataSourceImpl @Inject constructor(
     override fun loadUserSakeFlow(sakeId: Int): Flow<UserSake?> =
         sakeDao.findById(sakeId).map { it?.toUserSake() }.flowOn(Dispatchers.IO)
 
+    override fun loadSakeDetailFlow(sakeId: Int): Flow<SakeDetail?> =
+        sakeDao.findById(sakeId).map { it?.toSakeDetail() }.flowOn(Dispatchers.IO)
+
     override suspend fun saveUserSake(userSake: UserSake) = withContext(Dispatchers.IO) {
         val sakeEntity = SakeEntity.of(userSake)
         val tagEntities = userSake.sakeDetail.tags.map(TagEntity::of)

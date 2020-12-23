@@ -26,18 +26,20 @@ internal data class RoomSake(
     val tagEntities: List<TagEntity>
 ) {
     fun toUserSake() = UserSake(
-        sakeDetail = SakeDetail(
-            id = sakeEntity.id,
-            name = sakeEntity.name,
-            description = sakeEntity.description,
-            region = sakeEntity.region,
-            brewer = sakeEntity.brewer,
-            imageUri = sakeEntity.imageUri,
-            tags = tagEntities.map { it.toTag() },
-            suitableTemperatures = sakeEntity.suitableTemperatures,
-            goodFoodCategories = sakeEntity.goodFoodCategories
-        ),
+        sakeDetail = toSakeDetail(),
         isAddedToWish = sakeEntity.isAddedToWish,
         isAddedToTasted = sakeEntity.isAddedToTasted
+    )
+
+    fun toSakeDetail() = SakeDetail(
+        id = sakeEntity.id,
+        name = sakeEntity.name,
+        description = sakeEntity.description,
+        region = sakeEntity.region,
+        brewer = sakeEntity.brewer,
+        imageUri = sakeEntity.imageUri,
+        tags = tagEntities.map { it.toTag() },
+        suitableTemperatures = sakeEntity.suitableTemperatures,
+        goodFoodCategories = sakeEntity.goodFoodCategories
     )
 }
