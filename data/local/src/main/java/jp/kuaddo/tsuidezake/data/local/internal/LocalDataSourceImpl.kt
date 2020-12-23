@@ -38,8 +38,8 @@ internal class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun saveUserSake(userSake: UserSake) = withContext(Dispatchers.IO) {
         val sakeEntity = SakeEntity.of(userSake)
-        val tagEntities = userSake.sakeDetail.tags.map(TagEntity::of)
-        val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(userSake.sakeDetail)
+        val tagEntities = userSake.sakeDetail.tags.map(TagEntity::of).toSet()
+        val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(userSake.sakeDetail).toSet()
 
         db.withTransaction {
             sakeDao.upsert(sakeEntity)
@@ -50,8 +50,8 @@ internal class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun saveSakeDetail(sakeDetail: SakeDetail) = withContext(Dispatchers.IO) {
         val sakeUpdate = SakeUpdate.of(sakeDetail)
-        val tagEntities = sakeDetail.tags.map(TagEntity::of)
-        val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(sakeDetail)
+        val tagEntities = sakeDetail.tags.map(TagEntity::of).toSet()
+        val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(sakeDetail).toSet()
 
         db.withTransaction {
             sakeDao.upsert(sakeUpdate)
@@ -61,9 +61,9 @@ internal class LocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun saveWishList(wishList: List<SakeDetail>) = withContext(Dispatchers.IO) {
-        val wishUpdates = wishList.map { WishUpdate.of(it, true) }
-        val tagEntities = wishList.flatMap { it.tags.map(TagEntity::of) }
-        val sakeTagCrossRefs = wishList.flatMap(SakeTagCrossRef::createSakeTagCrossRefs)
+        val wishUpdates = wishList.map { WishUpdate.of(it, true) }.toSet()
+        val tagEntities = wishList.flatMap { it.tags.map(TagEntity::of) }.toSet()
+        val sakeTagCrossRefs = wishList.flatMap(SakeTagCrossRef::createSakeTagCrossRefs).toSet()
 
         db.withTransaction {
             sakeDao.upsert(wishUpdates)

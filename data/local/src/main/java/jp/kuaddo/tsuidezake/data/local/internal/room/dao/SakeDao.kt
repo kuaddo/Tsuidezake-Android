@@ -30,7 +30,7 @@ internal abstract class SakeDao {
         if (hasRow(sakeUpdate.id)) update(sakeUpdate) else insert(sakeUpdate)
 
     @Transaction
-    open suspend fun upsert(wishUpdates: List<WishUpdate>) {
+    open suspend fun upsert(wishUpdates: Set<WishUpdate>) {
         val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeUpdate.id) }
         insert(insertList)
         update(updateList)
