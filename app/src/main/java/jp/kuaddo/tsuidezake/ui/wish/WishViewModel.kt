@@ -8,10 +8,15 @@ import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.GetWishListUseCase
 import jp.kuaddo.tsuidezake.domain.invoke
 import jp.kuaddo.tsuidezake.extensions.combineLatest
+import jp.kuaddo.tsuidezake.extensions.setValueIfNew
+import jp.kuaddo.tsuidezake.extensions.setValueIfNewAndNotNull
 import jp.kuaddo.tsuidezake.model.ErrorResource
+import jp.kuaddo.tsuidezake.model.LoadingResource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuccessResource
 import jp.kuaddo.tsuidezake.util.SnackbarMessageText
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,24 +39,44 @@ class WishViewModel @Inject constructor(
     private val _isGridMode = MutableLiveData(true)
     private val _groupedWishList = MutableLiveData<GroupedWishList>()
 
+    private var getWishListJob: Job? = null
+
     init {
-        updateWishList()
+        collect(getWishListUseCase)
     }
 
     fun switchRecyclerViewMode() {
         _isGridMode.value = _isGridMode.value?.not()
     }
 
-    fun refresh() = viewModelScope.launch {
-        _isRefreshing.value = true
-        updateWishList().join()
-        _isRefreshing.value = false
+    fun refresh() = collect(getWishListUseCase)
+
+    private fun collect(getWishListUseCase: GetWishListUseCase) {
+        getWishListJob?.cancel()
+        getWishListJob = viewModelScope.launch {
+            var isFirstError = true
+            getWishListUseCase().collect { res ->
+                when (res) {
+                    is SuccessResource -> {
+                        _isRefreshing.value = false
+                        _groupedWishList.setValueIfNew(res.data.toGroupedWishList())
+                    }
+                    is ErrorResource -> {
+                        if (isFirstError) setMessage(SnackbarMessageText(res.message))
+                        isFirstError = false
+                        _isRefreshing.value = false
+                        _groupedWishList.setValueIfNewAndNotNull(res.data?.toGroupedWishList())
+                    }
+                    is LoadingResource -> {
+                        _isRefreshing.value = true
+                        _groupedWishList.setValueIfNewAndNotNull(res.data?.toGroupedWishList())
+                    }
+                }
+            }
+        }
     }
 
-    private fun updateWishList() = viewModelScope.launch {
-        when (val res = getWishListUseCase()) {
-            is SuccessResource -> _groupedWishList.value = res.data.groupBy { it.region }
-            is ErrorResource -> setMessage(SnackbarMessageText(res.message))
-        }
+    companion object {
+        fun List<SakeDetail>.toGroupedWishList() = groupBy { it.region }
     }
 }

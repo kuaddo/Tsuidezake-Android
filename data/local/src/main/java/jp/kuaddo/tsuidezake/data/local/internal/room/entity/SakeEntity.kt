@@ -1,6 +1,7 @@
 package jp.kuaddo.tsuidezake.data.local.internal.room.entity
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import jp.kuaddo.tsuidezake.model.FoodCategory
@@ -94,6 +95,20 @@ internal data class SakeUpdate(
             imageUri = sakeDetail.imageUri,
             suitableTemperatures = sakeDetail.suitableTemperatures,
             goodFoodCategories = sakeDetail.goodFoodCategories
+        )
+    }
+}
+
+internal data class WishUpdate(
+    @Embedded
+    val sakeUpdate: SakeUpdate,
+    @ColumnInfo(name = SakeEntity.ColumnNames.IS_ADDED_TO_WISH)
+    val isAddedToWish: Boolean
+) {
+    companion object {
+        fun of(sakeDetail: SakeDetail, isAddedToWish: Boolean): WishUpdate = WishUpdate(
+            sakeUpdate = SakeUpdate.of(sakeDetail),
+            isAddedToWish = isAddedToWish
         )
     }
 }

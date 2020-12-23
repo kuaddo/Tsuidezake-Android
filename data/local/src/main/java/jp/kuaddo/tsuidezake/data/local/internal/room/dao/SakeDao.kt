@@ -9,11 +9,15 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.ColumnNames
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.Companion.TABLE_NAME
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.WishUpdate
 import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomSake
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal abstract class SakeDao {
+    @Query("SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.IS_ADDED_TO_WISH} = 1")
+    abstract fun selectWishList(): Flow<List<RoomSake>>
+
     @Query("SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id")
     abstract fun findById(id: Int): Flow<RoomSake?>
 
@@ -24,6 +28,13 @@ internal abstract class SakeDao {
     @Transaction
     open suspend fun upsert(sakeUpdate: SakeUpdate) =
         if (hasRow(sakeUpdate.id)) update(sakeUpdate) else insert(sakeUpdate)
+
+    @Transaction
+    open suspend fun upsert(wishUpdates: List<WishUpdate>) {
+        val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeUpdate.id) }
+        insert(insertList)
+        update(updateList)
+    }
 
     @Query("SELECT EXISTS(SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id)")
     protected abstract suspend fun hasRow(id: Int): Boolean
@@ -39,4 +50,10 @@ internal abstract class SakeDao {
 
     @Update(entity = SakeEntity::class)
     protected abstract suspend fun update(sakeUpdate: SakeUpdate)
+
+    @Insert(entity = SakeEntity::class)
+    protected abstract suspend fun insert(wishUpdates: List<WishUpdate>)
+
+    @Update(entity = SakeEntity::class)
+    protected abstract suspend fun update(wishUpdates: List<WishUpdate>)
 }

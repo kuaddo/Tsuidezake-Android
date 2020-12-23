@@ -33,8 +33,19 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>> =
         tsuidezakeService.getRecommendedSakes().convertToResource()
 
-    override suspend fun getWishList(): Resource<List<SakeDetail>> =
-        tsuidezakeService.getWishList().convertToResource()
+    override fun getWishList(): Flow<Resource<List<SakeDetail>>> =
+        object : NetworkBoundResource<List<SakeDetail>, List<SakeDetail>>() {
+            override fun loadFromDb(): Flow<List<SakeDetail>?> = localDataSource.loadWishList()
+
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<SakeDetail>?): Boolean = true
+
+            override suspend fun callApi(): ApiResponse<List<SakeDetail>> =
+                tsuidezakeService.getWishList()
+
+            override suspend fun saveApiResult(item: List<SakeDetail>) =
+                localDataSource.saveWishList(item)
+        }.getResultFlow()
 
     override fun getSakeDetail(
         id: Int
@@ -63,6 +74,7 @@ internal class RepositoryImpl @Inject constructor(
         override suspend fun saveApiResult(item: UserSake) = localDataSource.saveUserSake(item)
     }.getResultFlow()
 
+    // TODO: レスポンスが修正され次第NetworkBoundResource対応をする
     override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
         tsuidezakeService.addSakeToWishList(id).convertToResource()
 

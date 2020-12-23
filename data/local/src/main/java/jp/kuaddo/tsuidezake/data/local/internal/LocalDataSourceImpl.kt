@@ -9,6 +9,8 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeTagCrossRef
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.WishUpdate
+import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomSake
 import jp.kuaddo.tsuidezake.data.repository.LocalDataSource
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.UserSake
@@ -31,6 +33,9 @@ internal class LocalDataSourceImpl @Inject constructor(
     override fun loadSakeDetailFlow(sakeId: Int): Flow<SakeDetail?> =
         sakeDao.findById(sakeId).map { it?.toSakeDetail() }.flowOn(Dispatchers.IO)
 
+    override fun loadWishList(): Flow<List<SakeDetail>> = sakeDao.selectWishList()
+        .map { roomSakeList -> roomSakeList.map(RoomSake::toSakeDetail) }
+
     override suspend fun saveUserSake(userSake: UserSake) = withContext(Dispatchers.IO) {
         val sakeEntity = SakeEntity.of(userSake)
         val tagEntities = userSake.sakeDetail.tags.map(TagEntity::of)
@@ -50,6 +55,18 @@ internal class LocalDataSourceImpl @Inject constructor(
 
         db.withTransaction {
             sakeDao.upsert(sakeUpdate)
+            tagDao.upsert(tagEntities)
+            sakeTagDao.upsert(sakeTagCrossRefs)
+        }
+    }
+
+    override suspend fun saveWishList(wishList: List<SakeDetail>) = withContext(Dispatchers.IO) {
+        val wishUpdates = wishList.map { WishUpdate.of(it, true) }
+        val tagEntities = wishList.flatMap { it.tags.map(TagEntity::of) }
+        val sakeTagCrossRefs = wishList.flatMap(SakeTagCrossRef::createSakeTagCrossRefs)
+
+        db.withTransaction {
+            sakeDao.upsert(wishUpdates)
             tagDao.upsert(tagEntities)
             sakeTagDao.upsert(sakeTagCrossRefs)
         }
