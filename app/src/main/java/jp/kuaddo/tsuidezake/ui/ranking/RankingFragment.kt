@@ -61,7 +61,8 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
             if (isInitialLoading) {
                 binding.recommendedViewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
             }
-            showRecommendSakeDialog()
+            // TODO: 表示タイミングを考える
+//            showRecommendSakeDialog()
         }
         viewModel.rankings.observeNonNull(viewLifecycleOwner) { rankings ->
             rankingStateAdapter.submitList(rankings)

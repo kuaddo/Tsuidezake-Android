@@ -30,6 +30,13 @@ internal abstract class SakeDao {
         if (hasRow(sakeUpdate.id)) updateSakeUpdate(sakeUpdate) else insertSakeUpdate(sakeUpdate)
 
     @Transaction
+    open suspend fun upsertSakeUpdates(sakeUpdates: Set<SakeUpdate>) {
+        val (updateList, insertList) = sakeUpdates.partition { hasRow(it.id) }
+        insertSakeUpdates(insertList)
+        updateSakeUpdates(updateList)
+    }
+
+    @Transaction
     open suspend fun upsertWishUpdates(wishUpdates: Set<WishUpdate>) {
         val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeUpdate.id) }
         insertWishUpdates(insertList)
@@ -50,6 +57,12 @@ internal abstract class SakeDao {
 
     @Update(entity = SakeEntity::class)
     protected abstract suspend fun updateSakeUpdate(sakeUpdate: SakeUpdate)
+
+    @Insert(entity = SakeEntity::class)
+    protected abstract suspend fun insertSakeUpdates(sakeUpdates: List<SakeUpdate>)
+
+    @Update(entity = SakeEntity::class)
+    protected abstract suspend fun updateSakeUpdates(sakeUpdates: List<SakeUpdate>)
 
     @Insert(entity = SakeEntity::class)
     protected abstract suspend fun insertWishUpdates(wishUpdates: List<WishUpdate>)

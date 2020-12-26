@@ -30,8 +30,20 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun getRankings(): Resource<List<Ranking>> =
         tsuidezakeService.getRankings().convertToResource()
 
-    override suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>> =
-        tsuidezakeService.getRecommendedSakes().convertToResource()
+    override fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>> =
+        object : NetworkBoundResource<List<Ranking.Content>, List<Ranking.Content>>() {
+            override fun loadFromDb(): Flow<List<Ranking.Content>?> =
+                localDataSource.loadRecommendedSakes()
+
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<Ranking.Content>?): Boolean = true
+
+            override suspend fun callApi(): ApiResponse<List<Ranking.Content>> =
+                tsuidezakeService.getRecommendedSakes()
+
+            override suspend fun saveApiResult(item: List<Ranking.Content>) =
+                localDataSource.saveRecommendedSakes(item)
+        }.getResultFlow()
 
     override fun getWishList(): Flow<Resource<List<SakeDetail>>> =
         object : NetworkBoundResource<List<SakeDetail>, List<SakeDetail>>() {
