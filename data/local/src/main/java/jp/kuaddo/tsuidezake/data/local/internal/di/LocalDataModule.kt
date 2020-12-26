@@ -7,6 +7,7 @@ import dagger.Provides
 import jp.kuaddo.tsuidezake.data.local.internal.LocalDataSourceImpl
 import jp.kuaddo.tsuidezake.data.local.internal.SharedPreferenceStorage
 import jp.kuaddo.tsuidezake.data.local.internal.room.TsuidezakeDB
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RecommendedSakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeTagDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.TagDao
@@ -39,5 +40,10 @@ internal abstract class LocalDataModule {
         @LocalDataScope
         @Provides
         fun provideSakeTagDao(db: TsuidezakeDB): SakeTagDao = db.sakeTagDao()
+
+        @LocalDataScope
+        @Provides
+        fun provideRecommendedSakeDao(db: TsuidezakeDB): RecommendedSakeDao =
+            db.recommendedSakeDao()
     }
 }
