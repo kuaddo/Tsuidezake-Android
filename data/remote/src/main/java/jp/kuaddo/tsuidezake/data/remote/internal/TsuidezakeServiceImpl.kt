@@ -148,8 +148,7 @@ private suspend fun getImageUri(firebaseImagePath: String?): String? = runCatchi
     .getOrNull()
     ?.toString()
 
-// TODO: Schemaが直ったら!!を消す
-private fun ApolloTag.toTag() = Tag(id = id!!, name = name)
+private fun ApolloTag.toTag() = Tag(id = id, name = name)
 
 private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
     ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
