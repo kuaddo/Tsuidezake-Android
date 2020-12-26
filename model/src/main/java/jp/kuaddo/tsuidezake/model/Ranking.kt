@@ -11,8 +11,6 @@ data class Ranking(
     @Parcelize
     data class Content(
         val rank: Int,
-        val sakeId: Int,
-        val name: String,
-        val imageUri: String?
+        val sakeDetail: SakeDetail
     ) : Parcelable
 }

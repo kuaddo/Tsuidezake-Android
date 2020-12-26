@@ -17,8 +17,6 @@ query RecommendedSakeQuery {
 fragment contentFragment on RankingContent {
     rank
     sake {
-        id
-        name
-        imgPath
+        ...sakeDetailFragment
     }
 }

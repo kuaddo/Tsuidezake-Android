@@ -119,9 +119,7 @@ private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
 
 private suspend fun ContentFragment.toContent() = Ranking.Content(
     rank = rank,
-    sakeId = sake.id,
-    name = sake.name,
-    imageUri = getImageUri(sake.imgPath)
+    sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail()
 )
 
 private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(

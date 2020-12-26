@@ -12,8 +12,6 @@ class GetRecommendedSakesUseCase @Inject constructor(
         repository.getRecommendedSakes()
             .map { recommendedSakes ->
                 recommendedSakes.sortedBy(Ranking.Content::rank)
-                    .map(Ranking.Content::toSake)
+                    .map { Sake.of(it.sakeDetail) }
             }
 }
-
-private fun Ranking.Content.toSake() = Sake(id = sakeId, name = name, imageUri = imageUri)

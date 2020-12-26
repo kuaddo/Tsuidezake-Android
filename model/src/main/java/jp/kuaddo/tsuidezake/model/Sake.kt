@@ -9,5 +9,11 @@ data class Sake(
     val name: String,
     val imageUri: String?
 ) : Parcelable {
-    companion object
+    companion object {
+        fun of(sakeDetail: SakeDetail) = Sake(
+            id = sakeDetail.id,
+            name = sakeDetail.name,
+            imageUri = sakeDetail.imageUri
+        )
+    }
 }
