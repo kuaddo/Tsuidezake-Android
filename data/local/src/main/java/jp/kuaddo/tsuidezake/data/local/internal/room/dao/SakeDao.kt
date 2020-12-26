@@ -22,38 +22,38 @@ internal abstract class SakeDao {
     abstract fun findById(id: Int): Flow<RoomSake?>
 
     @Transaction
-    open suspend fun upsert(sakeEntity: SakeEntity) =
-        if (hasRow(sakeEntity.id)) update(sakeEntity) else insert(sakeEntity)
+    open suspend fun upsertSakeEntity(sakeEntity: SakeEntity) =
+        if (hasRow(sakeEntity.id)) updateSakeEntity(sakeEntity) else insertSakeEntity(sakeEntity)
 
     @Transaction
-    open suspend fun upsert(sakeUpdate: SakeUpdate) =
-        if (hasRow(sakeUpdate.id)) update(sakeUpdate) else insert(sakeUpdate)
+    open suspend fun upsertSakeUpdate(sakeUpdate: SakeUpdate) =
+        if (hasRow(sakeUpdate.id)) updateSakeUpdate(sakeUpdate) else insertSakeUpdate(sakeUpdate)
 
     @Transaction
-    open suspend fun upsert(wishUpdates: Set<WishUpdate>) {
+    open suspend fun upsertWishUpdates(wishUpdates: Set<WishUpdate>) {
         val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeUpdate.id) }
-        insert(insertList)
-        update(updateList)
+        insertWishUpdates(insertList)
+        updateWishUpdates(updateList)
     }
 
     @Query("SELECT EXISTS(SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id)")
     protected abstract suspend fun hasRow(id: Int): Boolean
 
     @Insert
-    protected abstract suspend fun insert(sakeEntity: SakeEntity)
+    protected abstract suspend fun insertSakeEntity(sakeEntity: SakeEntity)
 
     @Update
-    protected abstract suspend fun update(sakeEntity: SakeEntity)
+    protected abstract suspend fun updateSakeEntity(sakeEntity: SakeEntity)
 
     @Insert(entity = SakeEntity::class)
-    protected abstract suspend fun insert(sakeUpdate: SakeUpdate)
+    protected abstract suspend fun insertSakeUpdate(sakeUpdate: SakeUpdate)
 
     @Update(entity = SakeEntity::class)
-    protected abstract suspend fun update(sakeUpdate: SakeUpdate)
+    protected abstract suspend fun updateSakeUpdate(sakeUpdate: SakeUpdate)
 
     @Insert(entity = SakeEntity::class)
-    protected abstract suspend fun insert(wishUpdates: List<WishUpdate>)
+    protected abstract suspend fun insertWishUpdates(wishUpdates: List<WishUpdate>)
 
     @Update(entity = SakeEntity::class)
-    protected abstract suspend fun update(wishUpdates: List<WishUpdate>)
+    protected abstract suspend fun updateWishUpdates(wishUpdates: List<WishUpdate>)
 }

@@ -42,7 +42,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(userSake.sakeDetail).toSet()
 
         db.withTransaction {
-            sakeDao.upsert(sakeEntity)
+            sakeDao.upsertSakeEntity(sakeEntity)
             tagDao.upsert(tagEntities)
             sakeTagDao.upsert(sakeTagCrossRefs)
         }
@@ -54,7 +54,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(sakeDetail).toSet()
 
         db.withTransaction {
-            sakeDao.upsert(sakeUpdate)
+            sakeDao.upsertSakeUpdate(sakeUpdate)
             tagDao.upsert(tagEntities)
             sakeTagDao.upsert(sakeTagCrossRefs)
         }
@@ -66,7 +66,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         val sakeTagCrossRefs = wishList.flatMap(SakeTagCrossRef::createSakeTagCrossRefs).toSet()
 
         db.withTransaction {
-            sakeDao.upsert(wishUpdates)
+            sakeDao.upsertWishUpdates(wishUpdates)
             tagDao.upsert(tagEntities)
             sakeTagDao.upsert(sakeTagCrossRefs)
         }
