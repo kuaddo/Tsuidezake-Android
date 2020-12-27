@@ -36,7 +36,7 @@ class LauncherActivity : DaggerAppCompatActivity(R.layout.activity_launcher) {
             else supportActionBar?.hide()
         }
 
-        viewModel.isInitialized.observeNonNull(this) {
+        viewModel.canStart.observeNonNull(this) {
             if (it) startMainActivityWithFinish()
         }
     }

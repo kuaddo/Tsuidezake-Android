@@ -22,13 +22,20 @@ class LauncherViewModel @Inject constructor(
     LoadingViewModelDelegate by loadingViewModelDelegate,
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
 
-    val isInitialized: LiveData<Boolean>
+    val canStart: LiveData<Boolean>
         get() = isAccountInitializedUseCase().asLiveData()
             .combineLatest(initializeTimeIntervalFinished) { authInitialized, intervalFinished ->
                 authInitialized && intervalFinished
             }
+            .combineLatest(timeOutLiveData) { isInitialized, timeOut ->
+                isInitialized || timeOut
+            }
     private val initializeTimeIntervalFinished = liveData {
-        delay(2000L)
+        delay(INITIAL_DELAY)
+        emit(true)
+    }
+    private val timeOutLiveData = liveData {
+        delay(TIME_OUT_DURATION)
         emit(true)
     }
 
@@ -39,4 +46,9 @@ class LauncherViewModel @Inject constructor(
     fun showActionBar() = _isVisibleActionBar.setValueIfNew(true)
 
     fun hideActionBar() = _isVisibleActionBar.setValueIfNew(false)
+
+    companion object {
+        const val INITIAL_DELAY = 2000L
+        const val TIME_OUT_DURATION = 6000L
+    }
 }
