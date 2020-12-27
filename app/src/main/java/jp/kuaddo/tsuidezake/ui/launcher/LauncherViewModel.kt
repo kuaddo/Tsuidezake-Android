@@ -35,6 +35,7 @@ class LauncherViewModel @Inject constructor(
         emit(true)
     }
     private val timeOutLiveData = liveData {
+        emit(false)
         delay(TIME_OUT_DURATION)
         emit(true)
     }

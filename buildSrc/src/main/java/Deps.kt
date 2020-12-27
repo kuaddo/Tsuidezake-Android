@@ -131,7 +131,7 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
         const val assertJ = "org.assertj:assertj-core:3.18.1"
-        const val mockk = "io.mockk:mockk:1.10.3"
+        const val mockk = "io.mockk:mockk:1.10.2"
         const val threeTenBp = "org.threeten:threetenbp:1.5.0"
     }
 
