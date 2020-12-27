@@ -20,7 +20,7 @@ internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
     return ErrorResponse(message)
 }
 
-internal suspend fun <T : Any, R : Any> ApolloQueryCall<T>.toApiResponse(
+internal suspend fun <T : Any, R> ApolloQueryCall<T>.toApiResponse(
     transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
     when (val res = await().toApiResponse()) {

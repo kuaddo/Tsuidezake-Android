@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.repository.internal
 
+import jp.kuaddo.tsuidezake.core.alsoS
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
@@ -73,47 +74,57 @@ internal class RepositoryImpl @Inject constructor(
 
     override fun getSakeDetail(
         id: Int
-    ): Flow<Resource<SakeDetail>> = object : NetworkBoundResource<SakeDetail, SakeDetail>() {
+    ): Flow<Resource<SakeDetail>> = object : NetworkBoundResource<SakeDetail, SakeDetail?>() {
         override fun loadFromDb(): Flow<SakeDetail?> = localDataSource.loadSakeDetailFlow(id)
 
         // TODO: キャッシュの生存期間を考える
         override fun shouldFetch(data: SakeDetail?): Boolean = true
 
-        override suspend fun callApi(): ApiResponse<SakeDetail> =
+        override suspend fun callApi(): ApiResponse<SakeDetail?> =
             tsuidezakeService.getSakeDetail(id)
 
-        override suspend fun saveApiResult(item: SakeDetail) = localDataSource.saveSakeDetail(item)
+        override suspend fun saveApiResult(item: SakeDetail?) {
+            item?.alsoS(localDataSource::saveSakeDetail)
+        }
     }.getResultFlow()
 
     override fun getUserSake(
         id: Int
-    ): Flow<Resource<UserSake>> = object : NetworkBoundResource<UserSake, UserSake>() {
+    ): Flow<Resource<UserSake>> = object : NetworkBoundResource<UserSake, UserSake?>() {
         override fun loadFromDb(): Flow<UserSake?> = localDataSource.loadUserSakeFlow(id)
 
         // TODO: キャッシュの生存期間を考える
         override fun shouldFetch(data: UserSake?): Boolean = true
 
-        override suspend fun callApi(): ApiResponse<UserSake> = tsuidezakeService.getUserSake(id)
+        override suspend fun callApi(): ApiResponse<UserSake?> = tsuidezakeService.getUserSake(id)
 
-        override suspend fun saveApiResult(item: UserSake) = localDataSource.saveUserSake(item)
+        override suspend fun saveApiResult(item: UserSake?) {
+            item?.alsoS(localDataSource::saveUserSake)
+        }
     }.getResultFlow()
 
-    // TODO: レスポンスが修正され次第NetworkBoundResource対応をする
-    override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
-        tsuidezakeService.addSakeToWishList(id).convertToResource()
+    override suspend fun addSakeToWishList(id: Int): Resource<Unit> =
+        tsuidezakeService.addSakeToWishList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>> =
-        tsuidezakeService.removeSakeFromWishList(id).convertToResource()
+    override suspend fun removeSakeFromWishList(id: Int): Resource<Unit> =
+        tsuidezakeService.removeSakeFromWishList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun addSakeToTastedList(id: Int): Resource<List<SakeDetail>> =
-        tsuidezakeService.addSakeToTastedList(id).convertToResource()
+    override suspend fun addSakeToTastedList(id: Int): Resource<Unit> =
+        tsuidezakeService.addSakeToTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun removeSakeFromTastedList(id: Int): Resource<List<SakeDetail>> =
-        tsuidezakeService.removeSakeFromTastedList(id).convertToResource()
+    override suspend fun removeSakeFromTastedList(id: Int): Resource<Unit> =
+        tsuidezakeService.removeSakeFromTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    private fun <T : Any> ApiResponse<T>.convertToResource(): Resource<T> =
+    private suspend fun saveUserSakeResponse(response: ApiResponse<UserSake>) {
+        when (response) {
+            is SuccessResponse -> localDataSource.saveUserSake(response.data)
+            is ErrorResponse -> Unit
+        }
+    }
+
+    private fun <T : Any> ApiResponse<T>.ignoreData(): Resource<Unit> =
         when (this) {
-            is SuccessResponse -> SuccessResource(data)
+            is SuccessResponse -> SuccessResource(Unit)
             is ErrorResponse -> ErrorResource(message, null)
         }
 }

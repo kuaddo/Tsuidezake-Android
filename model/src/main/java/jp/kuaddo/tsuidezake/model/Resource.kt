@@ -6,8 +6,6 @@ sealed class Resource<out T> {
         is ErrorResource -> ErrorResource(message, data?.let { transform(it) })
         is LoadingResource -> LoadingResource(data?.let { transform(it) })
     }
-
-    fun ignoreData(): Resource<Unit> = map { Unit }
 }
 
 data class SuccessResource<out T>(val data: T) : Resource<T>()

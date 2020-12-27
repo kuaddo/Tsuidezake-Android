@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 /**
  * https://github.com/android/architecture-components-samples/blob/main/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.kt
  */
-internal abstract class NetworkBoundResource<LocalSourceResult : Any, RemoteSourceResult : Any> {
+internal abstract class NetworkBoundResource<LocalSourceResult : Any, RemoteSourceResult> {
     private val result = MutableSharedFlow<Resource<LocalSourceResult>>(
         replay = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST

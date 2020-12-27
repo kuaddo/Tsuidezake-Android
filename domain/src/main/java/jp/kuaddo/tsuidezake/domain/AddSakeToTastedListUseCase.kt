@@ -7,5 +7,5 @@ class AddSakeToTastedListUseCase @Inject constructor(
     private val repository: Repository
 ) : UseCase<Int, Unit>() {
     override suspend fun execute(parameter: Int): Resource<Unit> =
-        repository.addSakeToTastedList(parameter).ignoreData()
+        repository.addSakeToTastedList(parameter)
 }

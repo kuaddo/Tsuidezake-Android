@@ -13,6 +13,7 @@ import jp.kuaddo.tsuidezake.data.remote.UserSakeQuery
 import jp.kuaddo.tsuidezake.data.remote.WishListQuery
 import jp.kuaddo.tsuidezake.data.remote.fragment.ContentFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
+import jp.kuaddo.tsuidezake.data.remote.fragment.UserSakeFragment
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
 import jp.kuaddo.tsuidezake.model.FoodCategory
@@ -55,58 +56,47 @@ internal class TsuidezakeServiceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
+    override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail?> =
         withContext(Dispatchers.IO) {
             apolloClient.query(SakeQuery(id)).toApiResponse { response ->
-                response.sake!!.fragments
-                    .sakeDetailFragment
-                    .toSakeDetail()
+                response.sake?.fragments?.sakeDetailFragment?.toSakeDetail()
             }
         }
 
-    override suspend fun getUserSake(id: Int): ApiResponse<UserSake> =
+    override suspend fun getUserSake(id: Int): ApiResponse<UserSake?> =
         withContext(Dispatchers.IO) {
             apolloClient.query(UserSakeQuery(id)).toApiResponse { response ->
-                val sakeDetail = response.getUserSake!!.sake.fragments
-                    .sakeDetailFragment
-                    .toSakeDetail()
-                UserSake(
-                    sakeDetail,
-                    isAddedToWish = response.getUserSake.isWished,
-                    isAddedToTasted = response.getUserSake.isTasted
-                )
+                response.getUserSake?.fragments?.userSakeFragment?.toUserSake()
             }
         }
 
-    override suspend fun addSakeToWishList(id: Int): ApiResponse<List<SakeDetail>> =
+    override suspend fun addSakeToWishList(id: Int): ApiResponse<UserSake> =
         withContext(Dispatchers.IO) {
             apolloClient.mutate(AddSakeToWishListMutation(id)).toApiResponse { response ->
-                response.addWishSake
-                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+                response.addWishSake.fragments.userSakeFragment.toUserSake()
             }
         }
 
-    override suspend fun removeSakeFromWishList(id: Int): ApiResponse<List<SakeDetail>> =
+    override suspend fun removeSakeFromWishList(id: Int): ApiResponse<UserSake> =
         withContext(Dispatchers.IO) {
             apolloClient.mutate(RemoveSakeFromWishListMutation(id)).toApiResponse { response ->
-                response.removeWishSake
-                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+                response.removeWishSake.fragments.userSakeFragment.toUserSake()
             }
         }
 
-    override suspend fun addSakeToTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+    // TODO: Fix to use addTastedSakeWithStars()
+    override suspend fun addSakeToTastedList(id: Int): ApiResponse<UserSake> =
         withContext(Dispatchers.IO) {
             apolloClient.mutate(AddSakeToTastedListMutation(id)).toApiResponse { response ->
-                response.addTastedSake
-                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+                response.addTastedSake.fragments.userSakeFragment.toUserSake()
             }
         }
 
-    override suspend fun removeSakeFromTastedList(id: Int): ApiResponse<List<SakeDetail>> =
+    // TODO: Fix to use addTastedSakeWithStars()
+    override suspend fun removeSakeFromTastedList(id: Int): ApiResponse<UserSake> =
         withContext(Dispatchers.IO) {
             apolloClient.mutate(RemoveSakeFromTastedListMutation(id)).toApiResponse { response ->
-                response.removeTastedSake
-                    .map { it.fragments.sakeDetailFragment.toSakeDetail() }
+                response.removeTastedSake.fragments.userSakeFragment.toUserSake()
             }
         }
 }
@@ -132,6 +122,12 @@ private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
     tags = tags.map { it.toTag() },
     suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
     goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
+)
+
+private suspend fun UserSakeFragment.toUserSake() = UserSake(
+    sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail(),
+    isAddedToWish = isWished,
+    isAddedToTasted = isTasted
 )
 
 private suspend fun getImageUri(firebaseImagePath: String?): String? = runCatching {
