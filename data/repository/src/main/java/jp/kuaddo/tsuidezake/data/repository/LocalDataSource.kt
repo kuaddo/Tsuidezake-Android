@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDataSource {
     fun loadUserSakeFlow(sakeId: Int): Flow<UserSake?>
     fun loadSakeDetailFlow(sakeId: Int): Flow<SakeDetail?>
-    fun loadWishList(): Flow<List<SakeDetail>>
-    fun loadRankings(): Flow<List<Ranking>>
-    fun loadRecommendedSakes(): Flow<List<Ranking.Content>>
+    fun loadWishListFlow(): Flow<List<SakeDetail>>
+    fun loadRankingsFlow(): Flow<List<Ranking>>
+    fun loadRecommendedSakesFlow(): Flow<List<Ranking.Content>>
 
     suspend fun saveUserSake(userSake: UserSake)
     suspend fun saveSakeDetail(sakeDetail: SakeDetail)

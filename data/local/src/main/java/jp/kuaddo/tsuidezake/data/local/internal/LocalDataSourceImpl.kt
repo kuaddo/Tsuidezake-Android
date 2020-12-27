@@ -49,11 +49,11 @@ internal class LocalDataSourceImpl @Inject constructor(
     override fun loadSakeDetailFlow(sakeId: Int): Flow<SakeDetail?> =
         sakeDao.findById(sakeId).map { it?.toSakeDetail() }.flowOn(Dispatchers.IO)
 
-    override fun loadWishList(): Flow<List<SakeDetail>> = sakeDao.selectWishList()
-        .map { roomSakeList -> roomSakeList.map(RoomSake::toSakeDetail) }
+    override fun loadWishListFlow(): Flow<List<SakeDetail>> = sakeDao.selectWishList()
+        .map { roomSakes -> roomSakes.map(RoomSake::toSakeDetail) }
         .flowOn(Dispatchers.IO)
 
-    override fun loadRankings(): Flow<List<Ranking>> = rankingCategoryDao.findAll()
+    override fun loadRankingsFlow(): Flow<List<Ranking>> = rankingCategoryDao.findAll()
         .flatMapLatest { roomRankings ->
             val rankingFlows = roomRankings.map(::loadRanking)
             combineWithEmpty(rankingFlows) { it.toList() }
@@ -72,7 +72,7 @@ internal class LocalDataSourceImpl @Inject constructor(
             }
     }
 
-    override fun loadRecommendedSakes(): Flow<List<Ranking.Content>> =
+    override fun loadRecommendedSakesFlow(): Flow<List<Ranking.Content>> =
         recommendedSakeDao.findAll().flatMapLatest { recommendedSakes ->
             val contentFlows = recommendedSakes.map { loadContent(it.sakeId, it.order) }
             combineWithEmpty(contentFlows) { it.toList() }
@@ -141,11 +141,11 @@ internal class LocalDataSourceImpl @Inject constructor(
         contents: List<Ranking.Content>
     ) = withContext(Dispatchers.IO) {
         val sakeUpdates = contents.map { SakeUpdate.of(it.sakeDetail) }.toSet()
-        val recommendedList = contents.map(RecommendedSakeEntity::of).toSet()
+        val recommendedSakes = contents.map(RecommendedSakeEntity::of).toSet()
 
         db.withTransaction {
             sakeDao.upsertSakeUpdates(sakeUpdates)
-            recommendedSakeDao.replaceWith(recommendedList)
+            recommendedSakeDao.replaceWith(recommendedSakes)
         }
     }
 

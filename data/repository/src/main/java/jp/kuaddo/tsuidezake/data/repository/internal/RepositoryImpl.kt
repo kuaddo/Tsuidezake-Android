@@ -33,7 +33,7 @@ internal class RepositoryImpl @Inject constructor(
     override fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>> =
         object : NetworkBoundResource<List<Ranking.Content>, List<Ranking.Content>>() {
             override fun loadFromDb(): Flow<List<Ranking.Content>?> =
-                localDataSource.loadRecommendedSakes()
+                localDataSource.loadRecommendedSakesFlow()
 
             // TODO: キャッシュの生存期間を考える
             override fun shouldFetch(data: List<Ranking.Content>?): Boolean = true
@@ -47,7 +47,7 @@ internal class RepositoryImpl @Inject constructor(
 
     override fun getWishList(): Flow<Resource<List<SakeDetail>>> =
         object : NetworkBoundResource<List<SakeDetail>, List<SakeDetail>>() {
-            override fun loadFromDb(): Flow<List<SakeDetail>?> = localDataSource.loadWishList()
+            override fun loadFromDb(): Flow<List<SakeDetail>?> = localDataSource.loadWishListFlow()
 
             // TODO: キャッシュの生存期間を考える
             override fun shouldFetch(data: List<SakeDetail>?): Boolean = true
