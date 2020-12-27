@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import jp.kuaddo.tsuidezake.model.Ranking
 
 @Entity(
     tableName = RankingCategoryEntity.TABLE_NAME,
@@ -24,7 +25,7 @@ import androidx.room.PrimaryKey
 internal data class RankingCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ColumnNames.ID)
-    val id: Long,
+    val id: Long = 0,
     @ColumnInfo(name = ColumnNames.NAME)
     val name: String,
     @ColumnInfo(name = ColumnNames.ORDER)
@@ -38,5 +39,10 @@ internal data class RankingCategoryEntity(
 
     companion object {
         const val TABLE_NAME = "ranking_categories"
+
+        fun of(ranking: Ranking) = RankingCategoryEntity(
+            name = ranking.category,
+            order = ranking.displayOrder
+        )
     }
 }

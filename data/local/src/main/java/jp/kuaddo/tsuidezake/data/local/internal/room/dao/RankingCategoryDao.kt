@@ -8,11 +8,20 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntit
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntity.Companion.TABLE_NAME
 import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomRanking
 import kotlinx.coroutines.flow.Flow
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntity.ColumnNames as RankingCategoryColumns
 
 @Dao
 internal abstract class RankingCategoryDao {
     @Query("SELECT * FROM $TABLE_NAME")
     abstract fun findAll(): Flow<List<RoomRanking>>
+
+    @Query(
+        """
+            SELECT ${RankingCategoryColumns.ID} FROM $TABLE_NAME 
+            WHERE ${RankingCategoryColumns.NAME} = :name
+        """
+    )
+    abstract suspend fun selectIdBy(name: String): Int
 
     @Transaction
     open suspend fun replaceWith(rankingCategories: Set<RankingCategoryEntity>) {

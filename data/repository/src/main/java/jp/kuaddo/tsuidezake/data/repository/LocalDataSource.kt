@@ -9,10 +9,12 @@ interface LocalDataSource {
     fun loadUserSakeFlow(sakeId: Int): Flow<UserSake?>
     fun loadSakeDetailFlow(sakeId: Int): Flow<SakeDetail?>
     fun loadWishList(): Flow<List<SakeDetail>>
+    fun loadRankings(): Flow<List<Ranking>>
     fun loadRecommendedSakes(): Flow<List<Ranking.Content>>
 
     suspend fun saveUserSake(userSake: UserSake)
     suspend fun saveSakeDetail(sakeDetail: SakeDetail)
     suspend fun saveWishList(wishList: List<SakeDetail>)
+    suspend fun saveRankings(rankings: List<Ranking>)
     suspend fun saveRecommendedSakes(contents: List<Ranking.Content>)
 }

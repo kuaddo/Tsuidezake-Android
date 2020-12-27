@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.data.local.internal.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import jp.kuaddo.tsuidezake.model.Ranking
 
 @Entity(
     tableName = RankingEntity.TABLE_NAME,
@@ -42,5 +43,11 @@ internal data class RankingEntity(
 
     companion object {
         const val TABLE_NAME = "rankings"
+
+        fun of(categoryId: Int, content: Ranking.Content) = RankingEntity(
+            categoryId = categoryId,
+            rank = content.rank,
+            sakeId = content.sakeDetail.id
+        )
     }
 }
