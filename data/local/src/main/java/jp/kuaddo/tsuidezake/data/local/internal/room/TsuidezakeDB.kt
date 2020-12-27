@@ -7,9 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import jp.kuaddo.tsuidezake.data.local.internal.room.converter.FoodCategorySetConverters
 import jp.kuaddo.tsuidezake.data.local.internal.room.converter.SuitableTemperatureSetConverters
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RankingCategoryDao
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RankingDao
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RecommendedSakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeTagDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.TagDao
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntity
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingEntity
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RecommendedSakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeTagCrossRef
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
@@ -18,6 +24,9 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
     entities = [
         SakeEntity::class,
         TagEntity::class,
+        RecommendedSakeEntity::class,
+        RankingEntity::class,
+        RankingCategoryEntity::class,
         SakeTagCrossRef::class
     ],
     version = 1,
@@ -30,6 +39,9 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
 internal abstract class TsuidezakeDB : RoomDatabase() {
     abstract fun sakeDao(): SakeDao
     abstract fun tagDao(): TagDao
+    abstract fun recommendedSakeDao(): RecommendedSakeDao
+    abstract fun rankingDao(): RankingDao
+    abstract fun rankingCategoryDao(): RankingCategoryDao
 
     abstract fun sakeTagDao(): SakeTagDao
 

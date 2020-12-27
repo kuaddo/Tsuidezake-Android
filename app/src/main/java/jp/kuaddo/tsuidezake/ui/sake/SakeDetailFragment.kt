@@ -11,6 +11,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentSakeDetailBinding
 import jp.kuaddo.tsuidezake.extensions.assistedViewModels
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
+import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import javax.inject.Inject
 
 class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
@@ -29,6 +30,7 @@ class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
     }
 
     private fun observe() {
+        observeViewModelDelegate(viewModel, viewLifecycleOwner)
         viewModel.sakeDetail.observeNonNull(viewLifecycleOwner) { sakeDetail ->
             binding.tagsChipGroup.let { chipGroup ->
                 chipGroup.removeAllViews()

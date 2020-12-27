@@ -15,7 +15,7 @@ class RankingItemFragment : Fragment(R.layout.fragment_item_ranking) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val rankingAdapter = RankingItemAdapter(viewLifecycleOwner) { content ->
-            showSakeDetail(content.sakeId)
+            showSakeDetail(content.sakeDetail.id)
         }
         binding.recyclerView.let { recyclerView ->
             recyclerView.adapter = rankingAdapter

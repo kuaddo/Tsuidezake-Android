@@ -12,7 +12,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeTagCrossRef.Comp
 @Dao
 internal abstract class SakeTagDao {
     @Transaction
-    open suspend fun upsert(sakeTagCrossRefs: List<SakeTagCrossRef>) {
+    open suspend fun upsert(sakeTagCrossRefs: Set<SakeTagCrossRef>) {
         val (updateList, insertList) = sakeTagCrossRefs.partition {
             hasRow(sakeId = it.sakeId, tagId = it.tagId)
         }

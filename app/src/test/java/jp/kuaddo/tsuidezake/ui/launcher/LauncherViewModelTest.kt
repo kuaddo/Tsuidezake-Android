@@ -33,35 +33,47 @@ object LauncherViewModelTest : Spek({
         )
     }
 
-    describe("isInitialized") {
+    describe("canStart") {
         it("should return true after 2 seconds.") {
             every { isAccountInitializedUseCase.invoke() } returns flowOf(true)
-            val isInitializedObserver = viewModel.isInitialized.observeAndGet()
+            val isInitializedObserver = viewModel.canStart.observeAndGet()
 
-            testDispatcher.advanceTimeBy(2000)
+            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
 
-            verify(exactly = 1) {
+            verify(exactly = 1) { isInitializedObserver.onChanged(true) }
+        }
+
+        it("should return true after authService is initialized") {
+            val totalDelay = 3000L
+            every { isAccountInitializedUseCase.invoke() } returns flow {
+                emit(false)
+                delay(totalDelay)
+                emit(true)
+            }
+            val isInitializedObserver = viewModel.canStart.observeAndGet()
+
+            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
+            verify(exactly = 1) { isInitializedObserver.onChanged(false) }
+            verify(exactly = 0) { isInitializedObserver.onChanged(true) }
+
+            testDispatcher.advanceTimeBy(totalDelay - LauncherViewModel.INITIAL_DELAY)
+            verifySequence {
+                isInitializedObserver.onChanged(false)
                 isInitializedObserver.onChanged(true)
             }
         }
 
-        it("should return true after authService is initialized") {
-            every { isAccountInitializedUseCase.invoke() } returns flow {
-                emit(false)
-                delay(3000)
-                emit(true)
-            }
-            val isInitializedObserver = viewModel.isInitialized.observeAndGet()
+        it("should return true after time out") {
+            every { isAccountInitializedUseCase.invoke() } returns flowOf(false)
+            val isInitializedObserver = viewModel.canStart.observeAndGet()
 
-            testDispatcher.advanceTimeBy(2000)
-            verify(exactly = 1) {
-                isInitializedObserver.onChanged(false)
-            }
-            verify(exactly = 0) {
-                isInitializedObserver.onChanged(true)
-            }
+            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
+            verify(exactly = 1) { isInitializedObserver.onChanged(false) }
+            verify(exactly = 0) { isInitializedObserver.onChanged(true) }
 
-            testDispatcher.advanceTimeBy(1000)
+            testDispatcher.advanceTimeBy(
+                LauncherViewModel.TIME_OUT_DURATION - LauncherViewModel.INITIAL_DELAY
+            )
             verifySequence {
                 isInitializedObserver.onChanged(false)
                 isInitializedObserver.onChanged(true)

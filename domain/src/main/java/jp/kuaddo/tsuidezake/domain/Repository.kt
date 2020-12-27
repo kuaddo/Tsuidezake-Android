@@ -11,10 +11,10 @@ interface Repository {
 
     suspend fun signInAnonymously(): Boolean
 
-    suspend fun getRankings(): Resource<List<Ranking>>
-    suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>>
-    suspend fun getWishList(): Resource<List<SakeDetail>>
-    suspend fun getSakeDetail(id: Int): Resource<SakeDetail>
+    fun getRankings(): Flow<Resource<List<Ranking>>>
+    fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>>
+    fun getWishList(): Flow<Resource<List<SakeDetail>>>
+    fun getSakeDetail(id: Int): Flow<Resource<SakeDetail>>
     fun getUserSake(id: Int): Flow<Resource<UserSake>>
 
     suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>>

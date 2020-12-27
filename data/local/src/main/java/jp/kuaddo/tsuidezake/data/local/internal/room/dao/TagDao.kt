@@ -12,7 +12,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity.Companion.
 @Dao
 internal abstract class TagDao {
     @Transaction
-    open suspend fun upsert(tagEntities: List<TagEntity>) {
+    open suspend fun upsert(tagEntities: Set<TagEntity>) {
         val (updateList, insertList) = tagEntities.partition { hasRow(it.id) }
         insert(insertList)
         update(updateList)

@@ -7,6 +7,9 @@ import dagger.Provides
 import jp.kuaddo.tsuidezake.data.local.internal.LocalDataSourceImpl
 import jp.kuaddo.tsuidezake.data.local.internal.SharedPreferenceStorage
 import jp.kuaddo.tsuidezake.data.local.internal.room.TsuidezakeDB
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RankingCategoryDao
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RankingDao
+import jp.kuaddo.tsuidezake.data.local.internal.room.dao.RecommendedSakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.SakeTagDao
 import jp.kuaddo.tsuidezake.data.local.internal.room.dao.TagDao
@@ -35,6 +38,20 @@ internal abstract class LocalDataModule {
         @LocalDataScope
         @Provides
         fun provideTagDao(db: TsuidezakeDB): TagDao = db.tagDao()
+
+        @LocalDataScope
+        @Provides
+        fun provideRecommendedSakeDao(db: TsuidezakeDB): RecommendedSakeDao =
+            db.recommendedSakeDao()
+
+        @LocalDataScope
+        @Provides
+        fun provideRankingDao(db: TsuidezakeDB): RankingDao = db.rankingDao()
+
+        @LocalDataScope
+        @Provides
+        fun provideRankingCategoryDao(db: TsuidezakeDB): RankingCategoryDao =
+            db.rankingCategoryDao()
 
         @LocalDataScope
         @Provides

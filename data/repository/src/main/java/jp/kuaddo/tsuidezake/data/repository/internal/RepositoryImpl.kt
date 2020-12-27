@@ -27,17 +27,63 @@ internal class RepositoryImpl @Inject constructor(
 
     override suspend fun signInAnonymously(): Boolean = authService.signInAnonymously()
 
-    override suspend fun getRankings(): Resource<List<Ranking>> =
-        tsuidezakeService.getRankings().convertToResource()
+    override fun getRankings(): Flow<Resource<List<Ranking>>> =
+        object : NetworkBoundResource<List<Ranking>, List<Ranking>>() {
+            override fun loadFromDb(): Flow<List<Ranking>?> =
+                localDataSource.loadRankingsFlow()
 
-    override suspend fun getRecommendedSakes(): Resource<List<Ranking.Content>> =
-        tsuidezakeService.getRecommendedSakes().convertToResource()
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<Ranking>?): Boolean = true
 
-    override suspend fun getWishList(): Resource<List<SakeDetail>> =
-        tsuidezakeService.getWishList().convertToResource()
+            override suspend fun callApi(): ApiResponse<List<Ranking>> =
+                tsuidezakeService.getRankings()
 
-    override suspend fun getSakeDetail(id: Int): Resource<SakeDetail> =
-        tsuidezakeService.getSakeDetail(id).convertToResource()
+            override suspend fun saveApiResult(item: List<Ranking>) =
+                localDataSource.saveRankings(item)
+        }.getResultFlow()
+
+    override fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>> =
+        object : NetworkBoundResource<List<Ranking.Content>, List<Ranking.Content>>() {
+            override fun loadFromDb(): Flow<List<Ranking.Content>?> =
+                localDataSource.loadRecommendedSakesFlow()
+
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<Ranking.Content>?): Boolean = true
+
+            override suspend fun callApi(): ApiResponse<List<Ranking.Content>> =
+                tsuidezakeService.getRecommendedSakes()
+
+            override suspend fun saveApiResult(item: List<Ranking.Content>) =
+                localDataSource.saveRecommendedSakes(item)
+        }.getResultFlow()
+
+    override fun getWishList(): Flow<Resource<List<SakeDetail>>> =
+        object : NetworkBoundResource<List<SakeDetail>, List<SakeDetail>>() {
+            override fun loadFromDb(): Flow<List<SakeDetail>?> = localDataSource.loadWishListFlow()
+
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<SakeDetail>?): Boolean = true
+
+            override suspend fun callApi(): ApiResponse<List<SakeDetail>> =
+                tsuidezakeService.getWishList()
+
+            override suspend fun saveApiResult(item: List<SakeDetail>) =
+                localDataSource.saveWishList(item)
+        }.getResultFlow()
+
+    override fun getSakeDetail(
+        id: Int
+    ): Flow<Resource<SakeDetail>> = object : NetworkBoundResource<SakeDetail, SakeDetail>() {
+        override fun loadFromDb(): Flow<SakeDetail?> = localDataSource.loadSakeDetailFlow(id)
+
+        // TODO: キャッシュの生存期間を考える
+        override fun shouldFetch(data: SakeDetail?): Boolean = true
+
+        override suspend fun callApi(): ApiResponse<SakeDetail> =
+            tsuidezakeService.getSakeDetail(id)
+
+        override suspend fun saveApiResult(item: SakeDetail) = localDataSource.saveSakeDetail(item)
+    }.getResultFlow()
 
     override fun getUserSake(
         id: Int
@@ -52,6 +98,7 @@ internal class RepositoryImpl @Inject constructor(
         override suspend fun saveApiResult(item: UserSake) = localDataSource.saveUserSake(item)
     }.getResultFlow()
 
+    // TODO: レスポンスが修正され次第NetworkBoundResource対応をする
     override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
         tsuidezakeService.addSakeToWishList(id).convertToResource()
 

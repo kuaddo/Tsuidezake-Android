@@ -14,6 +14,7 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
+import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import jp.kuaddo.tsuidezake.ui.common.AutoScroller
 import javax.inject.Inject
 
@@ -55,13 +56,15 @@ class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
     }
 
     private fun observe() {
+        observeViewModelDelegate(viewModel, viewLifecycleOwner)
         viewModel.recommendedSakes.observeNonNull(viewLifecycleOwner) {
             val isInitialLoading = recommendedAdapter.itemCount == 0
             recommendedAdapter.submitList(it)
             if (isInitialLoading) {
                 binding.recommendedViewPager.setCurrentItem(RecommendedAdapter.START_INDEX, false)
             }
-            showRecommendSakeDialog()
+            // TODO: 表示タイミングを考える
+//            showRecommendSakeDialog()
         }
         viewModel.rankings.observeNonNull(viewLifecycleOwner) { rankings ->
             rankingStateAdapter.submitList(rankings)
