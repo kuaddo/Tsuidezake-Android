@@ -10,6 +10,7 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":model"))
     implementation(project(":domain"))
     implementation(Deps.Kotlin.stdlib)

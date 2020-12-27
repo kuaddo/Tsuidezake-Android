@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.repository.internal
 
+import jp.kuaddo.tsuidezake.core.alsoS
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.AuthService
 import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
@@ -73,29 +74,33 @@ internal class RepositoryImpl @Inject constructor(
 
     override fun getSakeDetail(
         id: Int
-    ): Flow<Resource<SakeDetail>> = object : NetworkBoundResource<SakeDetail, SakeDetail>() {
+    ): Flow<Resource<SakeDetail>> = object : NetworkBoundResource<SakeDetail, SakeDetail?>() {
         override fun loadFromDb(): Flow<SakeDetail?> = localDataSource.loadSakeDetailFlow(id)
 
         // TODO: キャッシュの生存期間を考える
         override fun shouldFetch(data: SakeDetail?): Boolean = true
 
-        override suspend fun callApi(): ApiResponse<SakeDetail> =
+        override suspend fun callApi(): ApiResponse<SakeDetail?> =
             tsuidezakeService.getSakeDetail(id)
 
-        override suspend fun saveApiResult(item: SakeDetail) = localDataSource.saveSakeDetail(item)
+        override suspend fun saveApiResult(item: SakeDetail?) {
+            item?.alsoS(localDataSource::saveSakeDetail)
+        }
     }.getResultFlow()
 
     override fun getUserSake(
         id: Int
-    ): Flow<Resource<UserSake>> = object : NetworkBoundResource<UserSake, UserSake>() {
+    ): Flow<Resource<UserSake>> = object : NetworkBoundResource<UserSake, UserSake?>() {
         override fun loadFromDb(): Flow<UserSake?> = localDataSource.loadUserSakeFlow(id)
 
         // TODO: キャッシュの生存期間を考える
         override fun shouldFetch(data: UserSake?): Boolean = true
 
-        override suspend fun callApi(): ApiResponse<UserSake> = tsuidezakeService.getUserSake(id)
+        override suspend fun callApi(): ApiResponse<UserSake?> = tsuidezakeService.getUserSake(id)
 
-        override suspend fun saveApiResult(item: UserSake) = localDataSource.saveUserSake(item)
+        override suspend fun saveApiResult(item: UserSake?) {
+            item?.alsoS(localDataSource::saveUserSake)
+        }
     }.getResultFlow()
 
     // TODO: レスポンスが修正され次第NetworkBoundResource対応をする

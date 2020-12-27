@@ -56,19 +56,17 @@ internal class TsuidezakeServiceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail> =
+    override suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail?> =
         withContext(Dispatchers.IO) {
             apolloClient.query(SakeQuery(id)).toApiResponse { response ->
-                response.sake!!.fragments
-                    .sakeDetailFragment
-                    .toSakeDetail()
+                response.sake?.fragments?.sakeDetailFragment?.toSakeDetail()
             }
         }
 
-    override suspend fun getUserSake(id: Int): ApiResponse<UserSake> =
+    override suspend fun getUserSake(id: Int): ApiResponse<UserSake?> =
         withContext(Dispatchers.IO) {
             apolloClient.query(UserSakeQuery(id)).toApiResponse { response ->
-                response.getUserSake!!.fragments.userSakeFragment.toUserSake()
+                response.getUserSake?.fragments?.userSakeFragment?.toUserSake()
             }
         }
 
