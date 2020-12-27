@@ -103,22 +103,28 @@ internal class RepositoryImpl @Inject constructor(
         }
     }.getResultFlow()
 
-    // TODO: レスポンスが修正され次第NetworkBoundResource対応をする
-    override suspend fun addSakeToWishList(id: Int): Resource<UserSake> =
-        tsuidezakeService.addSakeToWishList(id).convertToResource()
+    override suspend fun addSakeToWishList(id: Int): Resource<Unit> =
+        tsuidezakeService.addSakeToWishList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun removeSakeFromWishList(id: Int): Resource<UserSake> =
-        tsuidezakeService.removeSakeFromWishList(id).convertToResource()
+    override suspend fun removeSakeFromWishList(id: Int): Resource<Unit> =
+        tsuidezakeService.removeSakeFromWishList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun addSakeToTastedList(id: Int): Resource<UserSake> =
-        tsuidezakeService.addSakeToTastedList(id).convertToResource()
+    override suspend fun addSakeToTastedList(id: Int): Resource<Unit> =
+        tsuidezakeService.addSakeToTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun removeSakeFromTastedList(id: Int): Resource<UserSake> =
-        tsuidezakeService.removeSakeFromTastedList(id).convertToResource()
+    override suspend fun removeSakeFromTastedList(id: Int): Resource<Unit> =
+        tsuidezakeService.removeSakeFromTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    private fun <T : Any> ApiResponse<T>.convertToResource(): Resource<T> =
+    private suspend fun saveUserSakeResponse(response: ApiResponse<UserSake>) {
+        when (response) {
+            is SuccessResponse -> localDataSource.saveUserSake(response.data)
+            is ErrorResponse -> Unit
+        }
+    }
+
+    private fun <T : Any> ApiResponse<T>.ignoreData(): Resource<Unit> =
         when (this) {
-            is SuccessResponse -> SuccessResource(data)
+            is SuccessResponse -> SuccessResource(Unit)
             is ErrorResponse -> ErrorResource(message, null)
         }
 }
