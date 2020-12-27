@@ -11,7 +11,7 @@ interface Repository {
 
     suspend fun signInAnonymously(): Boolean
 
-    suspend fun getRankings(): Resource<List<Ranking>>
+    fun getRankings(): Flow<Resource<List<Ranking>>>
     fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>>
     fun getWishList(): Flow<Resource<List<SakeDetail>>>
     fun getSakeDetail(id: Int): Flow<Resource<SakeDetail>>

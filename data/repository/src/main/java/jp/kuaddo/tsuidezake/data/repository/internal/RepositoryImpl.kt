@@ -27,8 +27,20 @@ internal class RepositoryImpl @Inject constructor(
 
     override suspend fun signInAnonymously(): Boolean = authService.signInAnonymously()
 
-    override suspend fun getRankings(): Resource<List<Ranking>> =
-        tsuidezakeService.getRankings().convertToResource()
+    override fun getRankings(): Flow<Resource<List<Ranking>>> =
+        object : NetworkBoundResource<List<Ranking>, List<Ranking>>() {
+            override fun loadFromDb(): Flow<List<Ranking>?> =
+                localDataSource.loadRankingsFlow()
+
+            // TODO: キャッシュの生存期間を考える
+            override fun shouldFetch(data: List<Ranking>?): Boolean = true
+
+            override suspend fun callApi(): ApiResponse<List<Ranking>> =
+                tsuidezakeService.getRankings()
+
+            override suspend fun saveApiResult(item: List<Ranking>) =
+                localDataSource.saveRankings(item)
+        }.getResultFlow()
 
     override fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>> =
         object : NetworkBoundResource<List<Ranking.Content>, List<Ranking.Content>>() {
