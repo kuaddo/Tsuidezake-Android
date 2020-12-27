@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9dbb4b8d3e47e884b86ff6aa1e804cbd",
+    "identityHash": "58676beb9272e361f00960fae5196c8e",
     "entities": [
       {
         "tableName": "sakes",
@@ -108,7 +108,7 @@
       },
       {
         "tableName": "recommended_sakes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`order`, `sake_id`), FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`order`), FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "order",
@@ -125,8 +125,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "order",
-            "sake_id"
+            "order"
           ],
           "autoGenerate": false
         },
@@ -147,7 +146,7 @@
       },
       {
         "tableName": "rankings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER NOT NULL, `rank` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`category_id`, `rank`, `sake_id`), FOREIGN KEY(`category_id`) REFERENCES `ranking_categories`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER NOT NULL, `rank` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`category_id`, `rank`), FOREIGN KEY(`category_id`) REFERENCES `ranking_categories`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "categoryId",
@@ -171,8 +170,7 @@
         "primaryKey": {
           "columnNames": [
             "category_id",
-            "rank",
-            "sake_id"
+            "rank"
           ],
           "autoGenerate": false
         },
@@ -306,7 +304,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9dbb4b8d3e47e884b86ff6aa1e804cbd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '58676beb9272e361f00960fae5196c8e')"
     ]
   }
 }

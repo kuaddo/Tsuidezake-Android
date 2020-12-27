@@ -9,8 +9,7 @@ import jp.kuaddo.tsuidezake.model.Ranking
     tableName = RankingEntity.TABLE_NAME,
     primaryKeys = [
         RankingEntity.ColumnNames.CATEGORY_ID,
-        RankingEntity.ColumnNames.RANK,
-        RankingEntity.ColumnNames.SAKE_ID
+        RankingEntity.ColumnNames.RANK
     ],
     foreignKeys = [
         ForeignKey(

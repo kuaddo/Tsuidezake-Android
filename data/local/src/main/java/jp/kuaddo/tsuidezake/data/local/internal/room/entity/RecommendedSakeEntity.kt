@@ -3,14 +3,11 @@ package jp.kuaddo.tsuidezake.data.local.internal.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import jp.kuaddo.tsuidezake.model.Ranking
 
 @Entity(
     tableName = RecommendedSakeEntity.TABLE_NAME,
-    primaryKeys = [
-        RecommendedSakeEntity.ColumnNames.ORDER,
-        RecommendedSakeEntity.ColumnNames.SAKE_ID
-    ],
     foreignKeys = [
         ForeignKey(
             entity = SakeEntity::class,
@@ -21,6 +18,7 @@ import jp.kuaddo.tsuidezake.model.Ranking
     ]
 )
 internal data class RecommendedSakeEntity(
+    @PrimaryKey
     @ColumnInfo(name = ColumnNames.ORDER)
     val order: Int,
     @ColumnInfo(name = ColumnNames.SAKE_ID)
