@@ -99,16 +99,16 @@ internal class RepositoryImpl @Inject constructor(
     }.getResultFlow()
 
     // TODO: レスポンスが修正され次第NetworkBoundResource対応をする
-    override suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>> =
+    override suspend fun addSakeToWishList(id: Int): Resource<UserSake> =
         tsuidezakeService.addSakeToWishList(id).convertToResource()
 
-    override suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>> =
+    override suspend fun removeSakeFromWishList(id: Int): Resource<UserSake> =
         tsuidezakeService.removeSakeFromWishList(id).convertToResource()
 
-    override suspend fun addSakeToTastedList(id: Int): Resource<List<SakeDetail>> =
+    override suspend fun addSakeToTastedList(id: Int): Resource<UserSake> =
         tsuidezakeService.addSakeToTastedList(id).convertToResource()
 
-    override suspend fun removeSakeFromTastedList(id: Int): Resource<List<SakeDetail>> =
+    override suspend fun removeSakeFromTastedList(id: Int): Resource<UserSake> =
         tsuidezakeService.removeSakeFromTastedList(id).convertToResource()
 
     private fun <T : Any> ApiResponse<T>.convertToResource(): Resource<T> =

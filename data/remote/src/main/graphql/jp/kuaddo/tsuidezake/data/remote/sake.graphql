@@ -6,11 +6,7 @@ query SakeQuery($id: Int!) {
 
 query UserSakeQuery($id: Int!) {
     getUserSake(id: $id) {
-        sake {
-            ...sakeDetailFragment
-        }
-        isTasted
-        isWished
+        ...userSakeFragment
     }
 }
 
@@ -22,25 +18,25 @@ query WishListQuery {
 
 mutation AddSakeToWishList($id: Int!) {
     addWishSake(id: $id) {
-        ...sakeDetailFragment
+        ...userSakeFragment
     }
 }
 
 mutation RemoveSakeFromWishList($id: Int!) {
     removeWishSake(id: $id) {
-        ...sakeDetailFragment
+        ...userSakeFragment
     }
 }
 
 mutation AddSakeToTastedList($id: Int!) {
     addTastedSake(id: $id) {
-        ...sakeDetailFragment
+        ...userSakeFragment
     }
 }
 
 mutation RemoveSakeFromTastedList($id: Int!) {
     removeTastedSake(id: $id) {
-        ...sakeDetailFragment
+        ...userSakeFragment
     }
 }
 
@@ -57,4 +53,12 @@ fragment sakeDetailFragment on Sake {
     imgPath
     suitableTemperatures
     goodFoodCategories
+}
+
+fragment userSakeFragment on UserSake {
+    sake {
+        ...sakeDetailFragment
+    }
+    isTasted
+    isWished
 }

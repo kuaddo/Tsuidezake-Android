@@ -17,8 +17,8 @@ interface Repository {
     fun getSakeDetail(id: Int): Flow<Resource<SakeDetail>>
     fun getUserSake(id: Int): Flow<Resource<UserSake>>
 
-    suspend fun addSakeToWishList(id: Int): Resource<List<SakeDetail>>
-    suspend fun removeSakeFromWishList(id: Int): Resource<List<SakeDetail>>
-    suspend fun addSakeToTastedList(id: Int): Resource<List<SakeDetail>>
-    suspend fun removeSakeFromTastedList(id: Int): Resource<List<SakeDetail>>
+    suspend fun addSakeToWishList(id: Int): Resource<UserSake>
+    suspend fun removeSakeFromWishList(id: Int): Resource<UserSake>
+    suspend fun addSakeToTastedList(id: Int): Resource<UserSake>
+    suspend fun removeSakeFromTastedList(id: Int): Resource<UserSake>
 }

@@ -11,8 +11,8 @@ interface TsuidezakeService {
     suspend fun getSakeDetail(id: Int): ApiResponse<SakeDetail>
     suspend fun getUserSake(id: Int): ApiResponse<UserSake>
 
-    suspend fun addSakeToWishList(id: Int): ApiResponse<List<SakeDetail>>
-    suspend fun removeSakeFromWishList(id: Int): ApiResponse<List<SakeDetail>>
-    suspend fun addSakeToTastedList(id: Int): ApiResponse<List<SakeDetail>>
-    suspend fun removeSakeFromTastedList(id: Int): ApiResponse<List<SakeDetail>>
+    suspend fun addSakeToWishList(id: Int): ApiResponse<UserSake>
+    suspend fun removeSakeFromWishList(id: Int): ApiResponse<UserSake>
+    suspend fun addSakeToTastedList(id: Int): ApiResponse<UserSake>
+    suspend fun removeSakeFromTastedList(id: Int): ApiResponse<UserSake>
 }
