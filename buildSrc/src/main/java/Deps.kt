@@ -141,19 +141,19 @@ object Deps {
             const val testRunner = "androidx.test:runner:1.3.0"
             const val jUnit = "androidx.test.ext:junit:1.1.2"
         }
-    }
 
-    object JUnit {
-        private const val version = "5.7.0"
+        object JUnit {
+            private const val version = "5.7.0"
 
-        const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
-        const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
-    }
+            const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
+            const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
+        }
 
-    object Spek {
-        private const val version = "2.0.15"
+        object Spek {
+            private const val version = "2.0.15"
 
-        const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
-        const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
+            const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
+            const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
+        }
     }
 }
