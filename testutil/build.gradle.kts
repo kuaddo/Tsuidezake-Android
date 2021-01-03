@@ -10,8 +10,13 @@ apply<CommonBuildPlugin>()
 
 dependencies {
     implementation(Deps.Kotlin.stdlib)
+    implementation(Deps.AndroidX.coreKtx)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     implementation(Deps.Test.kotlinCoroutinesTest)
     implementation(Deps.Test.AndroidX.coreTesting)
+    implementation(Deps.Test.AndroidX.testRunner)
+    implementation(Deps.Test.Spek.dslJvm)
+    implementation(Deps.Test.mockk)
 }
 
 tasks.withType<DependencyUpdatesTask> {

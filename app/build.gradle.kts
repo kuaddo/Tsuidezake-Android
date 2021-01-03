@@ -124,6 +124,7 @@ dependencies {
     implementation(Deps.dataBindingKtx)
     debugImplementation(Deps.leakCanary)
 
+    testImplementation(project(":testutil"))
     testImplementation(Deps.Test.kotlinCoroutinesTest)
     testImplementation(Deps.Test.AndroidX.coreTesting)
 
