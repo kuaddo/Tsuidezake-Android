@@ -6,6 +6,7 @@ include(
     ":data:auth",
     ":data:local",
     ":data:remote",
-    ":data:repository"
+    ":data:repository",
+    ":testutil"
 )
 rootProject.name = "Tsuidezake-Android"

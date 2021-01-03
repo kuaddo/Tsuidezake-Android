@@ -31,6 +31,7 @@ dependencies {
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 
+    testImplementation(project(":testutil"))
     testImplementation(Deps.Test.AndroidX.coreTesting)
     testImplementation(Deps.Test.AndroidX.testRunner)
     testImplementation(Deps.Test.AndroidX.jUnit)
