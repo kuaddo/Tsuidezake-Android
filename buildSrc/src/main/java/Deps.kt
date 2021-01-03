@@ -129,10 +129,18 @@ object Deps {
     object Test {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-        const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
         const val assertJ = "org.assertj:assertj-core:3.18.1"
         const val mockk = "io.mockk:mockk:1.10.2"
+
+        // robolectric4.4はjarダウンロードに失敗する
+        const val robolectric = "org.robolectric:robolectric:4.3"
         const val threeTenBp = "org.threeten:threetenbp:1.5.0"
+
+        object AndroidX {
+            const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
+            const val testRunner = "androidx.test:runner:1.3.0"
+            const val jUnit = "androidx.test.ext:junit:1.1.2"
+        }
     }
 
     object JUnit {

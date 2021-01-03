@@ -126,7 +126,7 @@ dependencies {
 
     testImplementation(Deps.Kotlin.reflect)
     testImplementation(Deps.Test.kotlinCoroutinesTest)
-    testImplementation(Deps.Test.androidXCoreTesting)
+    testImplementation(Deps.Test.AndroidX.coreTesting)
 
     testImplementation(Deps.JUnit.jupiterApi)
     testImplementation(Deps.JUnit.jupiterEngine)
