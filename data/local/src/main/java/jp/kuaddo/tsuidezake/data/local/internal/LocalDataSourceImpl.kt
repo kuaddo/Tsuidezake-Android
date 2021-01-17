@@ -91,7 +91,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         db.withTransaction {
             sakeDao.upsertSakeEntity(sakeEntity)
             tagDao.upsert(tagEntities)
-            sakeTagDao.upsert(sakeTagCrossRefs)
+            sakeTagDao.insertIfAbsent(sakeTagCrossRefs)
         }
     }
 
@@ -103,7 +103,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         db.withTransaction {
             sakeDao.upsertSakeUpdate(sakeUpdate)
             tagDao.upsert(tagEntities)
-            sakeTagDao.upsert(sakeTagCrossRefs)
+            sakeTagDao.insertIfAbsent(sakeTagCrossRefs)
         }
     }
 
@@ -115,7 +115,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         db.withTransaction {
             sakeDao.upsertWishUpdates(wishUpdates)
             tagDao.upsert(tagEntities)
-            sakeTagDao.upsert(sakeTagCrossRefs)
+            sakeTagDao.insertIfAbsent(sakeTagCrossRefs)
         }
     }
 
