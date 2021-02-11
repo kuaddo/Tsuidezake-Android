@@ -3,31 +3,18 @@ package jp.kuaddo.tsuidezake.data.local.internal.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import jp.kuaddo.tsuidezake.model.UserSake
 
-@Entity(tableName = SakeEntity.TABLE_NAME)
+@Entity(
+    tableName = SakeEntity.TABLE_NAME,
+    primaryKeys = [SakeEntity.ColumnNames.ID]
+)
 internal data class SakeEntity(
-    // TODO: @Embeddedが使えるかどうかをテストの後に確かめる
-    @PrimaryKey @ColumnInfo(name = ColumnNames.ID)
-    val id: Int,
-    @ColumnInfo(name = ColumnNames.NAME)
-    val name: String,
-    @ColumnInfo(name = ColumnNames.DESCRIPTION)
-    val description: String?,
-    @ColumnInfo(name = ColumnNames.REGION)
-    val region: String,
-    @ColumnInfo(name = ColumnNames.BREWER)
-    val brewer: String?,
-    @ColumnInfo(name = ColumnNames.IMAGE_URI)
-    val imageUri: String?,
-    @ColumnInfo(name = ColumnNames.SUITABLE_TEMPERATURES)
-    val suitableTemperatures: Set<SuitableTemperature>,
-    @ColumnInfo(name = ColumnNames.GOOD_FOOD_CATEGORIES)
-    val goodFoodCategories: Set<FoodCategory>,
+    @Embedded
+    val sakeInfo: SakeInfo,
     @ColumnInfo(name = ColumnNames.IS_ADDED_TO_WISH, defaultValue = "false")
     val isAddedToWish: Boolean,
     @ColumnInfo(name = ColumnNames.IS_ADDED_TO_TASTED, defaultValue = "false")
@@ -49,26 +36,16 @@ internal data class SakeEntity(
     companion object {
         const val TABLE_NAME = "sakes"
 
-        fun of(userSake: UserSake): SakeEntity {
-            val sakeDetail = userSake.sakeDetail
-            return SakeEntity(
-                id = sakeDetail.id,
-                name = sakeDetail.name,
-                description = sakeDetail.description,
-                region = sakeDetail.region,
-                brewer = sakeDetail.brewer,
-                imageUri = sakeDetail.imageUri,
-                suitableTemperatures = sakeDetail.suitableTemperatures,
-                goodFoodCategories = sakeDetail.goodFoodCategories,
-                isAddedToWish = userSake.isAddedToWish,
-                isAddedToTasted = userSake.isAddedToTasted
-            )
-        }
+        fun of(userSake: UserSake) = SakeEntity(
+            sakeInfo = SakeInfo.of(userSake.sakeDetail),
+            isAddedToWish = userSake.isAddedToWish,
+            isAddedToTasted = userSake.isAddedToTasted
+        )
     }
 }
 
-internal data class SakeUpdate(
-    @PrimaryKey @ColumnInfo(name = SakeEntity.ColumnNames.ID)
+internal data class SakeInfo(
+    @ColumnInfo(name = SakeEntity.ColumnNames.ID)
     val id: Int,
     @ColumnInfo(name = SakeEntity.ColumnNames.NAME)
     val name: String,
@@ -86,7 +63,7 @@ internal data class SakeUpdate(
     val goodFoodCategories: Set<FoodCategory>
 ) {
     companion object {
-        fun of(sakeDetail: SakeDetail): SakeUpdate = SakeUpdate(
+        fun of(sakeDetail: SakeDetail): SakeInfo = SakeInfo(
             id = sakeDetail.id,
             name = sakeDetail.name,
             description = sakeDetail.description,
@@ -101,13 +78,13 @@ internal data class SakeUpdate(
 
 internal data class WishUpdate(
     @Embedded
-    val sakeUpdate: SakeUpdate,
+    val sakeInfo: SakeInfo,
     @ColumnInfo(name = SakeEntity.ColumnNames.IS_ADDED_TO_WISH)
     val isAddedToWish: Boolean
 ) {
     companion object {
         fun of(sakeDetail: SakeDetail, isAddedToWish: Boolean): WishUpdate = WishUpdate(
-            sakeUpdate = SakeUpdate.of(sakeDetail),
+            sakeInfo = SakeInfo.of(sakeDetail),
             isAddedToWish = isAddedToWish
         )
     }

@@ -12,8 +12,8 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntit
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RecommendedSakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeInfo
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeTagCrossRef
-import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.WishUpdate
 import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomRanking
@@ -96,12 +96,12 @@ internal class LocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun saveSakeDetail(sakeDetail: SakeDetail) = withContext(Dispatchers.IO) {
-        val sakeUpdate = SakeUpdate.of(sakeDetail)
+        val sakeInfo = SakeInfo.of(sakeDetail)
         val tagEntities = sakeDetail.tags.map(TagEntity::of).toSet()
         val sakeTagCrossRefs = SakeTagCrossRef.createSakeTagCrossRefs(sakeDetail).toSet()
 
         db.withTransaction {
-            sakeDao.upsertSakeUpdate(sakeUpdate)
+            sakeDao.upsertSakeInfo(sakeInfo)
             tagDao.upsert(tagEntities)
             sakeTagDao.insertIfAbsent(sakeTagCrossRefs)
         }
@@ -121,13 +121,13 @@ internal class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun saveRankings(rankings: List<Ranking>) = withContext(Dispatchers.IO) {
         val rankingCategoryEntities = rankings.map(RankingCategoryEntity::of).toSet()
-        val sakeUpdates = rankings.flatMap { ranking ->
-            ranking.contents.map { SakeUpdate.of(it.sakeDetail) }
+        val sakeInfos = rankings.flatMap { ranking ->
+            ranking.contents.map { SakeInfo.of(it.sakeDetail) }
         }.toSet()
 
         db.withTransaction {
             rankingCategoryDao.replaceWith(rankingCategoryEntities)
-            sakeDao.upsertSakeUpdates(sakeUpdates)
+            sakeDao.upsertSakeInfos(sakeInfos)
 
             val rankingEntities = rankings.flatMap { ranking ->
                 val categoryId = rankingCategoryDao.selectIdBy(ranking.category)
@@ -140,11 +140,11 @@ internal class LocalDataSourceImpl @Inject constructor(
     override suspend fun saveRecommendedSakes(
         contents: List<Ranking.Content>
     ) = withContext(Dispatchers.IO) {
-        val sakeUpdates = contents.map { SakeUpdate.of(it.sakeDetail) }.toSet()
+        val sakeInfos = contents.map { SakeInfo.of(it.sakeDetail) }.toSet()
         val recommendedSakes = contents.map(RecommendedSakeEntity::of).toSet()
 
         db.withTransaction {
-            sakeDao.upsertSakeUpdates(sakeUpdates)
+            sakeDao.upsertSakeInfos(sakeInfos)
             recommendedSakeDao.replaceWith(recommendedSakes)
         }
     }

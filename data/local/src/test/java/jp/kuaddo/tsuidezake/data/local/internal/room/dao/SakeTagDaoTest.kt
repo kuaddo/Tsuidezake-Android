@@ -4,14 +4,15 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import jp.kuaddo.tsuidezake.data.local.EMPTY_SAKE_ENTITY
 import jp.kuaddo.tsuidezake.data.local.internal.room.TsuidezakeDB
-import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeTagCrossRef
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
 import jp.kuaddo.tsuidezake.testutil.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,25 +61,14 @@ class SakeTagDaoTest {
     }
 
     private suspend fun insertDummySake(id: Int) {
-        sakeDao.upsertSakeEntity(EMPTY_SAKE_ENTITY.copy(id = id))
+        sakeDao.upsertSakeEntity(
+            EMPTY_SAKE_ENTITY.copy(
+                sakeInfo = EMPTY_SAKE_ENTITY.sakeInfo.copy(id = id)
+            )
+        )
     }
 
     private suspend fun insertDummyTag(id: Int) {
         tagDao.upsert(setOf(TagEntity(id, "")))
-    }
-
-    companion object {
-        private val EMPTY_SAKE_ENTITY = SakeEntity(
-            id = 0,
-            name = "",
-            description = null,
-            region = "",
-            brewer = null,
-            imageUri = null,
-            suitableTemperatures = emptySet(),
-            goodFoodCategories = emptySet(),
-            isAddedToWish = false,
-            isAddedToTasted = false
-        )
     }
 }
