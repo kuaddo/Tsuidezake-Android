@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.local.internal.room.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -29,8 +30,9 @@ internal abstract class RankingCategoryDao {
         insert(rankingCategories.toList())
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     @Insert
-    protected abstract suspend fun insert(rankingCategories: List<RankingCategoryEntity>)
+    abstract suspend fun insert(rankingCategories: List<RankingCategoryEntity>)
 
     @Query("DELETE FROM $TABLE_NAME")
     protected abstract suspend fun deleteAll()
