@@ -129,23 +129,31 @@ object Deps {
     object Test {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-        const val androidXCoreTesting = "androidx.arch.core:core-testing:2.1.0"
         const val assertJ = "org.assertj:assertj-core:3.18.1"
         const val mockk = "io.mockk:mockk:1.10.2"
+
+        // robolectric4.4はjarダウンロードに失敗する
+        const val robolectric = "org.robolectric:robolectric:4.3"
         const val threeTenBp = "org.threeten:threetenbp:1.5.0"
-    }
 
-    object JUnit {
-        private const val version = "5.7.0"
+        object AndroidX {
+            const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
+            const val testRunner = "androidx.test:runner:1.3.0"
+            const val jUnit = "androidx.test.ext:junit:1.1.2"
+        }
 
-        const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
-        const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
-    }
+        object JUnit {
+            private const val version = "5.7.0"
 
-    object Spek {
-        private const val version = "2.0.15"
+            const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
+            const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
+        }
 
-        const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
-        const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
+        object Spek {
+            private const val version = "2.0.15"
+
+            const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
+            const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
+        }
     }
 }

@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.local.internal.room.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -8,7 +9,7 @@ import androidx.room.Update
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.ColumnNames
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.Companion.TABLE_NAME
-import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeUpdate
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeInfo
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.WishUpdate
 import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomSake
 import kotlinx.coroutines.flow.Flow
@@ -23,22 +24,23 @@ internal abstract class SakeDao {
 
     @Transaction
     open suspend fun upsertSakeEntity(sakeEntity: SakeEntity) =
-        if (hasRow(sakeEntity.id)) updateSakeEntity(sakeEntity) else insertSakeEntity(sakeEntity)
+        if (hasRow(sakeEntity.sakeInfo.id)) updateSakeEntity(sakeEntity)
+        else insertSakeEntity(sakeEntity)
 
     @Transaction
-    open suspend fun upsertSakeUpdate(sakeUpdate: SakeUpdate) =
-        if (hasRow(sakeUpdate.id)) updateSakeUpdate(sakeUpdate) else insertSakeUpdate(sakeUpdate)
+    open suspend fun upsertSakeInfo(sakeInfo: SakeInfo) =
+        if (hasRow(sakeInfo.id)) updateSakeInfo(sakeInfo) else insertSakeInfo(sakeInfo)
 
     @Transaction
-    open suspend fun upsertSakeUpdates(sakeUpdates: Set<SakeUpdate>) {
-        val (updateList, insertList) = sakeUpdates.partition { hasRow(it.id) }
-        insertSakeUpdates(insertList)
-        updateSakeUpdates(updateList)
+    open suspend fun upsertSakeInfos(sakeInfos: Set<SakeInfo>) {
+        val (updateList, insertList) = sakeInfos.partition { hasRow(it.id) }
+        insertSakeInfos(insertList)
+        updateSakeInfos(updateList)
     }
 
     @Transaction
     open suspend fun upsertWishUpdates(wishUpdates: Set<WishUpdate>) {
-        val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeUpdate.id) }
+        val (updateList, insertList) = wishUpdates.partition { hasRow(it.sakeInfo.id) }
         insertWishUpdates(insertList)
         updateWishUpdates(updateList)
     }
@@ -53,20 +55,24 @@ internal abstract class SakeDao {
     protected abstract suspend fun updateSakeEntity(sakeEntity: SakeEntity)
 
     @Insert(entity = SakeEntity::class)
-    protected abstract suspend fun insertSakeUpdate(sakeUpdate: SakeUpdate)
+    protected abstract suspend fun insertSakeInfo(sakeInfo: SakeInfo)
 
     @Update(entity = SakeEntity::class)
-    protected abstract suspend fun updateSakeUpdate(sakeUpdate: SakeUpdate)
+    protected abstract suspend fun updateSakeInfo(sakeInfo: SakeInfo)
 
     @Insert(entity = SakeEntity::class)
-    protected abstract suspend fun insertSakeUpdates(sakeUpdates: List<SakeUpdate>)
+    protected abstract suspend fun insertSakeInfos(sakeInfos: List<SakeInfo>)
 
     @Update(entity = SakeEntity::class)
-    protected abstract suspend fun updateSakeUpdates(sakeUpdates: List<SakeUpdate>)
+    protected abstract suspend fun updateSakeInfos(sakeInfos: List<SakeInfo>)
 
     @Insert(entity = SakeEntity::class)
     protected abstract suspend fun insertWishUpdates(wishUpdates: List<WishUpdate>)
 
     @Update(entity = SakeEntity::class)
     protected abstract suspend fun updateWishUpdates(wishUpdates: List<WishUpdate>)
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Query("SELECT * FROM $TABLE_NAME")
+    abstract fun selectAll(): List<RoomSake>
 }

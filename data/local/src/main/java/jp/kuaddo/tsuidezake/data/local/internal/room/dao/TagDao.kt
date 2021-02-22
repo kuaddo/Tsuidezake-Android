@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.local.internal.room.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -26,4 +27,8 @@ internal abstract class TagDao {
 
     @Update
     protected abstract suspend fun update(tagEntities: List<TagEntity>)
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Query("SELECT * FROM $TABLE_NAME")
+    abstract fun findAll(): List<TagEntity>
 }

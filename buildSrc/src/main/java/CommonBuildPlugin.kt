@@ -36,13 +36,18 @@ class CommonBuildPlugin : Plugin<Project> {
                 disable("GoogleAppIndexingWarning")
             }
             testOptions {
-                @Suppress("UNCHECKED_CAST")
-                unitTests.all(closureOf<Test> {
-                    testLogging { setEvents(TEST_LOGGING_EVENTS) }
-                    extensions.configure(JacocoTaskExtension::class.java) {
-                        isIncludeNoLocationClasses = true
-                    }
-                } as Closure<Test>)
+                unitTests.apply {
+                    isIncludeAndroidResources = true
+                    @Suppress("UNCHECKED_CAST")
+                    all(
+                        closureOf<Test> {
+                            testLogging { setEvents(TEST_LOGGING_EVENTS) }
+                            extensions.configure(JacocoTaskExtension::class.java) {
+                                isIncludeNoLocationClasses = true
+                            }
+                        } as Closure<Test>
+                    )
+                }
             }
 
             @Suppress("UnstableApiUsage")

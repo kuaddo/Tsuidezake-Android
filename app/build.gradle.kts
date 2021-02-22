@@ -124,15 +124,15 @@ dependencies {
     implementation(Deps.dataBindingKtx)
     debugImplementation(Deps.leakCanary)
 
-    testImplementation(Deps.Kotlin.reflect)
+    testImplementation(project(":testutil"))
     testImplementation(Deps.Test.kotlinCoroutinesTest)
-    testImplementation(Deps.Test.androidXCoreTesting)
+    testImplementation(Deps.Test.AndroidX.coreTesting)
 
-    testImplementation(Deps.JUnit.jupiterApi)
-    testImplementation(Deps.JUnit.jupiterEngine)
+    testImplementation(Deps.Test.JUnit.jupiterApi)
+    testImplementation(Deps.Test.JUnit.jupiterEngine)
 
-    testImplementation(Deps.Spek.dslJvm)
-    testImplementation(Deps.Spek.junit5)
+    testImplementation(Deps.Test.Spek.dslJvm)
+    testImplementation(Deps.Test.Spek.junit5)
 
     testImplementation(Deps.Test.assertJ)
     testImplementation(Deps.Test.mockk)
