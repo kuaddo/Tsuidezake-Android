@@ -36,4 +36,8 @@ internal abstract class RankingCategoryDao {
 
     @Query("DELETE FROM $TABLE_NAME")
     protected abstract suspend fun deleteAll()
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Query("SELECT * FROM $TABLE_NAME")
+    abstract suspend fun selectAll(): List<RankingCategoryEntity>
 }
