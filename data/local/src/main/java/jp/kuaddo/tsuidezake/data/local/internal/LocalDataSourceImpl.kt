@@ -114,15 +114,15 @@ internal class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveRankings(rankings: List<Ranking>) {
+    override suspend fun replaceRankings(rankings: List<Ranking>) {
         val rankingCategoryEntities = rankings.map(RankingCategoryEntity::of).toSet()
-        val sakeInfos = rankings.flatMap { ranking ->
-            ranking.contents.map { SakeInfo.of(it.sakeDetail) }
-        }.toSet()
+        val sakeDetails = rankings.flatMap { ranking ->
+            ranking.contents.map(Ranking.Content::sakeDetail)
+        }
 
         db.withTransaction {
             rankingCategoryDao.replaceWith(rankingCategoryEntities)
-            sakeDao.upsertSakeInfos(sakeInfos)
+            sakeDetails.forEach { saveSakeDetail(it) }
 
             val rankingEntities = rankings.flatMap { ranking ->
                 val categoryId = rankingCategoryDao.selectIdBy(ranking.category)
@@ -132,12 +132,12 @@ internal class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveRecommendedSakes(contents: List<Ranking.Content>) {
-        val sakeInfos = contents.map { SakeInfo.of(it.sakeDetail) }.toSet()
+    override suspend fun replaceRecommendedSakes(contents: List<Ranking.Content>) {
+        val sakeDetails = contents.map(Ranking.Content::sakeDetail)
         val recommendedSakes = contents.map(RecommendedSakeEntity::of).toSet()
 
         db.withTransaction {
-            sakeDao.upsertSakeInfos(sakeInfos)
+            sakeDetails.forEach { saveSakeDetail(it) }
             recommendedSakeDao.replaceWith(recommendedSakes)
         }
     }

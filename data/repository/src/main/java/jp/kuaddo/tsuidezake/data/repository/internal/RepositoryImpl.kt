@@ -40,7 +40,7 @@ internal class RepositoryImpl @Inject constructor(
                 tsuidezakeService.getRankings()
 
             override suspend fun saveApiResult(item: List<Ranking>) =
-                localDataSource.saveRankings(item)
+                localDataSource.replaceRankings(item)
         }.getResultFlow()
 
     override fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>> =
@@ -55,7 +55,7 @@ internal class RepositoryImpl @Inject constructor(
                 tsuidezakeService.getRecommendedSakes()
 
             override suspend fun saveApiResult(item: List<Ranking.Content>) =
-                localDataSource.saveRecommendedSakes(item)
+                localDataSource.replaceRecommendedSakes(item)
         }.getResultFlow()
 
     override fun getWishList(): Flow<Resource<List<SakeDetail>>> =
