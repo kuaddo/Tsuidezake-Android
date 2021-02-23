@@ -133,11 +133,11 @@ internal class LocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun saveRecommendedSakes(contents: List<Ranking.Content>) {
-        val sakeInfos = contents.map { SakeInfo.of(it.sakeDetail) }.toSet()
+        val sakeDetails = contents.map(Ranking.Content::sakeDetail)
         val recommendedSakes = contents.map(RecommendedSakeEntity::of).toSet()
 
         db.withTransaction {
-            sakeDao.upsertSakeInfos(sakeInfos)
+            sakeDetails.forEach { saveSakeDetail(it) }
             recommendedSakeDao.replaceWith(recommendedSakes)
         }
     }

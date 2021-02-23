@@ -141,6 +141,20 @@ class LocalDataSourceImplTest {
         assertThat(localDataSourceImpl.loadRankingsFlow().first()).isEmpty()
     }
 
+    @Test
+    fun testLoadRecommendedSakesFlow() = runBlocking<Unit> {
+        localDataSourceImpl.saveRecommendedSakes(CONTENTS_LIST_TEST_DATA[1])
+
+        val recommendedSakes = localDataSourceImpl.loadRecommendedSakesFlow().first()
+
+        assertThat(recommendedSakes).containsExactlyElementsOf(CONTENTS_LIST_TEST_DATA[1])
+    }
+
+    @Test
+    fun testLoadRecommendedSakesFlow_recommendedSakesIsEmpty() = runBlocking {
+        assertThat(localDataSourceImpl.loadRecommendedSakesFlow().first()).isEmpty()
+    }
+
     companion object {
         private val USER_SAKE_LIST_TEST_DATA: List<UserSake> = (1..3).map { id ->
             UserSake(
