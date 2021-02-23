@@ -9,8 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wada811.databinding.dataBinding
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.viewbinding.BindableItem
 import dagger.android.support.DaggerFragment
@@ -27,7 +26,7 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
 
     private val wishViewModel: WishViewModel by viewModels { viewModelFactory }
     private val binding: FragmentWishBinding by dataBinding()
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply { spanCount = 2 }
+    private val adapter = GroupieAdapter().apply { spanCount = 2 }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.wishViewModel = wishViewModel

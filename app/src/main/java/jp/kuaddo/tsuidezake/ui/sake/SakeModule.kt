@@ -1,12 +1,10 @@
 package jp.kuaddo.tsuidezake.ui.sake
 
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Suppress("unused")
-@AssistedModule
-@Module(includes = [AssistedInject_SakeModule::class])
+@Module
 abstract class SakeModule {
 
     @ContributesAndroidInjector

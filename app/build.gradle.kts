@@ -106,8 +106,6 @@ dependencies {
     api(Deps.Dagger.androidSupport)
     kapt(Deps.Dagger.compiler)
     kapt(Deps.Dagger.androidProcessor)
-    compileOnly(Deps.Dagger.AssistedInject.annotations)
-    kapt(Deps.Dagger.AssistedInject.processor)
 
     implementation(Deps.Glide.core)
     kapt(Deps.Glide.compiler)

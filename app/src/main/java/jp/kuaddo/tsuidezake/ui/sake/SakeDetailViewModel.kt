@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.AddSakeToTastedListUseCase
@@ -36,6 +37,11 @@ class SakeDetailViewModel @AssistedInject constructor(
     snackbarViewModelDelegate: SnackbarViewModelDelegate
 ) : ViewModel(),
     SnackbarViewModelDelegate by snackbarViewModelDelegate {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(sakeId: Int): SakeDetailViewModel
+    }
 
     private val userSake = MutableLiveData<UserSake>()
     val sakeDetail: LiveData<SakeDetail> = userSake.map(UserSake::sakeDetail)
@@ -114,10 +120,5 @@ class SakeDetailViewModel @AssistedInject constructor(
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_remove_tasted_list_failed))
         }
-    }
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(sakeId: Int): SakeDetailViewModel
     }
 }
