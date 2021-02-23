@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import jp.kuaddo.tsuidezake.data.local.internal.room.TsuidezakeDB
 import jp.kuaddo.tsuidezake.model.FoodCategory
+import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import jp.kuaddo.tsuidezake.model.Tag
@@ -111,6 +112,35 @@ class LocalDataSourceImplTest {
         assertThat(wishList).isEmpty()
     }
 
+    @Test
+    fun testLoadRankingsFlow() = runBlocking<Unit> {
+        localDataSourceImpl.saveRankings(RANKING_LIST_TEST_DATA)
+
+        val rankings = localDataSourceImpl.loadRankingsFlow().first()
+
+        assertThat(rankings).containsExactlyElementsOf(RANKING_LIST_TEST_DATA)
+    }
+
+    @Test
+    fun testLoadRankingsFlow_contentsIsEmpty() = runBlocking<Unit> {
+        val rankings = (1..3).map { id ->
+            Ranking(
+                displayOrder = id,
+                category = "category$id",
+                contents = emptyList()
+            )
+        }
+        localDataSourceImpl.saveRankings(rankings)
+
+        assertThat(localDataSourceImpl.loadRankingsFlow().first())
+            .containsExactlyElementsOf(rankings)
+    }
+
+    @Test
+    fun testLoadRankingsFlow_rankingsIsEmpty() = runBlocking {
+        assertThat(localDataSourceImpl.loadRankingsFlow().first()).isEmpty()
+    }
+
     companion object {
         private val USER_SAKE_LIST_TEST_DATA: List<UserSake> = (1..3).map { id ->
             UserSake(
@@ -130,6 +160,21 @@ class LocalDataSourceImplTest {
                 ),
                 isAddedToWish = id >= 2,
                 isAddedToTasted = id >= 2
+            )
+        }
+        private val CONTENTS_LIST_TEST_DATA: List<List<Ranking.Content>> = (1..3).map { size ->
+            (1..size).map { rank ->
+                Ranking.Content(
+                    rank = rank,
+                    sakeDetail = USER_SAKE_LIST_TEST_DATA[rank - 1].sakeDetail
+                )
+            }
+        }
+        private val RANKING_LIST_TEST_DATA: List<Ranking> = (1..3).map { id ->
+            Ranking(
+                displayOrder = id,
+                category = "category$id",
+                contents = CONTENTS_LIST_TEST_DATA[id - 1]
             )
         }
     }
