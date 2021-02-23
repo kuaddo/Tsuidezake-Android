@@ -11,6 +11,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntit
 import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingEntity
 import jp.kuaddo.tsuidezake.data.local.internal.room.model.RoomRanking
 import jp.kuaddo.tsuidezake.testutil.CoroutineTestRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -20,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class RankingCategoryDaoTest {
     @get:Rule
