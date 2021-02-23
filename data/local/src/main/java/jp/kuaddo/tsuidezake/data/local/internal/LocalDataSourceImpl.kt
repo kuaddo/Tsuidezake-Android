@@ -114,7 +114,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveRankings(rankings: List<Ranking>) {
+    override suspend fun replaceRankings(rankings: List<Ranking>) {
         val rankingCategoryEntities = rankings.map(RankingCategoryEntity::of).toSet()
         val sakeDetails = rankings.flatMap { ranking ->
             ranking.contents.map(Ranking.Content::sakeDetail)
@@ -132,7 +132,7 @@ internal class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveRecommendedSakes(contents: List<Ranking.Content>) {
+    override suspend fun replaceRecommendedSakes(contents: List<Ranking.Content>) {
         val sakeDetails = contents.map(Ranking.Content::sakeDetail)
         val recommendedSakes = contents.map(RecommendedSakeEntity::of).toSet()
 

@@ -114,7 +114,7 @@ class LocalDataSourceImplTest {
 
     @Test
     fun testLoadRankingsFlow() = runBlocking<Unit> {
-        localDataSourceImpl.saveRankings(RANKING_LIST_TEST_DATA)
+        localDataSourceImpl.replaceRankings(RANKING_LIST_TEST_DATA)
 
         val rankings = localDataSourceImpl.loadRankingsFlow().first()
 
@@ -130,7 +130,7 @@ class LocalDataSourceImplTest {
                 contents = emptyList()
             )
         }
-        localDataSourceImpl.saveRankings(rankings)
+        localDataSourceImpl.replaceRankings(rankings)
 
         assertThat(localDataSourceImpl.loadRankingsFlow().first())
             .containsExactlyElementsOf(rankings)
@@ -143,7 +143,7 @@ class LocalDataSourceImplTest {
 
     @Test
     fun testLoadRecommendedSakesFlow() = runBlocking<Unit> {
-        localDataSourceImpl.saveRecommendedSakes(CONTENTS_LIST_TEST_DATA[1])
+        localDataSourceImpl.replaceRecommendedSakes(CONTENTS_LIST_TEST_DATA[1])
 
         val recommendedSakes = localDataSourceImpl.loadRecommendedSakesFlow().first()
 

@@ -15,6 +15,6 @@ interface LocalDataSource {
     suspend fun saveUserSake(userSake: UserSake)
     suspend fun saveSakeDetail(sakeDetail: SakeDetail)
     suspend fun saveWishList(wishList: List<SakeDetail>)
-    suspend fun saveRankings(rankings: List<Ranking>)
-    suspend fun saveRecommendedSakes(contents: List<Ranking.Content>)
+    suspend fun replaceRankings(rankings: List<Ranking>)
+    suspend fun replaceRecommendedSakes(contents: List<Ranking.Content>)
 }
