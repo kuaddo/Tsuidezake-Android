@@ -155,6 +155,37 @@ class LocalDataSourceImplTest {
         assertThat(localDataSourceImpl.loadRecommendedSakesFlow().first()).isEmpty()
     }
 
+    // saveUserSake() is already tested by testLoadUserSakeFlow().
+
+    @Test
+    fun testSaveSakeDetail() = runBlocking<Unit> {
+        val sakeDetail = USER_SAKE_LIST_TEST_DATA[2].sakeDetail
+        localDataSourceImpl.saveSakeDetail(sakeDetail)
+
+        val userSake = localDataSourceImpl.loadUserSakeFlow(sakeId = 3).first()
+
+        assertThat(userSake).isEqualTo(
+            UserSake(
+                sakeDetail = sakeDetail,
+                isAddedToWish = false,
+                isAddedToTasted = false
+            )
+        )
+    }
+
+    @Test
+    fun testSaveWishList() = runBlocking<Unit> {
+        val sakeDetails = USER_SAKE_LIST_TEST_DATA.map(UserSake::sakeDetail)
+        localDataSourceImpl.saveWishList(sakeDetails)
+
+        val userSake = localDataSourceImpl.loadWishListFlow().first()
+
+        assertThat(userSake).containsExactlyElementsOf(sakeDetails)
+    }
+
+    // replaceRankings() is already tested by testLoadRankingsFlow().
+    // replaceRecommendedSakes() is already tested by testLoadRecommendedSakesFlow().
+
     companion object {
         private val USER_SAKE_LIST_TEST_DATA: List<UserSake> = (1..3).map { id ->
             UserSake(
