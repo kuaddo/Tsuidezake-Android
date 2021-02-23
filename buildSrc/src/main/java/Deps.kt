@@ -68,22 +68,13 @@ object Deps {
     }
 
     object Dagger {
-        private const val version = "2.30.1"
+        private const val version = "2.32"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
         const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
-
-        object AssistedInject {
-            private const val version = "0.6.0"
-
-            const val annotations =
-                "com.squareup.inject:assisted-inject-annotations-dagger2:$version"
-            const val processor =
-                "com.squareup.inject:assisted-inject-processor-dagger2:$version"
-        }
     }
 
     object OkHttp {
