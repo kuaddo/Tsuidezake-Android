@@ -14,6 +14,7 @@ import jp.kuaddo.tsuidezake.data.remote.WishListQuery
 import jp.kuaddo.tsuidezake.data.remote.fragment.ContentFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment
 import jp.kuaddo.tsuidezake.data.remote.fragment.UserSakeFragment
+import jp.kuaddo.tsuidezake.data.remote.type.TastedSakeInput
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
 import jp.kuaddo.tsuidezake.model.FoodCategory
@@ -84,15 +85,16 @@ internal class TsuidezakeServiceImpl @Inject constructor(
             }
         }
 
-    // TODO: Fix to use addTastedSakeWithStars()
-    override suspend fun addSakeToTastedList(id: Int): ApiResponse<UserSake> =
-        withContext(Dispatchers.IO) {
-            apolloClient.mutate(AddSakeToTastedListMutation(id)).toApiResponse { response ->
-                response.addTastedSake.fragments.userSakeFragment.toUserSake()
-            }
+    override suspend fun addSakeToTastedList(
+        id: Int,
+        evaluation: Int
+    ): ApiResponse<UserSake> = withContext(Dispatchers.IO) {
+        val input = TastedSakeInput(sakeId = id, stars = evaluation)
+        apolloClient.mutate(AddSakeToTastedListMutation(input)).toApiResponse { response ->
+            response.addTastedSakeWithStars.fragments.userSakeFragment.toUserSake()
         }
+    }
 
-    // TODO: Fix to use addTastedSakeWithStars()
     override suspend fun removeSakeFromTastedList(id: Int): ApiResponse<UserSake> =
         withContext(Dispatchers.IO) {
             apolloClient.mutate(RemoveSakeFromTastedListMutation(id)).toApiResponse { response ->

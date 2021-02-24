@@ -107,7 +107,8 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     private suspend fun addSakeToTastedList() {
-        when (addSakeToTastedListUseCase(sakeId)) {
+        val parameter = AddSakeToTastedListUseCase.Parameter(sakeId, 3) // TODO: replace dummy data
+        when (addSakeToTastedListUseCase(parameter)) {
             is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = true)
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
