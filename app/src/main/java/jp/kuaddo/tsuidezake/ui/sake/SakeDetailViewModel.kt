@@ -1,10 +1,12 @@
 package jp.kuaddo.tsuidezake.ui.sake
 
+import androidx.annotation.IntRange
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.hadilq.liveevent.LiveEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -48,6 +50,9 @@ class SakeDetailViewModel @AssistedInject constructor(
     val isAddedToWish: LiveData<Boolean> = userSake.map(UserSake::isAddedToWish)
     val isAddedToTasted: LiveData<Boolean> = userSake.map(UserSake::isAddedToTasted)
 
+    private val _showEvaluationDialogEvent = LiveEvent<Unit>()
+    val showEvaluationDialogEvent: LiveData<Unit> = _showEvaluationDialogEvent
+
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
@@ -87,7 +92,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     fun toggleTastedState() = viewModelScope.launch {
         // TODO: show loading UI
         if (isAddedToTasted.value == true) removeSakeFromTastedList()
-        else addSakeToTastedList()
+        else _showEvaluationDialogEvent.value = Unit
     }
 
     private suspend fun addSakeToWishList() {
@@ -106,8 +111,10 @@ class SakeDetailViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun addSakeToTastedList() {
-        val parameter = AddSakeToTastedListUseCase.Parameter(sakeId, 3) // TODO: replace dummy data
+    fun addSakeToTastedList(
+        @IntRange(from = 1, to = 5) evaluation: Int
+    ) = viewModelScope.launch {
+        val parameter = AddSakeToTastedListUseCase.Parameter(sakeId, evaluation)
         when (addSakeToTastedListUseCase(parameter)) {
             is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = true)
             is ErrorResource ->

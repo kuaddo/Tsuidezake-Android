@@ -37,6 +37,10 @@ class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
                 sakeDetail.tags.forEach { tag -> chipGroup.addTagChip(tag.name) }
             }
         }
+        viewModel.showEvaluationDialogEvent.observeNonNull(viewLifecycleOwner) {
+            // TODO: Show evaluation dialog
+            viewModel.addSakeToTastedList(3) // TODO: Replace dummy value.
+        }
     }
 
     private fun ChipGroup.addTagChip(text: String) {
