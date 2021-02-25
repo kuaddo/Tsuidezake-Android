@@ -109,8 +109,10 @@ internal class RepositoryImpl @Inject constructor(
     override suspend fun removeSakeFromWishList(id: Int): Resource<Unit> =
         tsuidezakeService.removeSakeFromWishList(id).alsoS(::saveUserSakeResponse).ignoreData()
 
-    override suspend fun addSakeToTastedList(id: Int): Resource<Unit> =
-        tsuidezakeService.addSakeToTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()
+    override suspend fun addSakeToTastedList(id: Int, evaluation: Int): Resource<Unit> =
+        tsuidezakeService.addSakeToTastedList(id, evaluation)
+            .alsoS(::saveUserSakeResponse)
+            .ignoreData()
 
     override suspend fun removeSakeFromTastedList(id: Int): Resource<Unit> =
         tsuidezakeService.removeSakeFromTastedList(id).alsoS(::saveUserSakeResponse).ignoreData()

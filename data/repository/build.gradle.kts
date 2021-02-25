@@ -16,6 +16,7 @@ dependencies {
     implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx) // TODO: remove
+    implementation(Deps.AndroidX.annotation)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
 }

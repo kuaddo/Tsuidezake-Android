@@ -28,8 +28,8 @@ mutation RemoveSakeFromWishList($id: Int!) {
     }
 }
 
-mutation AddSakeToTastedList($id: Int!) {
-    addTastedSake(id: $id) {
+mutation AddSakeToTastedList($tastedSakeInput: TastedSakeInput!) {
+    addTastedSakeWithStars(input: $tastedSakeInput) {
         ...userSakeFragment
     }
 }

@@ -36,6 +36,7 @@ object Deps {
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.2"
+        const val annotation = "androidx.annotation:annotation:1.1.0"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.0"
         const val material = "com.google.android.material:material:1.3.0"
 

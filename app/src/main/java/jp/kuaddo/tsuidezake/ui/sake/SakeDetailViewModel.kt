@@ -1,10 +1,12 @@
 package jp.kuaddo.tsuidezake.ui.sake
 
+import androidx.annotation.IntRange
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.hadilq.liveevent.LiveEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -48,6 +50,12 @@ class SakeDetailViewModel @AssistedInject constructor(
     val isAddedToWish: LiveData<Boolean> = userSake.map(UserSake::isAddedToWish)
     val isAddedToTasted: LiveData<Boolean> = userSake.map(UserSake::isAddedToTasted)
 
+    private val _showEvaluationDialogEvent = LiveEvent<Unit>()
+    val showEvaluationDialogEvent: LiveData<Unit> = _showEvaluationDialogEvent
+
+    private val _showTastedScreenEvent = LiveEvent<Unit>()
+    val showTastedScreenEvent: LiveData<Unit> = _showTastedScreenEvent
+
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
@@ -87,7 +95,7 @@ class SakeDetailViewModel @AssistedInject constructor(
     fun toggleTastedState() = viewModelScope.launch {
         // TODO: show loading UI
         if (isAddedToTasted.value == true) removeSakeFromTastedList()
-        else addSakeToTastedList()
+        else _showEvaluationDialogEvent.value = Unit
     }
 
     private suspend fun addSakeToWishList() {
@@ -106,9 +114,16 @@ class SakeDetailViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun addSakeToTastedList() {
-        when (addSakeToTastedListUseCase(sakeId)) {
-            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = true)
+    fun addSakeToTastedList(
+        @IntRange(from = 1, to = 5) evaluation: Int,
+        shouldShowTastedScreen: Boolean
+    ) = viewModelScope.launch {
+        val parameter = AddSakeToTastedListUseCase.Parameter(sakeId, evaluation)
+        when (addSakeToTastedListUseCase(parameter)) {
+            is SuccessResource -> {
+                userSake.value = userSake.value?.copy(isAddedToTasted = true)
+                if (shouldShowTastedScreen) _showTastedScreenEvent.value = Unit
+            }
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
         }

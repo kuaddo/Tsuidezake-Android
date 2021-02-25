@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.data.repository
 
+import androidx.annotation.IntRange
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.UserSake
@@ -13,6 +14,10 @@ interface TsuidezakeService {
 
     suspend fun addSakeToWishList(id: Int): ApiResponse<UserSake>
     suspend fun removeSakeFromWishList(id: Int): ApiResponse<UserSake>
-    suspend fun addSakeToTastedList(id: Int): ApiResponse<UserSake>
+    suspend fun addSakeToTastedList(
+        id: Int,
+        @IntRange(from = 1, to = 5) evaluation: Int
+    ): ApiResponse<UserSake>
+
     suspend fun removeSakeFromTastedList(id: Int): ApiResponse<UserSake>
 }

@@ -1,5 +1,6 @@
 package jp.kuaddo.tsuidezake.domain
 
+import androidx.annotation.IntRange
 import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.Resource
 import jp.kuaddo.tsuidezake.model.SakeDetail
@@ -19,6 +20,10 @@ interface Repository {
 
     suspend fun addSakeToWishList(id: Int): Resource<Unit>
     suspend fun removeSakeFromWishList(id: Int): Resource<Unit>
-    suspend fun addSakeToTastedList(id: Int): Resource<Unit>
+    suspend fun addSakeToTastedList(
+        id: Int,
+        @IntRange(from = 1, to = 5) evaluation: Int
+    ): Resource<Unit>
+
     suspend fun removeSakeFromTastedList(id: Int): Resource<Unit>
 }
