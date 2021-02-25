@@ -53,6 +53,9 @@ class SakeDetailViewModel @AssistedInject constructor(
     private val _showEvaluationDialogEvent = LiveEvent<Unit>()
     val showEvaluationDialogEvent: LiveData<Unit> = _showEvaluationDialogEvent
 
+    private val _showTastedScreenEvent = LiveEvent<Unit>()
+    val showTastedScreenEvent: LiveData<Unit> = _showTastedScreenEvent
+
     // TODO: この部分はCustomViewに責務を分けたい
     val isExpanded: LiveData<Boolean>
         get() = _isExpanded
@@ -112,11 +115,15 @@ class SakeDetailViewModel @AssistedInject constructor(
     }
 
     fun addSakeToTastedList(
-        @IntRange(from = 1, to = 5) evaluation: Int
+        @IntRange(from = 1, to = 5) evaluation: Int,
+        shouldShowTastedScreen: Boolean
     ) = viewModelScope.launch {
         val parameter = AddSakeToTastedListUseCase.Parameter(sakeId, evaluation)
         when (addSakeToTastedListUseCase(parameter)) {
-            is SuccessResource -> userSake.value = userSake.value?.copy(isAddedToTasted = true)
+            is SuccessResource -> {
+                userSake.value = userSake.value?.copy(isAddedToTasted = true)
+                if (shouldShowTastedScreen) _showTastedScreenEvent.value = Unit
+            }
             is ErrorResource ->
                 setMessage(SnackbarMessageRes(R.string.sake_detail_add_tasted_list_failed))
         }

@@ -4,6 +4,7 @@
     <string name="tasted">呑んだ</string>
     <string name="my_page">マイページ</string>
     <string name="detail">詳細</string>
+    <string name="done">完了</string>
 
     <string name="price">¥%1$,d</string>
 
@@ -24,4 +25,7 @@
     <string name="sake_detail_remove_wish_list_failed">呑みたいから削除できませんでした</string>
     <string name="sake_detail_add_tasted_list_failed">呑んだに追加できませんでした</string>
     <string name="sake_detail_remove_tasted_list_failed">呑んだから削除できませんでした</string>
+
+    <string name="evaluation_dialog_title">このお酒は気に入りましたか？</string>
+    <string name="evaluation_dialog_open_tasted_page">呑んだページを開く</string>
 </resources>
