@@ -46,7 +46,7 @@ fun BottomNavigationView.setupWithNavController(
 
         val childFragmentManager = navHostFragment.childFragmentManager
         childFragmentManager.addOnBackStackChangedListener {
-            this.isVisible = childFragmentManager.backStackEntryCount == 0
+            isVisible = childFragmentManager.backStackEntryCount == 0
         }
 
         // Obtain its id
@@ -63,6 +63,7 @@ fun BottomNavigationView.setupWithNavController(
         if (this.selectedItemId == graphId) {
             // Update livedata with the selected graph
             selectedNavController.value = navHostFragment.navController
+            isVisible = childFragmentManager.backStackEntryCount == 0
             attachNavHostFragment(fragmentManager, navHostFragment, index == 0)
         } else {
             detachNavHostFragment(fragmentManager, navHostFragment)
