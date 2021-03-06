@@ -31,6 +31,11 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         }
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupBottomNavigation()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController.value?.navigateUp() ?: false
     }
