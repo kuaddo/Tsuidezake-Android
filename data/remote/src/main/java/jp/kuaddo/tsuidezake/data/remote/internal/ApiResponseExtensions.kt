@@ -10,16 +10,6 @@ import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
 import kotlinx.coroutines.CancellationException
 import timber.log.Timber
 
-internal fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
-    if (data != null) return SuccessResponse(data!!)
-
-    val message = errors?.let {
-        it.map { error -> Timber.d(error.message) }
-        it.joinToString(separator = "\n") { error -> error.message }
-    } ?: UNKNOWN_ERROR_MESSAGE
-    return ErrorResponse(message)
-}
-
 internal suspend fun <T : Any, R> ApolloQueryCall<T>.toApiResponse(
     transform: suspend (T) -> R
 ): ApiResponse<R> = runCatching {
@@ -53,5 +43,15 @@ internal suspend fun <T : Any, R : Any> ApolloMutationCall<T>.toApiResponse(
             ErrorResponse(it.message ?: UNKNOWN_ERROR_MESSAGE)
         }
     )
+
+private fun <T : Any> Response<T>.toApiResponse(): ApiResponse<T> {
+    if (data != null) return SuccessResponse(data!!)
+
+    val message = errors?.let {
+        it.forEach { error -> Timber.e(error.toString()) }
+        it.joinToString(separator = "\n") { error -> error.message }
+    } ?: UNKNOWN_ERROR_MESSAGE
+    return ErrorResponse(message)
+}
 
 private const val UNKNOWN_ERROR_MESSAGE = "Unknown error"
