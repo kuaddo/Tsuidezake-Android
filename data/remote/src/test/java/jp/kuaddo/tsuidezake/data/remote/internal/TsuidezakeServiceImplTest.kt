@@ -87,4 +87,12 @@ class TsuidezakeServiceImplTest {
         assertTrue(wishList is SuccessResponse)
         assertThat(wishList.data).containsExactly(SAKE_DETAIL1, SAKE_DETAIL2)
     }
+
+    @Test
+    fun testGetSakeDetail() = runBlocking<Unit> {
+        val sakeDetail = target.getSakeDetail(100)
+
+        assertTrue(sakeDetail is SuccessResponse)
+        assertThat(sakeDetail.data).isEqualTo(SAKE_DETAIL1)
+    }
 }
