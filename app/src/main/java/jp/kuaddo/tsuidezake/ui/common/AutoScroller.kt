@@ -57,7 +57,6 @@ class AutoScroller(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    @Suppress("unused")
     private fun startAutoScroll() {
         scrollJob?.cancel()
         scrollJob = lifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -69,11 +68,9 @@ class AutoScroller(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    @Suppress("unused")
     private fun stopAutoScroll() = scrollJob?.cancel()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    @Suppress("unused")
     private fun onDestroy() {
         viewPager.unregisterOnPageChangeCallback(infinityScrollCallback)
         lifecycleOwner.lifecycle.removeObserver(this)

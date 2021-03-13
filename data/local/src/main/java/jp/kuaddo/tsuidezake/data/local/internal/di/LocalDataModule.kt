@@ -16,7 +16,6 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.dao.TagDao
 import jp.kuaddo.tsuidezake.data.repository.LocalDataSource
 import jp.kuaddo.tsuidezake.data.repository.PreferenceStorage
 
-@Suppress("unused")
 @Module
 internal abstract class LocalDataModule {
     @Binds

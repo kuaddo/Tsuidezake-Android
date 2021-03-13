@@ -10,12 +10,10 @@ import jp.kuaddo.tsuidezake.data.repository.AuthService
 
 @Module
 internal abstract class AuthenticationModule {
-    @Suppress("unused")
     @Binds
     @AuthenticationScope
     abstract fun bindAuthToken(impl: AuthServiceImpl): AuthToken
 
-    @Suppress("unused")
     @Binds
     @AuthenticationScope
     abstract fun bindAuthService(impl: AuthServiceImpl): AuthService

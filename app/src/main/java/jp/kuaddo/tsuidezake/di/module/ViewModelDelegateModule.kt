@@ -9,12 +9,9 @@ import jp.kuaddo.tsuidezake.delegate.MediatorLoadingViewModelDelegate
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.delegate.ToastViewModelDelegate
 
-@Suppress("unused")
 @Module
 abstract class ViewModelDelegateModule {
-
     companion object {
-
         @Provides
         fun provideLoadingViewModelDelegate(): LoadingViewModelDelegate =
             MediatorLoadingViewModelDelegate()

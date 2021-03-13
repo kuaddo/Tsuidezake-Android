@@ -10,10 +10,8 @@ import jp.kuaddo.tsuidezake.di.ViewModelKey
 import jp.kuaddo.tsuidezake.ui.MainViewModel
 import jp.kuaddo.tsuidezake.ui.launcher.LauncherViewModel
 
-@Suppress("unused")
 @Module
 abstract class ViewModelModule {
-
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)

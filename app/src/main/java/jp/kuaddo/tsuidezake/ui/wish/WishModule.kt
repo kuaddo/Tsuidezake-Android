@@ -7,10 +7,8 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import jp.kuaddo.tsuidezake.di.ViewModelKey
 
-@Suppress("unused")
 @Module
 abstract class WishModule {
-
     @ContributesAndroidInjector
     abstract fun contributeWishFragment(): WishFragment
 
