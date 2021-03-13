@@ -36,7 +36,9 @@ private class RankingHandler : Handler() {
 
 private class SakeHandler : Handler() {
     override val jsonDirectoryPath: String = "mock_response/sake"
-    override val operationNameToJsonFileNameMap = emptyMap<String, String>()
+    override val operationNameToJsonFileNameMap = mapOf(
+        "WishListQuery" to "WishListQuery.json"
+    )
 }
 
 private abstract class Handler {

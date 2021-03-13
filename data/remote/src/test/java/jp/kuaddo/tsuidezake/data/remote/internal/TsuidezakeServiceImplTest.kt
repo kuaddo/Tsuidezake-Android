@@ -79,4 +79,12 @@ class TsuidezakeServiceImplTest {
             Ranking.Content(rank = 2, sakeDetail = SAKE_DETAIL2)
         )
     }
+
+    @Test
+    fun testGetWishList() = runBlocking<Unit> {
+        val wishList = target.getWishList()
+
+        assertTrue(wishList is SuccessResponse)
+        assertThat(wishList.data).containsExactly(SAKE_DETAIL1, SAKE_DETAIL2)
+    }
 }
