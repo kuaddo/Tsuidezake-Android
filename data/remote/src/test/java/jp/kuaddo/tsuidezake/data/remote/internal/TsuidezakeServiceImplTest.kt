@@ -7,6 +7,7 @@ import io.mockk.slot
 import jp.kuaddo.tsuidezake.data.remote.SAKE_DETAIL1
 import jp.kuaddo.tsuidezake.data.remote.SAKE_DETAIL2
 import jp.kuaddo.tsuidezake.data.remote.TsuidezakeDispatcher
+import jp.kuaddo.tsuidezake.data.remote.USER_SAKE1
 import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
 import jp.kuaddo.tsuidezake.model.Ranking
 import kotlinx.coroutines.runBlocking
@@ -94,5 +95,13 @@ class TsuidezakeServiceImplTest {
 
         assertTrue(sakeDetail is SuccessResponse)
         assertThat(sakeDetail.data).isEqualTo(SAKE_DETAIL1)
+    }
+
+    @Test
+    fun testGetUserSake() = runBlocking<Unit> {
+        val userSake = target.getUserSake(100)
+
+        assertTrue(userSake is SuccessResponse)
+        assertThat(userSake.data).isEqualTo(USER_SAKE1)
     }
 }

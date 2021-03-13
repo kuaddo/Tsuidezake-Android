@@ -4,6 +4,7 @@ import jp.kuaddo.tsuidezake.model.FoodCategory
 import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import jp.kuaddo.tsuidezake.model.Tag
+import jp.kuaddo.tsuidezake.model.UserSake
 
 internal val SAKE_DETAIL1 = SakeDetail(
     id = 1,
@@ -44,4 +45,10 @@ internal val SAKE_DETAIL2 = SakeDetail(
         FoodCategory.MEAT,
         FoodCategory.SEAFOOD
     )
+)
+
+internal val USER_SAKE1 = UserSake(
+    sakeDetail = SAKE_DETAIL1,
+    isAddedToWish = true,
+    isAddedToTasted = true
 )
