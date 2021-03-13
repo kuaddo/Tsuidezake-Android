@@ -47,6 +47,8 @@ dependencies {
     testImplementation(Deps.Test.Spek.junit5)
     testImplementation(Deps.Test.assertJ)
     testImplementation(Deps.Test.mockk)
+    testImplementation(Deps.OkHttp.mockWebServer)
+    testImplementation(Deps.gson)
 }
 
 tasks.withType<DependencyUpdatesTask> {

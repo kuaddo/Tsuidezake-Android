@@ -83,6 +83,7 @@ object Deps {
 
         const val core = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
     }
 
     object Glide {
@@ -113,6 +114,7 @@ object Deps {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.0"
+    const val gson = "com.google.code.gson:gson:2.8.6"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.0"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.6"
