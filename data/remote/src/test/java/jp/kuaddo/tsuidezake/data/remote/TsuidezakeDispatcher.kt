@@ -29,7 +29,8 @@ class TsuidezakeDispatcher : Dispatcher() {
 private class RankingHandler : Handler() {
     override val jsonDirectoryPath: String = "mock_response/ranking"
     override val operationNameToJsonFileNameMap = mapOf(
-        "RankingsQuery" to "RankingsQuery.json"
+        "RankingsQuery" to "RankingsQuery.json",
+        "RecommendedSakesQuery" to "RecommendedSakesQuery.json"
     )
 }
 

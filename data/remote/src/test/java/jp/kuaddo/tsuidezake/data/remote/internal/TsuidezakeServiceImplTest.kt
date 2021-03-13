@@ -68,4 +68,15 @@ class TsuidezakeServiceImplTest {
             )
         )
     }
+
+    @Test
+    fun testGetRecommendedSakes() = runBlocking<Unit> {
+        val recommendedSakes = target.getRecommendedSakes()
+
+        assertTrue(recommendedSakes is SuccessResponse)
+        assertThat(recommendedSakes.data).containsExactly(
+            Ranking.Content(rank = 1, sakeDetail = SAKE_DETAIL1),
+            Ranking.Content(rank = 2, sakeDetail = SAKE_DETAIL2)
+        )
+    }
 }

@@ -5,7 +5,7 @@ import jp.kuaddo.tsuidezake.core.letS
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
-import jp.kuaddo.tsuidezake.data.remote.RecommendedSakeQuery
+import jp.kuaddo.tsuidezake.data.remote.RecommendedSakesQuery
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
@@ -42,7 +42,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 
     override suspend fun getRecommendedSakes(): ApiResponse<List<Ranking.Content>> =
         withContext(Dispatchers.IO) {
-            apolloClient.query(RecommendedSakeQuery()).toApiResponse { response ->
+            apolloClient.query(RecommendedSakesQuery()).toApiResponse { response ->
                 response.getRecommendedSakes
                     .map { it.fragments.contentFragment.toContent() }
             }

@@ -8,7 +8,7 @@ query RankingsQuery {
     }
 }
 
-query RecommendedSakeQuery {
+query RecommendedSakesQuery {
     getRecommendedSakes {
         ...contentFragment
     }
