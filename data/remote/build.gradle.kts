@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":model"))
     implementation(project(":data:repository"))
 
@@ -40,6 +41,7 @@ dependencies {
     implementation(Deps.Apollo.coroutines)
     implementation(Deps.timber)
 
+    implementation(kotlin("test-junit"))
     testImplementation(Deps.Test.kotlinCoroutinesTest)
     testImplementation(Deps.Test.JUnit.jupiterApi)
     testImplementation(Deps.Test.JUnit.jupiterEngine)
