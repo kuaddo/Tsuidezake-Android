@@ -1,0 +1,40 @@
+{
+    "data": {
+        "getUserSake": {
+            "__typename": "UserSake",
+            "sake": {
+                "__typename": "Sake",
+                "id": 1,
+                "name": "秘幻　吟醸酒",
+                "tags": [
+                    {
+                        "__typename": "Tag",
+                        "id": 1,
+                        "name": "辛口"
+                    },
+                    {
+                        "__typename": "Tag",
+                        "id": 2,
+                        "name": "アルコール度数：中"
+                    }
+                ],
+                "region": "草津",
+                "brewer": "浅間酒造",
+                "description": "おいしいお酒",
+                "imgPath": "gs://tsuidezake.appspot.com/sakes/1.png",
+                "suitableTemperatures": [
+                    "HOT",
+                    "WARM",
+                    "COLD",
+                    "ROCK"
+                ],
+                "goodFoodCategories": [
+                    "DAIRY",
+                    "SNACK"
+                ]
+            },
+            "isTasted": true,
+            "isWished": true
+        }
+    }
+}

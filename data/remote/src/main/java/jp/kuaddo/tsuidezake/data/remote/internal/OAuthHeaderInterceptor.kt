@@ -11,8 +11,7 @@ internal class OAuthHeaderInterceptor @Inject constructor(
     private val authToken: AuthToken
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val requestBuilder = chain.request()
-            .newBuilder()
+        val requestBuilder = chain.request().newBuilder()
         authToken.token?.let { requestBuilder.addHeader("Authorization", it) }
         return chain.proceed(requestBuilder.build())
     }

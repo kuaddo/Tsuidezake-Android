@@ -1,11 +1,11 @@
 package jp.kuaddo.tsuidezake.data.remote.internal
 
 import com.apollographql.apollo.ApolloClient
-import com.google.firebase.storage.FirebaseStorage
+import jp.kuaddo.tsuidezake.core.letS
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.AddSakeToWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.RankingsQuery
-import jp.kuaddo.tsuidezake.data.remote.RecommendedSakeQuery
+import jp.kuaddo.tsuidezake.data.remote.RecommendedSakesQuery
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromTastedListMutation
 import jp.kuaddo.tsuidezake.data.remote.RemoveSakeFromWishListMutation
 import jp.kuaddo.tsuidezake.data.remote.SakeQuery
@@ -23,9 +23,7 @@ import jp.kuaddo.tsuidezake.model.SakeDetail
 import jp.kuaddo.tsuidezake.model.SuitableTemperature
 import jp.kuaddo.tsuidezake.model.Tag
 import jp.kuaddo.tsuidezake.model.UserSake
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import jp.kuaddo.tsuidezake.data.remote.fragment.SakeDetailFragment.Tag as ApolloTag
@@ -33,7 +31,8 @@ import jp.kuaddo.tsuidezake.data.remote.type.FoodCategory as ApolloFoodCategory
 import jp.kuaddo.tsuidezake.data.remote.type.SuitableTemperature as ApolloSuitableTemperature
 
 internal class TsuidezakeServiceImpl @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
+    private val firebaseImagePathConverter: FirebaseImagePathConverter
 ) : TsuidezakeService {
     override suspend fun getRankings(): ApiResponse<List<Ranking>> = withContext(Dispatchers.IO) {
         apolloClient.query(RankingsQuery()).toApiResponse { response ->
@@ -43,7 +42,7 @@ internal class TsuidezakeServiceImpl @Inject constructor(
 
     override suspend fun getRecommendedSakes(): ApiResponse<List<Ranking.Content>> =
         withContext(Dispatchers.IO) {
-            apolloClient.query(RecommendedSakeQuery()).toApiResponse { response ->
+            apolloClient.query(RecommendedSakesQuery()).toApiResponse { response ->
                 response.getRecommendedSakes
                     .map { it.fragments.contentFragment.toContent() }
             }
@@ -101,64 +100,52 @@ internal class TsuidezakeServiceImpl @Inject constructor(
                 response.removeTastedSake.fragments.userSakeFragment.toUserSake()
             }
         }
-}
 
-private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
-    displayOrder = displayOrder,
-    category = category,
-    contents = contents.map { it.fragments.contentFragment.toContent() }
-)
+    private suspend fun RankingsQuery.GetRanking.toRanking() = Ranking(
+        displayOrder = displayOrder,
+        category = category,
+        contents = contents.map { it.fragments.contentFragment.toContent() }
+    )
 
-private suspend fun ContentFragment.toContent() = Ranking.Content(
-    rank = rank,
-    sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail()
-)
+    private suspend fun ContentFragment.toContent() = Ranking.Content(
+        rank = rank,
+        sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail()
+    )
 
-private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
-    id = id,
-    name = name,
-    description = description,
-    region = region,
-    brewer = brewer,
-    imageUri = getImageUri(imgPath),
-    tags = tags.map { it.toTag() },
-    suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
-    goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
-)
+    private suspend fun SakeDetailFragment.toSakeDetail() = SakeDetail(
+        id = id,
+        name = name,
+        description = description,
+        region = region,
+        brewer = brewer,
+        imageUri = imgPath?.letS(firebaseImagePathConverter::getImageUriString),
+        tags = tags.map { it.toTag() },
+        suitableTemperatures = suitableTemperatures.map { it.toSuitableTemperature() }.toSet(),
+        goodFoodCategories = goodFoodCategories.map { it.toFoodCategory() }.toSet()
+    )
 
-private suspend fun UserSakeFragment.toUserSake() = UserSake(
-    sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail(),
-    isAddedToWish = isWished,
-    isAddedToTasted = isTasted
-)
+    private suspend fun UserSakeFragment.toUserSake() = UserSake(
+        sakeDetail = sake.fragments.sakeDetailFragment.toSakeDetail(),
+        isAddedToWish = isWished,
+        isAddedToTasted = isTasted
+    )
 
-private suspend fun getImageUri(firebaseImagePath: String?): String? = runCatching {
-    firebaseImagePath?.let { path ->
-        FirebaseStorage.getInstance()
-            .getReferenceFromUrl(path)
-            .downloadUrl
-            .await()
+    private fun ApolloTag.toTag() = Tag(id = id, name = name)
+
+    private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
+        ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
+        ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
+        ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
+        ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
+        ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
+        is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
     }
-}
-    .onFailure { if (it is CancellationException) throw it }
-    .getOrNull()
-    ?.toString()
 
-private fun ApolloTag.toTag() = Tag(id = id, name = name)
-
-private fun ApolloSuitableTemperature.toSuitableTemperature() = when (this) {
-    ApolloSuitableTemperature.HOT -> SuitableTemperature.HOT
-    ApolloSuitableTemperature.WARM -> SuitableTemperature.WARM
-    ApolloSuitableTemperature.ROOM -> SuitableTemperature.NORMAL
-    ApolloSuitableTemperature.COLD -> SuitableTemperature.COLD
-    ApolloSuitableTemperature.ROCK -> SuitableTemperature.ROCK
-    is ApolloSuitableTemperature.UNKNOWN__ -> error("Unknown temperature : $rawValue")
-}
-
-private fun ApolloFoodCategory.toFoodCategory() = when (this) {
-    ApolloFoodCategory.MEAT -> FoodCategory.MEAT
-    ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
-    ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
-    ApolloFoodCategory.SNACK -> FoodCategory.SNACK
-    is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
+    private fun ApolloFoodCategory.toFoodCategory() = when (this) {
+        ApolloFoodCategory.MEAT -> FoodCategory.MEAT
+        ApolloFoodCategory.SEAFOOD -> FoodCategory.SEAFOOD
+        ApolloFoodCategory.DAIRY -> FoodCategory.DAIRY
+        ApolloFoodCategory.SNACK -> FoodCategory.SNACK
+        is ApolloFoodCategory.UNKNOWN__ -> error("Unknown food category : $rawValue")
+    }
 }

@@ -7,7 +7,6 @@ import jp.kuaddo.tsuidezake.domain.Repository
 
 @Module
 internal abstract class RepositoryModule {
-    @Suppress("unused")
     @Binds
     abstract fun bindRepository(impl: RepositoryImpl): Repository
 }
