@@ -144,6 +144,41 @@ class TsuidezakeServiceImplTest {
         )
     }
 
+    @Test
+    fun testAddSakeToTastedList() = runBlocking<Unit> {
+        val userSake = target.addSakeToTastedList(100, 3)
+
+        val tastedSakeInput = mockWebServer.takeRequest()
+            .getVariables()
+            .getAsJsonObject("tastedSakeInput")
+        assertThat(tastedSakeInput.get("sakeId").asInt).isEqualTo(100)
+        assertThat(tastedSakeInput.get("stars").asInt).isEqualTo(3)
+        assertTrue(userSake is SuccessResponse)
+        assertThat(userSake.data).isEqualTo(
+            UserSake(
+                sakeDetail = SAKE_DETAIL1,
+                isAddedToWish = false,
+                isAddedToTasted = true
+            )
+        )
+    }
+
+    @Test
+    fun testRemoveSakeFromTastedList() = runBlocking<Unit> {
+        val userSake = target.removeSakeFromTastedList(100)
+
+        val variables = mockWebServer.takeRequest().getVariables()
+        assertThat(variables.get("id").asInt).isEqualTo(100)
+        assertTrue(userSake is SuccessResponse)
+        assertThat(userSake.data).isEqualTo(
+            UserSake(
+                sakeDetail = SAKE_DETAIL1,
+                isAddedToWish = false,
+                isAddedToTasted = false
+            )
+        )
+    }
+
     private fun RecordedRequest.getVariables(): JsonObject =
         gson.fromJson(body.peek().readUtf8(), JsonObject::class.java)
             .getAsJsonObject("variables")
