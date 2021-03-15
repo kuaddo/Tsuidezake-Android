@@ -241,18 +241,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appetizers_seafood_text" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
+                <Button
+                    style="@style/MaterialButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
                     android:text="@string/sake_detail_let_us_taste"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:icon="@drawable/ic_sake"
-                    app:iconSize="24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

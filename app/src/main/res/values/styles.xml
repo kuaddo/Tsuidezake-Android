@@ -11,6 +11,17 @@
         <item name="android:windowBackground">@color/transparent_background</item>
     </style>
 
+    <style name="MaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialButton</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="TextAppearance.MaterialButton" parent="android:TextAppearance">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TagChip" parent="Widget.MaterialComponents.Chip.Action">
         <item name="chipCornerRadius">8dp</item>
         <item name="chipMinHeight">24dp</item>
