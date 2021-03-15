@@ -19,8 +19,8 @@ class TsuidezakeDispatcher : Dispatcher() {
     companion object {
         private val gson = Gson()
 
-        private fun RecordedRequest.getOperationName() =
-            gson.fromJson(body.readUtf8(), JsonObject::class.java)
+        private fun RecordedRequest.getOperationName(): String =
+            gson.fromJson(body.peek().readUtf8(), JsonObject::class.java)
                 .get("operationName")
                 .asString
     }
@@ -39,7 +39,8 @@ private class SakeHandler : Handler() {
     override val operationNameToJsonFileNameMap = mapOf(
         "WishListQuery" to "WishListQuery.json",
         "SakeQuery" to "SakeQuery.json",
-        "UserSakeQuery" to "UserSakeQuery.json"
+        "UserSakeQuery" to "UserSakeQuery.json",
+        "AddSakeToWishList" to "AddSakeToWishList.json"
     )
 }
 

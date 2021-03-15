@@ -1,6 +1,8 @@
 package jp.kuaddo.tsuidezake.data.remote.internal
 
 import com.apollographql.apollo.ApolloClient
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot
@@ -10,9 +12,11 @@ import jp.kuaddo.tsuidezake.data.remote.TsuidezakeDispatcher
 import jp.kuaddo.tsuidezake.data.remote.USER_SAKE1
 import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
 import jp.kuaddo.tsuidezake.model.Ranking
+import jp.kuaddo.tsuidezake.model.UserSake
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
@@ -20,14 +24,17 @@ import org.junit.Test
 import kotlin.test.assertTrue
 
 class TsuidezakeServiceImplTest {
+    private val gson = Gson()
     private lateinit var mockWebServer: MockWebServer
+    private lateinit var dispatcher: TsuidezakeDispatcher
     private lateinit var target: TsuidezakeServiceImpl
 
     @Before
     fun setUp() {
-        mockWebServer = MockWebServer().apply {
-            dispatcher = TsuidezakeDispatcher()
-            start()
+        dispatcher = TsuidezakeDispatcher()
+        mockWebServer = MockWebServer().also {
+            it.dispatcher = dispatcher
+            it.start()
         }
         val apolloClient = ApolloClient.builder()
             .serverUrl(mockWebServer.url(""))
@@ -104,4 +111,24 @@ class TsuidezakeServiceImplTest {
         assertTrue(userSake is SuccessResponse)
         assertThat(userSake.data).isEqualTo(USER_SAKE1)
     }
+
+    @Test
+    fun testAddSakeToWishList() = runBlocking<Unit> {
+        val userSake = target.addSakeToWishList(100)
+
+        val variables = mockWebServer.takeRequest().getVariables()
+        assertThat(variables.get("id").asInt).isEqualTo(100)
+        assertTrue(userSake is SuccessResponse)
+        assertThat(userSake.data).isEqualTo(
+            UserSake(
+                sakeDetail = SAKE_DETAIL1,
+                isAddedToWish = true,
+                isAddedToTasted = false
+            )
+        )
+    }
+
+    private fun RecordedRequest.getVariables(): JsonObject =
+        gson.fromJson(body.peek().readUtf8(), JsonObject::class.java)
+            .getAsJsonObject("variables")
 }
