@@ -40,7 +40,8 @@ private class SakeHandler : Handler() {
         "WishListQuery" to "WishListQuery.json",
         "SakeQuery" to "SakeQuery.json",
         "UserSakeQuery" to "UserSakeQuery.json",
-        "AddSakeToWishList" to "AddSakeToWishList.json"
+        "AddSakeToWishList" to "AddSakeToWishList.json",
+        "RemoveSakeFromWishList" to "RemoveSakeFromWishList.json"
     )
 }
 
