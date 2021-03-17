@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.ui.wish
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.GetWishListUseCase
@@ -32,6 +33,8 @@ class WishViewModel @Inject constructor(
         get() = _isRefreshing
     val isGridMode: LiveData<Boolean>
         get() = _isGridMode
+    val hasWish: LiveData<Boolean>
+        get() = _groupedWishList.map { !it.isNullOrEmpty() }
     val groupedWishListWithMode: LiveData<Pair<GroupedWishList, Boolean>>
         get() = _groupedWishList.combineLatest(_isGridMode) { list, mode -> list to mode }
 
