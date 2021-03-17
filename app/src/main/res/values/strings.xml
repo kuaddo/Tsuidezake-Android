@@ -8,6 +8,10 @@
 
     <string name="price">¥%1$,d</string>
 
+    <string name="empty_list_instruction">呑みたいお酒を追加しましょう</string>
+    <string name="empty_list_recommended_to_you">あなたにおすすめ</string>
+    <string name="empty_list_to_ranking">ランキングへ</string>
+
     <string name="dialog_wish_button_text">呑みたい</string>
     <string name="dialog_do_not_wish_button_text">そうでもない</string>
 

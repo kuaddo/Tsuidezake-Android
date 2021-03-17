@@ -65,5 +65,11 @@
                 tools:ignore="ContentDescription"
                 tools:tint="@color/white" />
         </LinearLayout>
+
+        <ViewStub
+            android:id="@+id/empty_list_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout="@layout/view_empty_list_instruction" />
     </FrameLayout>
 </layout>
