@@ -1,6 +1,8 @@
 package jp.kuaddo.tsuidezake.extensions
 
 import android.widget.Toast
+import androidx.databinding.ViewDataBinding
+import androidx.databinding.ViewStubProxy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,6 +20,7 @@ import jp.kuaddo.tsuidezake.util.SnackbarMessageText
 import jp.kuaddo.tsuidezake.util.ToastMessage
 import jp.kuaddo.tsuidezake.util.ToastMessageRes
 import jp.kuaddo.tsuidezake.util.ToastMessageText
+import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -30,6 +33,24 @@ fun Fragment.observeViewModelDelegate(
     }
     if (viewModel is ToastViewModelDelegate) {
         observeToast(viewModel.toastEvent, lifecycleOwner)
+    }
+}
+
+fun <T : ViewDataBinding> Fragment.viewStubDataBinding(
+    viewStubProxyProvider: () -> ViewStubProxy
+): ReadOnlyProperty<Fragment, T?> {
+    return object : ReadOnlyProperty<Fragment, T?> {
+        @Suppress("UNCHECKED_CAST")
+        override fun getValue(thisRef: Fragment, property: KProperty<*>): T? {
+            val viewStubProxy = viewStubProxyProvider()
+            if (!viewStubProxy.isInflated) return null
+            (viewStubProxy.root.getTag(property.name.hashCode()) as? T)?.let { return it }
+
+            return (viewStubProxy.binding as? T)?.also {
+                it.lifecycleOwner = thisRef.viewLifecycleOwner
+                it.root.setTag(property.name.hashCode(), it)
+            }
+        }
     }
 }
 

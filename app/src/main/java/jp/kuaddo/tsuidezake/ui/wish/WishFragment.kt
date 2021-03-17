@@ -15,9 +15,11 @@ import com.xwray.groupie.viewbinding.BindableItem
 import dagger.android.support.DaggerFragment
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentWishBinding
+import jp.kuaddo.tsuidezake.databinding.ViewEmptyListInstructionBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
-import jp.kuaddo.tsuidezake.model.SakeDetail
+import jp.kuaddo.tsuidezake.extensions.viewStubDataBinding
+import jp.kuaddo.tsuidezake.model.Sake
 import javax.inject.Inject
 
 class WishFragment : DaggerFragment(R.layout.fragment_wish) {
@@ -25,8 +27,14 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val wishViewModel: WishViewModel by viewModels { viewModelFactory }
+    private val emptyListInstructionViewModel: EmptyListInstructionViewModel by viewModels {
+        viewModelFactory
+    }
     private val binding: FragmentWishBinding by dataBinding()
+    private val viewEmptyListInstructionBinding: ViewEmptyListInstructionBinding?
+        by viewStubDataBinding { binding.emptyListInstruction }
     private val adapter = GroupieAdapter().apply { spanCount = 2 }
+    private val recommendedGridAdapter = GroupieAdapter().apply { spanCount = 2 }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.wishViewModel = wishViewModel
@@ -38,13 +46,21 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
 
     private fun observe() {
         observeViewModelDelegate(wishViewModel, viewLifecycleOwner)
+        observeViewModelDelegate(emptyListInstructionViewModel, viewLifecycleOwner)
+
         wishViewModel.groupedWishListWithMode
             .observeNonNull(viewLifecycleOwner) { (groupedWishList, isGrid) ->
+                if (groupedWishList.isEmpty()) inflateEmptyListInstruction()
                 adapter.update(getGroups(groupedWishList, isGrid))
             }
         wishViewModel.isGridMode.observeNonNull(viewLifecycleOwner) { isGrid ->
             binding.recyclerView.layoutManager = getLayoutManager(isGrid)
         }
+        emptyListInstructionViewModel.recommendedSakes
+            .observeNonNull(viewLifecycleOwner) { recommendedSakes ->
+                val items = recommendedSakes.map { WishGridItem(it, ::showSakeDetailFragment) }
+                recommendedGridAdapter.update(items)
+            }
     }
 
     private fun getLayoutManager(isGrid: Boolean) = if (isGrid) {
@@ -75,7 +91,24 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
         }
     }
 
+    private fun inflateEmptyListInstruction() {
+        if (viewEmptyListInstructionBinding != null) return
+        binding.emptyListInstruction.viewStub?.inflate()
+
+        viewEmptyListInstructionBinding?.let { instructionBinding ->
+            instructionBinding.recommendedGrid.adapter = recommendedGridAdapter
+            instructionBinding.moveToRankingButton.setOnClickListener {
+                moveToRankingFragment()
+            }
+        }
+        emptyListInstructionViewModel.loadRecommendedSakes()
+    }
+
     private fun showSakeDetailFragment(sakeDetail: SakeDetail) = findNavController().navigate(
         WishFragmentDirections.actionWishToSakeDetail(sakeDetail.id)
     )
+
+    private fun moveToRankingFragment() {
+        TODO()
+    }
 }
