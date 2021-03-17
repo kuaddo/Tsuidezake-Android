@@ -76,18 +76,18 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
             .map { (region, sakeList) ->
                 Section().apply {
                     setHeader(WishHeaderItem(region))
-                    addAll(sakeList.map { getWishGridItem(it, isGrid) })
+                    addAll(sakeList.map { getWishGridItem(Sake.of(it), isGrid) })
                 }
             }
 
     private fun getWishGridItem(
-        sakeDetail: SakeDetail,
+        sake: Sake,
         isGrid: Boolean
     ): BindableItem<out ViewDataBinding> {
         return if (isGrid) {
-            WishGridItem(sakeDetail, ::showSakeDetailFragment)
+            WishGridItem(sake, ::showSakeDetailFragment)
         } else {
-            WishLinearItem(sakeDetail, ::showSakeDetailFragment)
+            WishLinearItem(sake, ::showSakeDetailFragment)
         }
     }
 
@@ -104,8 +104,8 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
         emptyListInstructionViewModel.loadRecommendedSakes()
     }
 
-    private fun showSakeDetailFragment(sakeDetail: SakeDetail) = findNavController().navigate(
-        WishFragmentDirections.actionWishToSakeDetail(sakeDetail.id)
+    private fun showSakeDetailFragment(sake: Sake) = findNavController().navigate(
+        WishFragmentDirections.actionWishToSakeDetail(sake.id)
     )
 
     private fun moveToRankingFragment() {

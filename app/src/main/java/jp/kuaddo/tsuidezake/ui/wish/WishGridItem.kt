@@ -4,21 +4,21 @@ import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ItemSakeCardBinding
-import jp.kuaddo.tsuidezake.model.SakeDetail
+import jp.kuaddo.tsuidezake.model.Sake
 
 data class WishGridItem(
-    private val sakeDetail: SakeDetail,
-    private val onClickItem: (SakeDetail) -> Unit
-) : BindableItem<ItemSakeCardBinding>(sakeDetail.id.toLong()) {
+    private val sake: Sake,
+    private val onClickItem: (Sake) -> Unit
+) : BindableItem<ItemSakeCardBinding>(sake.id.toLong()) {
     override fun initializeViewBinding(view: View): ItemSakeCardBinding =
         ItemSakeCardBinding.bind(view)
 
     override fun getLayout(): Int = R.layout.item_sake_card
 
     override fun bind(viewBinding: ItemSakeCardBinding, position: Int) {
-        viewBinding.name = sakeDetail.name
-        viewBinding.imageUri = sakeDetail.imageUri
-        viewBinding.root.setOnClickListener { onClickItem(sakeDetail) }
+        viewBinding.name = sake.name
+        viewBinding.imageUri = sake.imageUri
+        viewBinding.root.setOnClickListener { onClickItem(sake) }
         viewBinding.executePendingBindings()
     }
 
