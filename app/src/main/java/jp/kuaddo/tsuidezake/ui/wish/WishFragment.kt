@@ -31,8 +31,9 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
         viewModelFactory
     }
     private val binding: FragmentWishBinding by dataBinding()
-    private val viewEmptyListInstructionBinding: ViewEmptyListInstructionBinding?
-        by viewStubDataBinding { binding.emptyListInstruction }
+    private val emptyInstructionBinding: ViewEmptyListInstructionBinding? by viewStubDataBinding {
+        binding.emptyListInstruction
+    }
     private val adapter = GroupieAdapter().apply { spanCount = 2 }
     private val recommendedGridAdapter = GroupieAdapter().apply { spanCount = 2 }
 
@@ -92,10 +93,10 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
     }
 
     private fun inflateEmptyListInstruction() {
-        if (viewEmptyListInstructionBinding != null) return
+        if (emptyInstructionBinding != null) return
         binding.emptyListInstruction.viewStub?.inflate()
 
-        viewEmptyListInstructionBinding?.let { instructionBinding ->
+        emptyInstructionBinding?.let { instructionBinding ->
             instructionBinding.recommendedGrid.adapter = recommendedGridAdapter
             instructionBinding.moveToRankingButton.setOnClickListener {
                 moveToRankingFragment()
