@@ -18,8 +18,8 @@ import jp.kuaddo.tsuidezake.databinding.FragmentWishBinding
 import jp.kuaddo.tsuidezake.databinding.ViewEmptyListInstructionBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
-import jp.kuaddo.tsuidezake.extensions.viewStubDataBinding
 import jp.kuaddo.tsuidezake.model.Sake
+import jp.kuaddo.tsuidezake.util.viewStubDataBinding
 import javax.inject.Inject
 
 class WishFragment : DaggerFragment(R.layout.fragment_wish) {
