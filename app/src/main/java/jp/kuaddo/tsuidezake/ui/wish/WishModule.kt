@@ -16,4 +16,11 @@ abstract class WishModule {
     @IntoMap
     @ViewModelKey(WishViewModel::class)
     abstract fun bindWishViewModel(viewModel: WishViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EmptyListInstructionViewModel::class)
+    abstract fun bindEmptyListInstructionViewModel(
+        viewModel: EmptyListInstructionViewModel
+    ): ViewModel
 }
