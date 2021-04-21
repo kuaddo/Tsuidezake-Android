@@ -11,7 +11,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
-import jp.kuaddo.tsuidezake.extensions.setupWithNavController
+import jp.kuaddo.tsuidezake.ui.common.BottomNavigationViewController
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
@@ -41,22 +41,21 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupBottomNavigation() {
-        val controller = binding.navView.setupWithNavController(
+        val bottomNavController = BottomNavigationViewController(
+            binding.navView,
+            supportFragmentManager,
+            containerId = R.id.nav_host_container,
             navGraphIds = listOf(
                 R.navigation.ranking,
                 R.navigation.tasted,
                 R.navigation.wish,
                 R.navigation.my_page
-            ),
-            fragmentManager = supportFragmentManager,
-            containerId = R.id.nav_host_container,
-            intent = intent
+            )
         )
+        val navController = bottomNavController.setupWithNavController()
 
         // Whenever the selected controller changes, setup the action bar.
-        controller.observeNonNull(this) { navController ->
-            setupActionBarWithNavController(navController)
-        }
-        currentNavController = controller
+        navController.observeNonNull(this, ::setupActionBarWithNavController)
+        currentNavController = navController
     }
 }
