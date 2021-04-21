@@ -55,6 +55,9 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         val navController = bottomNavController.setupWithNavController()
 
         // Whenever the selected controller changes, setup the action bar.
+        // ActionBarOnDestinationChangedListenerが何度も追加されてしまうが、BottomNavigationの要素
+        // が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
+        // NavComponentの実装だと不可能なので諦めるしか無い。
         navController.observeNonNull(this, ::setupActionBarWithNavController)
         currentNavController = navController
     }
