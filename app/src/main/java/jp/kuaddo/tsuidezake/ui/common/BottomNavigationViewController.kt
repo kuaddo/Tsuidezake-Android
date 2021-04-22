@@ -2,8 +2,6 @@ package jp.kuaddo.tsuidezake.ui.common
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,10 +12,7 @@ class BottomNavigationViewController(
     private val containerId: Int,
     private val navGraphIds: List<Int>
 ) {
-    fun setupWithNavController(): LiveData<NavController> {
-        // Result. Mutable live data with the selected controlled
-        val selectedNavController = MutableLiveData<NavController>()
-
+    fun setupWithNavController(setupActionBarWithNavController: (NavController) -> Unit) {
         val tagAndNavHostFragments = navGraphIds.map { navGraphId ->
             val fragmentTag = getFragmentTag(navGraphId)
             fragmentTag to obtainNavHostFragment(
@@ -42,8 +37,7 @@ class BottomNavigationViewController(
 
             // Attach or detach nav host fragment depending on whether it's the selected item.
             if (fragment.navController.graph.id == bottomNavigationView.selectedItemId) {
-                // Update livedata with the selected graph
-                selectedNavController.value = fragment.navController
+                setupActionBarWithNavController(fragment.navController)
                 bottomNavigationView.isVisible = childFragmentManager.backStackEntryCount == 0
                 attachNavHostFragment(fragmentManager, fragment)
             } else {
@@ -74,12 +68,11 @@ class BottomNavigationViewController(
                 .commit()
 
             selectedItemTag = newlySelectedItemTag
-            selectedNavController.value = newlySelectedFragment.navController
+            setupActionBarWithNavController(newlySelectedFragment.navController)
             true
         }
 
         setupItemReselected(fragmentManager, graphIdToTagMap)
-        return selectedNavController
     }
 
     private fun detachNavHostFragment(

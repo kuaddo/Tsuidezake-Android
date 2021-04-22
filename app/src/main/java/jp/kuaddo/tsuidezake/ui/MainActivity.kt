@@ -8,7 +8,6 @@ import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerAppCompatActivity
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
-import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.ui.common.BottomNavigationViewController
 import javax.inject.Inject
 
@@ -46,11 +45,9 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
             )
         )
 
-        // Whenever the selected controller changes, setup the action bar.
         // ActionBarOnDestinationChangedListenerが何度も追加されてしまうが、BottomNavigationの要素
         // が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
         // NavComponentの実装だと不可能なので諦めるしか無い。
-        bottomNavController.setupWithNavController()
-            .observeNonNull(this, ::setupActionBarWithNavController)
+        bottomNavController.setupWithNavController(::setupActionBarWithNavController)
     }
 }
