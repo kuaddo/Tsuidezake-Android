@@ -10,9 +10,12 @@ class BottomNavigationViewController(
     private val bottomNavigationView: BottomNavigationView,
     private val fragmentManager: FragmentManager,
     private val containerId: Int,
-    private val navGraphIds: List<Int>
+    private val navGraphIds: List<Int>,
+    private val setupActionBarWithNavController: (NavController) -> Unit
 ) {
-    fun setupWithNavController(setupActionBarWithNavController: (NavController) -> Unit) {
+    private var selectedItemTag: String? = null
+
+    fun setupWithNavController() {
         val tagAndNavHostFragments = navGraphIds.map { navGraphId ->
             val fragmentTag = getFragmentTag(navGraphId)
             fragmentTag to obtainNavHostFragment(
@@ -25,7 +28,7 @@ class BottomNavigationViewController(
         val graphIdToTagMap = tagAndNavHostFragments.associate { (tag, fragment) ->
             fragment.navController.graph.id to tag
         }
-        var selectedItemTag = graphIdToTagMap[bottomNavigationView.selectedItemId]
+        selectedItemTag = graphIdToTagMap[bottomNavigationView.selectedItemId]
 
         tagAndNavHostFragments.forEach { (tag, fragment) ->
             val childFragmentManager = fragment.childFragmentManager
@@ -52,23 +55,10 @@ class BottomNavigationViewController(
                 return@setOnNavigationItemSelectedListener false
             }
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
-            if (selectedItemTag == newlySelectedItemTag) {
+            if (newlySelectedItemTag == null || newlySelectedItemTag == selectedItemTag) {
                 return@setOnNavigationItemSelectedListener false
             }
-
-            val previousFragment = fragmentManager.findFragmentByTag(selectedItemTag)
-            val newlySelectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
-                as NavHostFragment
-
-            fragmentManager.beginTransaction()
-                .apply { previousFragment?.let { detach(it) } }
-                .attach(newlySelectedFragment)
-                .setPrimaryNavigationFragment(newlySelectedFragment)
-                .setReorderingAllowed(true)
-                .commit()
-
-            selectedItemTag = newlySelectedItemTag
-            setupActionBarWithNavController(newlySelectedFragment.navController)
+            swapFragment(newlySelectedItemTag)
             true
         }
 
@@ -108,6 +98,22 @@ class BottomNavigationViewController(
             .add(containerId, navHostFragment, fragmentTag)
             .commitNow()
         return navHostFragment
+    }
+
+    private fun swapFragment(targetFragmentTag: String) {
+        val previousFragment = fragmentManager.findFragmentByTag(selectedItemTag)
+        val targetFragment = fragmentManager.findFragmentByTag(targetFragmentTag)
+            as NavHostFragment
+
+        fragmentManager.beginTransaction()
+            .apply { previousFragment?.let { detach(it) } }
+            .attach(targetFragment)
+            .setPrimaryNavigationFragment(targetFragment)
+            .setReorderingAllowed(true)
+            .commit()
+
+        selectedItemTag = targetFragmentTag
+        setupActionBarWithNavController(targetFragment.navController)
     }
 
     private fun setupItemReselected(

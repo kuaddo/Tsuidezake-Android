@@ -33,7 +33,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupBottomNavigation() {
-        val bottomNavController = BottomNavigationViewController(
+        BottomNavigationViewController(
             binding.navView,
             supportFragmentManager,
             containerId = R.id.nav_host_container,
@@ -42,12 +42,11 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
                 R.navigation.wish,
                 R.navigation.tasted,
                 R.navigation.my_page
-            )
-        )
-
-        // ActionBarOnDestinationChangedListenerが何度も追加されてしまうが、BottomNavigationの要素
-        // が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
-        // NavComponentの実装だと不可能なので諦めるしか無い。
-        bottomNavController.setupWithNavController(::setupActionBarWithNavController)
+            ),
+            // ActionBarOnDestinationChangedListenerが何度も追加されてしまうが、BottomNavigationの
+            // 要素が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
+            // NavComponentの実装だと不可能なので諦めるしか無い。
+            ::setupActionBarWithNavController
+        ).setupWithNavController()
     }
 }
