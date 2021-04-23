@@ -65,6 +65,10 @@ class BottomNavigationViewController(
         setupItemReselected(fragmentManager, graphIdToTagMap)
     }
 
+    fun goTo(navGraphId: Int) {
+        bottomNavigationView.selectedItemId = getGraphId(navGraphId)
+    }
+
     private fun detachNavHostFragment(
         fragmentManager: FragmentManager,
         navHostFragment: NavHostFragment
@@ -99,6 +103,14 @@ class BottomNavigationViewController(
             .commitNow()
         return navHostFragment
     }
+
+    private fun getGraphId(navGraphId: Int): Int = obtainNavHostFragment(
+        fragmentManager,
+        getFragmentTag(navGraphId),
+        navGraphId,
+        containerId
+    ).navController.graph.id
+
 
     private fun swapFragment(targetFragmentTag: String) {
         val previousFragment = fragmentManager.findFragmentByTag(selectedItemTag)

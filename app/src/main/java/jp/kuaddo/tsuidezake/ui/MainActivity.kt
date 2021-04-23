@@ -3,12 +3,15 @@ package jp.kuaddo.tsuidezake.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerAppCompatActivity
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
 import jp.kuaddo.tsuidezake.ui.common.BottomNavigationViewController
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
@@ -17,6 +20,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
     private val binding: ActivityMainBinding by dataBinding()
+    private lateinit var bottomNavigationViewController: BottomNavigationViewController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,8 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         if (savedInstanceState == null) {
             setupBottomNavigation()
         }
+
+        lifecycleScope.launch { viewModel.showRankingEvent.collect { showRankingFragment() } }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -33,7 +39,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupBottomNavigation() {
-        BottomNavigationViewController(
+        bottomNavigationViewController = BottomNavigationViewController(
             binding.navView,
             supportFragmentManager,
             containerId = R.id.nav_host_container,
@@ -47,6 +53,9 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
             // 要素が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
             // NavComponentの実装だと不可能なので諦めるしか無い。
             ::setupActionBarWithNavController
-        ).setupWithNavController()
+        )
+        bottomNavigationViewController.setupWithNavController()
     }
+
+    private fun showRankingFragment() = bottomNavigationViewController.goTo(R.navigation.ranking)
 }
