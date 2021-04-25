@@ -143,7 +143,9 @@ object Deps {
         }
 
         object Spek {
-            private const val version = "2.0.16"
+            // TODO: Updateはこのissueが解決するまで待つ
+            //  https://github.com/spekframework/spek/issues/964
+            private const val version = "2.0.15"
 
             const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
             const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
