@@ -118,7 +118,6 @@ class BottomNavigationViewController(
         containerId
     ).navController.graph.id
 
-
     private fun swapFragment(targetFragmentTag: String) {
         val previousFragment = fragmentManager.findFragmentByTag(selectedItemTag)
         val targetFragment = fragmentManager.findFragmentByTag(targetFragmentTag)
