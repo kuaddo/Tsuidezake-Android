@@ -1,12 +1,12 @@
 object Deps {
-    private const val kotlinVersion = "1.4.31"
+    private const val kotlinVersion = "1.4.32"
     private const val coroutinesVersion = "1.4.2"
-    private const val navigationVersion = "2.3.4"
-    private const val apolloVersion = "2.5.3"
+    private const val navigationVersion = "2.3.5"
+    private const val apolloVersion = "2.5.6"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.1.2"
+        const val android = "com.android.tools.build:gradle:4.1.3"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val gms = "com.google.gms:google-services:4.3.4"
         const val safeArgs =
@@ -31,17 +31,17 @@ object Deps {
 
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
-        const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+        const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.2"
-        const val annotation = "androidx.annotation:annotation:1.1.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.1"
+        const val annotation = "androidx.annotation:annotation:1.2.0"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.3"
         const val material = "com.google.android.material:material:1.3.0"
 
         object Lifecycle {
-            private const val version = "2.3.0"
+            private const val version = "2.3.1"
 
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -54,7 +54,7 @@ object Deps {
         }
 
         object Room {
-            private const val version = "2.2.6"
+            private const val version = "2.3.0"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
@@ -63,13 +63,13 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:18.0.2"
-        const val auth = "com.google.firebase:firebase-auth:20.0.3"
-        const val storage = "com.google.firebase:firebase-storage:19.2.1"
+        const val analytics = "com.google.firebase:firebase-analytics:18.0.3"
+        const val auth = "com.google.firebase:firebase-auth:20.0.4"
+        const val storage = "com.google.firebase:firebase-storage:19.2.2"
     }
 
     object Dagger {
-        private const val version = "2.33"
+        private const val version = "2.35"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -113,11 +113,11 @@ object Deps {
     }
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
-    const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.0"
+    const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
     const val gson = "com.google.code.gson:gson:2.8.6"
     const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.1"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.6"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.7"
     const val inject = "javax.inject:javax.inject:1"
 
     object Test {
@@ -127,7 +127,7 @@ object Deps {
         const val mockk = "io.mockk:mockk:1.11.0"
 
         const val robolectric = "org.robolectric:robolectric:4.5.1"
-        const val threeTenBp = "org.threeten:threetenbp:1.5.0"
+        const val threeTenBp = "org.threeten:threetenbp:1.5.1"
 
         object AndroidX {
             const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
@@ -143,6 +143,8 @@ object Deps {
         }
 
         object Spek {
+            // TODO: Updateはこのissueが解決するまで待つ
+            //  https://github.com/spekframework/spek/issues/964
             private const val version = "2.0.15"
 
             const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"

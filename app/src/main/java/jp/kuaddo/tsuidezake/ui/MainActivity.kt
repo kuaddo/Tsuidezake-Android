@@ -2,16 +2,16 @@ package jp.kuaddo.tsuidezake.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.wada811.databinding.dataBinding
 import dagger.android.support.DaggerAppCompatActivity
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
-import jp.kuaddo.tsuidezake.extensions.observeNonNull
-import jp.kuaddo.tsuidezake.extensions.setupWithNavController
+import jp.kuaddo.tsuidezake.ui.common.BottomNavigationViewController
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
@@ -20,7 +20,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
     private val binding: ActivityMainBinding by dataBinding()
-    private lateinit var currentNavController: LiveData<NavController>
+    private lateinit var bottomNavigationViewController: BottomNavigationViewController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +29,8 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         if (savedInstanceState == null) {
             setupBottomNavigation()
         }
+
+        lifecycleScope.launch { viewModel.showRankingEvent.collect { showRankingFragment() } }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -37,26 +39,27 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return currentNavController.value?.navigateUp() ?: false
+        return bottomNavigationViewController.navigateUp()
     }
 
     private fun setupBottomNavigation() {
-        val controller = binding.navView.setupWithNavController(
+        bottomNavigationViewController = BottomNavigationViewController(
+            binding.navView,
+            supportFragmentManager,
+            containerId = R.id.nav_host_container,
             navGraphIds = listOf(
                 R.navigation.ranking,
-                R.navigation.tasted,
                 R.navigation.wish,
+                R.navigation.tasted,
                 R.navigation.my_page
             ),
-            fragmentManager = supportFragmentManager,
-            containerId = R.id.nav_host_container,
-            intent = intent
+            // ActionBarOnDestinationChangedListenerが何度も追加されてしまうが、BottomNavigationの
+            // 要素が変化した際にAction barを更新する為に必要。また、追加したリスナーの削除は現状の
+            // NavComponentの実装だと不可能なので諦めるしか無い。
+            ::setupActionBarWithNavController
         )
-
-        // Whenever the selected controller changes, setup the action bar.
-        controller.observeNonNull(this) { navController ->
-            setupActionBarWithNavController(navController)
-        }
-        currentNavController = controller
+        bottomNavigationViewController.setupWithNavController()
     }
+
+    private fun showRankingFragment() = bottomNavigationViewController.goTo(R.navigation.ranking)
 }

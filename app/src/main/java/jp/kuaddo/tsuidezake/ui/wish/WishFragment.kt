@@ -3,6 +3,7 @@ package jp.kuaddo.tsuidezake.ui.wish
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import jp.kuaddo.tsuidezake.databinding.ViewEmptyListInstructionBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import jp.kuaddo.tsuidezake.model.Sake
+import jp.kuaddo.tsuidezake.ui.MainViewModel
 import jp.kuaddo.tsuidezake.util.viewStubDataBinding
 import javax.inject.Inject
 
@@ -30,6 +32,7 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
     private val emptyListInstructionViewModel: EmptyListInstructionViewModel by viewModels {
         viewModelFactory
     }
+    private val mainViewModel: MainViewModel by activityViewModels { viewModelFactory }
     private val binding: FragmentWishBinding by dataBinding()
     private val emptyInstructionBinding: ViewEmptyListInstructionBinding? by viewStubDataBinding {
         binding.emptyListInstruction
@@ -109,7 +112,5 @@ class WishFragment : DaggerFragment(R.layout.fragment_wish) {
         WishFragmentDirections.actionWishToSakeDetail(sake.id)
     )
 
-    private fun moveToRankingFragment() {
-        TODO()
-    }
+    private fun moveToRankingFragment() = mainViewModel.showRanking()
 }
