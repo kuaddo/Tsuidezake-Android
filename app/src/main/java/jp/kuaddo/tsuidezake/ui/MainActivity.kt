@@ -38,6 +38,10 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         setupBottomNavigation()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return bottomNavigationViewController.navigateUp()
+    }
+
     private fun setupBottomNavigation() {
         bottomNavigationViewController = BottomNavigationViewController(
             binding.navView,

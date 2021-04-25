@@ -65,6 +65,13 @@ class BottomNavigationViewController(
         setupItemReselected(fragmentManager, graphIdToTagMap)
     }
 
+    fun navigateUp(): Boolean {
+        val selectedFragment = selectedItemTag?.let {
+            fragmentManager.findFragmentByTag(it)
+        } as? NavHostFragment ?: return false
+        return selectedFragment.navController.navigateUp()
+    }
+
     fun goTo(navGraphId: Int) {
         bottomNavigationView.selectedItemId = getGraphId(navGraphId)
     }
