@@ -25,4 +25,4 @@
 #   junit.show_skipped_tests = true
 #   junit.report
 # end
-message("Danger test!")
+message("Danger test!!")
