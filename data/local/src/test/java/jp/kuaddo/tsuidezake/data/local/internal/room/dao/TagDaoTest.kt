@@ -14,6 +14,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.fail
 import org.junit.runner.RunWith
 
 @ExperimentalCoroutinesApi
@@ -37,6 +38,11 @@ class TagDaoTest {
     @After
     fun tearDown() {
         database.close()
+    }
+
+    @Test
+    fun failedTest() {
+        fail("danger test!!!")
     }
 
     @Test

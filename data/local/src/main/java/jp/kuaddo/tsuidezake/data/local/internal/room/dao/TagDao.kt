@@ -25,6 +25,7 @@ internal abstract class TagDao {
     @Insert
     protected abstract suspend fun insert(tagEntities: List<TagEntity>)
 
+
     @Update
     protected abstract suspend fun update(tagEntities: List<TagEntity>)
 
