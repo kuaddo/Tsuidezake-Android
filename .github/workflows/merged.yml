@@ -3,7 +3,7 @@ name: Merged
 on:
   pull_request:
     types: closed
-    branches: master
+    branches: danger_test_master
 
 env:
   STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
@@ -29,16 +29,16 @@ jobs:
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_SECRET: ${{ secrets.GPG_SECRET }}
-      - name: Build
-        run: ./gradlew assembleDebug
-      - name: Deploy to DeployGate
-        run: .github/scripts/deploy_on_merged.sh
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-      - name: Slack notification
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_COLOR: '#00FF00'
-          SLACK_TITLE: ':rocket::merge: Deploy(Merged) :merge::rocket:'
-          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<https://deploygate.com/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps/jp.kuaddo.tsuidezake.debug | Download link>"
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DEPLOY }}
+#      - name: Build
+#        run: ./gradlew assembleDebug
+#      - name: Deploy to DeployGate
+#        run: .github/scripts/deploy_on_merged.sh
+#        env:
+#          PR_TITLE: ${{ github.event.pull_request.title }}
+#      - name: Slack notification
+#        uses: rtCamp/action-slack-notify@master
+#        env:
+#          SLACK_COLOR: '#00FF00'
+#          SLACK_TITLE: ':rocket::merge: Deploy(Merged) :merge::rocket:'
+#          SLACK_MESSAGE: "Deploy success!\nThis deploy is based on \"${{ env.DEPLOY_MESSAGE }}\"\n<https://deploygate.com/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps/jp.kuaddo.tsuidezake.debug | Download link>"
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DEPLOY }}
