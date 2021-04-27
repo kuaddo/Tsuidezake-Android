@@ -1,0 +1,5 @@
+Dir["**/build/test-results/**/*.xml"].each do |file|
+  junit.parse(file)
+  junit.show_skipped_tests = true
+  junit.report
+end

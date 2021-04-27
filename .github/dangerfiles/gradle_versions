@@ -1,0 +1,10 @@
+if File.exist?("app/build/dependencyUpdates/merged_report.md")
+  File.open("app/build/dependencyUpdates/merged_report.md", "r") do |f|
+    contents = f.read()
+    if contents.empty?
+        message("All libraries are up to date.")
+    else
+        markdown(contents)
+    end
+  end
+end
