@@ -38,7 +38,7 @@ jobs:
           SLACK_MESSAGE: "ktlint failed! Please check github!"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_FAILURE }}
       - name: Run danger
-        run: danger
+        run: danger --dangerfile='.github/dangerfiles/ktlint' --remove-previous-comments --danger_id='ktlint'
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,7 +67,7 @@ jobs:
           ./gradlew dependencyUpdate
           ./gradlew mergeDependencyUpdatesReports
       - name: Run danger
-        run: danger
+        run: danger --dangerfile='.github/dangerfiles/gradle_versions' --remove-previous-comments --danger_id='gradle_versions'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -146,7 +146,7 @@ jobs:
           SLACK_MESSAGE: "Test failed! Please check github!"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_FAILURE }}
       - name: Run danger
-        run: danger
+        run: danger --dangerfile='.github/dangerfiles/test' --remove-previous-comments --danger_id='test'
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
