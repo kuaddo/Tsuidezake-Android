@@ -2,6 +2,7 @@ object Versions {
     const val targetSdkVersion = 30
     const val compileSdkVersion = 30
     const val minSdkVersion = 23
+    const val buildToolsVersion = "30.0.3"
     val versionCode: Int
         get() = majorVersion * 10000 + minorVersion * 100 + patchVersion
     val versionName: String

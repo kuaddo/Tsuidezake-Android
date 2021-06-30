@@ -22,7 +22,7 @@ class CommonBuildPlugin : Plugin<Project> {
 
         target.extensions.findByType(BaseExtension::class)?.apply {
             setCompileSdkVersion(Versions.compileSdkVersion)
-            buildToolsVersion(Deps.buildToolsVersion)
+            buildToolsVersion(Versions.buildToolsVersion)
             defaultConfig {
                 minSdkVersion(Versions.minSdkVersion)
                 targetSdkVersion(Versions.targetSdkVersion)
