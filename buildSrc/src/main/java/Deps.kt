@@ -8,13 +8,13 @@ object Deps {
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.2.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        const val gms = "com.google.gms:google-services:4.3.4"
+        const val gms = "com.google.gms:google-services:4.3.8"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
-        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
-        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
-        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
+        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
+        const val versions = "com.github.ben-manes:gradle-versions-plugin:0.39.0"
         const val deployGate = "com.deploygate:gradle:2.4.0"
     }
 
@@ -140,6 +140,8 @@ object Deps {
 
             const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
             const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
+
+            const val androidTestRunner = "de.mannodermaus.junit5:android-test-runner:1.2.0"
         }
 
         object Spek {
