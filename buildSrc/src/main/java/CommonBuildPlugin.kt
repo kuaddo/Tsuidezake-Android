@@ -75,9 +75,9 @@ class CommonBuildPlugin : Plugin<Project> {
             task("jacocoTestReport", JacocoReport::class) {
                 dependsOn("testDebugUnitTest")
                 reports {
-                    xml.isEnabled = true
-                    html.isEnabled = true
-                    csv.isEnabled = false
+                    xml.required.set(true)
+                    html.required.set(true)
+                    csv.required.set(false)
                 }
                 sourceDirectories.setFrom("$projectDir/src/main/java")
                 classDirectories.setFrom(
