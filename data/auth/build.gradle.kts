@@ -12,7 +12,6 @@ apply<CommonBuildPlugin>()
 dependencies {
     implementation(project(":data:remote"))
     implementation(project(":data:repository"))
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
     implementation(Deps.Firebase.auth)

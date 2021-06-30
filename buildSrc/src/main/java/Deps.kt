@@ -19,8 +19,6 @@ object Deps {
     }
 
     object Kotlin {
-        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
         const val coroutinesCore =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid =

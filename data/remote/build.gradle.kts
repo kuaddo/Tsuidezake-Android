@@ -30,7 +30,6 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":data:repository"))
 
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
     implementation(Deps.Firebase.storage)

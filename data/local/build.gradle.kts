@@ -22,7 +22,6 @@ android {
 dependencies {
     implementation(project(":model"))
     implementation(project(":data:repository"))
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.coreKtx)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     implementation(Deps.AndroidX.Room.runtime)
