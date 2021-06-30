@@ -1,12 +1,12 @@
 object Deps {
-    private const val kotlinVersion = "1.4.32"
-    private const val coroutinesVersion = "1.4.2"
+    private const val kotlinVersion = "1.5.20"
+    private const val coroutinesVersion = "1.5.0"
     private const val navigationVersion = "2.3.5"
-    private const val apolloVersion = "2.5.6"
+    private const val apolloVersion = "2.5.9"
     const val buildToolsVersion = "29.0.3"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.1.3"
+        const val android = "com.android.tools.build:gradle:4.2.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val gms = "com.google.gms:google-services:4.3.4"
         const val safeArgs =
@@ -15,7 +15,7 @@ object Deps {
         const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
         const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
         const val versions = "com.github.ben-manes:gradle-versions-plugin:0.36.0"
-        const val deployGate = "com.deploygate:gradle:2.3.0"
+        const val deployGate = "com.deploygate:gradle:2.4.0"
     }
 
     object Kotlin {
@@ -30,14 +30,14 @@ object Deps {
     }
 
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:1.2.0"
-        const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.3.0"
+        const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
-        const val coreKtx = "androidx.core:core-ktx:1.3.2"
+        const val coreKtx = "androidx.core:core-ktx:1.5.0"
         const val annotation = "androidx.annotation:annotation:1.2.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.3"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.5"
         const val material = "com.google.android.material:material:1.3.0"
 
         object Lifecycle {
@@ -63,13 +63,13 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:18.0.3"
-        const val auth = "com.google.firebase:firebase-auth:20.0.4"
-        const val storage = "com.google.firebase:firebase-storage:19.2.2"
+        const val analytics = "com.google.firebase:firebase-analytics:19.0.0"
+        const val auth = "com.google.firebase:firebase-auth:21.0.1"
+        const val storage = "com.google.firebase:firebase-storage:20.0.0"
     }
 
     object Dagger {
-        private const val version = "2.35"
+        private const val version = "2.37"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -114,8 +114,8 @@ object Deps {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
-    const val gson = "com.google.code.gson:gson:2.8.6"
-    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.1"
+    const val gson = "com.google.code.gson:gson:2.8.7"
+    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.2"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.7"
     const val inject = "javax.inject:javax.inject:1"
@@ -123,7 +123,7 @@ object Deps {
     object Test {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-        const val assertJ = "org.assertj:assertj-core:3.19.0"
+        const val assertJ = "org.assertj:assertj-core:3.20.2"
         const val mockk = "io.mockk:mockk:1.11.0"
 
         const val robolectric = "org.robolectric:robolectric:4.5.1"
@@ -136,7 +136,7 @@ object Deps {
         }
 
         object JUnit {
-            private const val version = "5.7.1"
+            private const val version = "5.7.2"
 
             const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
             const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
