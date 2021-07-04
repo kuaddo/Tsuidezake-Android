@@ -6,7 +6,7 @@ internal abstract class EnumSetConverters<T : Enum<T>>(private val clazz: Class<
     protected abstract val T.storeBit: Int
 
     @TypeConverter
-    fun encode(enums: Set<T>?): Int? = enums?.sumBy { 1 shl it.storeBit }
+    fun encode(enums: Set<T>?): Int? = enums?.sumOf { 1 shl it.storeBit }
 
     @TypeConverter
     fun decode(value: Int?): Set<T>? {

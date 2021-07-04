@@ -1,5 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -20,6 +19,10 @@ android {
         versionCode = Versions.versionCode
         versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument(
+            "runnerBuilder",
+            "de.mannodermaus.junit5.AndroidJUnit5Builder"
+        )
     }
     signingConfigs {
         getByName("debug") {
@@ -66,8 +69,10 @@ android {
             )
         }
     }
-    testOptions.junitPlatform.filters {
-        includeEngines("spek2")
+    tasks.withType<Test> {
+        useJUnitPlatform {
+            includeEngines("spek2")
+        }
     }
 }
 
@@ -80,8 +85,6 @@ dependencies {
     implementation(project(":data:remote"))
     implementation(project(":data:repository"))
 
-    implementation(Deps.Kotlin.stdlib)
-    implementation(Deps.Kotlin.reflect)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesAndroid)
 
@@ -138,6 +141,8 @@ dependencies {
     testImplementation(Deps.Test.threeTenBp) {
         exclude(Deps.threeTenAbp)
     }
+
+    androidTestRuntimeOnly(Deps.Test.JUnit.androidTestRunner)
 }
 
 tasks.withType<DependencyUpdatesTask> {

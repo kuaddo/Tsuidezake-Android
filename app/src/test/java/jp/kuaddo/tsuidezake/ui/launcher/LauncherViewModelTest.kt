@@ -2,82 +2,80 @@ package jp.kuaddo.tsuidezake.ui.launcher
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import io.mockk.verifySequence
 import jp.kuaddo.tsuidezake.domain.IsAccountInitializedUseCase
 import jp.kuaddo.tsuidezake.domain.invoke
-import jp.kuaddo.tsuidezake.testutil.applyArchTaskExecutor
-import jp.kuaddo.tsuidezake.testutil.applyTestDispatcher
-import jp.kuaddo.tsuidezake.testutil.observeAndGet
+import jp.kuaddo.tsuidezake.testutil.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+import kotlinx.coroutines.test.runBlockingTest
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
-object LauncherViewModelTest : Spek({
-    val testDispatcher = TestCoroutineDispatcher()
+class LauncherViewModelTest {
+    private val testDispatcher = TestCoroutineDispatcher()
 
-    applyArchTaskExecutor()
-    applyTestDispatcher(testDispatcher)
+    @get:Rule
+    val coroutineRule = CoroutineTestRule(testDispatcher)
 
-    val isAccountInitializedUseCase by memoized { mockk<IsAccountInitializedUseCase>() }
-    val viewModel by memoized {
-        LauncherViewModel(
+    private lateinit var isAccountInitializedFlow: MutableSharedFlow<Boolean>
+    private lateinit var target: LauncherViewModel
+
+    @Before
+    fun setUp() {
+        isAccountInitializedFlow = MutableSharedFlow()
+        val isAccountInitializedUseCase = mockk<IsAccountInitializedUseCase> {
+            every { this@mockk.invoke() } returns isAccountInitializedFlow
+        }
+        target = LauncherViewModel(
             isAccountInitializedUseCase,
             mockk(relaxed = true),
             mockk(relaxed = true)
         )
     }
 
-    describe("canStart") {
-        it("should return true after 2 seconds.") {
-            every { isAccountInitializedUseCase.invoke() } returns flowOf(true)
-            val isInitializedObserver = viewModel.canStart.observeAndGet()
+    @Test
+    fun testCanStart_returnsTrueAfter2Seconds() = testDispatcher.runBlockingTest {
+        isAccountInitializedFlow.emit(true)
+        assertThat(target.canStart.first()).isFalse
 
-            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
+        testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
 
-            verify(exactly = 1) { isInitializedObserver.onChanged(true) }
-        }
-
-        it("should return true after authService is initialized") {
-            val totalDelay = 3000L
-            every { isAccountInitializedUseCase.invoke() } returns flow {
-                emit(false)
-                delay(totalDelay)
-                emit(true)
-            }
-            val isInitializedObserver = viewModel.canStart.observeAndGet()
-
-            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
-            verify(exactly = 1) { isInitializedObserver.onChanged(false) }
-            verify(exactly = 0) { isInitializedObserver.onChanged(true) }
-
-            testDispatcher.advanceTimeBy(totalDelay - LauncherViewModel.INITIAL_DELAY)
-            verifySequence {
-                isInitializedObserver.onChanged(false)
-                isInitializedObserver.onChanged(true)
-            }
-        }
-
-        it("should return true after time out") {
-            every { isAccountInitializedUseCase.invoke() } returns flowOf(false)
-            val isInitializedObserver = viewModel.canStart.observeAndGet()
-
-            testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
-            verify(exactly = 1) { isInitializedObserver.onChanged(false) }
-            verify(exactly = 0) { isInitializedObserver.onChanged(true) }
-
-            testDispatcher.advanceTimeBy(
-                LauncherViewModel.TIME_OUT_DURATION - LauncherViewModel.INITIAL_DELAY
-            )
-            verifySequence {
-                isInitializedObserver.onChanged(false)
-                isInitializedObserver.onChanged(true)
-            }
-        }
+        assertThat(target.canStart.first()).isTrue
     }
-})
+
+    @Test
+    fun testCanStart_returnsTrueAfterAuthServiceInitialization() = testDispatcher.runBlockingTest {
+        val additionalDelay = 1000L
+        launch {
+            isAccountInitializedFlow.emit(false)
+            delay(LauncherViewModel.INITIAL_DELAY + additionalDelay)
+            isAccountInitializedFlow.emit(true)
+        }
+        assertThat(target.canStart.first()).isFalse
+
+        testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
+        assertThat(target.canStart.first()).isFalse
+        testDispatcher.advanceTimeBy(additionalDelay)
+        assertThat(target.canStart.first()).isTrue
+    }
+
+    @Test
+    fun testCanStart_returnsTrueAfterTimeout() = testDispatcher.runBlockingTest {
+        isAccountInitializedFlow.emit(false)
+        assertThat(target.canStart.first()).isFalse
+
+        testDispatcher.advanceTimeBy(LauncherViewModel.INITIAL_DELAY)
+        assertThat(target.canStart.first()).isFalse
+        testDispatcher.advanceTimeBy(
+            LauncherViewModel.TIME_OUT_DURATION - LauncherViewModel.INITIAL_DELAY
+        )
+        assertThat(target.canStart.first()).isTrue
+    }
+}

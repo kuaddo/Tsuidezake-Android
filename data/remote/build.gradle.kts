@@ -1,5 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -19,8 +18,10 @@ apollo {
 }
 
 android {
-    testOptions.junitPlatform.filters {
-        includeEngines("spek2")
+    tasks.withType<Test> {
+        useJUnitPlatform {
+            includeEngines("spek2")
+        }
     }
 }
 
@@ -29,7 +30,6 @@ dependencies {
     implementation(project(":model"))
     implementation(project(":data:repository"))
 
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
     implementation(Deps.Firebase.storage)

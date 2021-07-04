@@ -10,7 +10,6 @@ apply<CommonBuildPlugin>()
 dependencies {
     implementation(project(":model"))
 
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.AndroidX.annotation)
     api(Deps.inject)

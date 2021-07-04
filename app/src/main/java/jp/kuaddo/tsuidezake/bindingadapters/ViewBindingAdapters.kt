@@ -10,11 +10,6 @@ fun View.bindVisibilityGone(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("visibleInvisible")
-fun View.bindVisibilityInvisible(isVisible: Boolean) {
-    visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
-}
-
 @BindingAdapter("isEnabled")
 fun View.bindEnabled(isEnabled: Boolean) {
     this.isEnabled = isEnabled

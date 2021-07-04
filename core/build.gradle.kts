@@ -9,7 +9,6 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
-    implementation(Deps.Kotlin.stdlib)
     api(Deps.AndroidX.Lifecycle.liveDataKtx)
     api(Deps.inject)
 }

@@ -9,10 +9,6 @@ plugins {
 }
 apply<CommonBuildPlugin>()
 
-dependencies {
-    implementation(Deps.Kotlin.stdlib)
-}
-
 tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)

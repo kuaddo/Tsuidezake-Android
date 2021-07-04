@@ -13,7 +13,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
     implementation(project(":domain"))
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx) // TODO: remove
     implementation(Deps.AndroidX.annotation)

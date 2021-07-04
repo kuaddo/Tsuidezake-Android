@@ -9,7 +9,6 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
-    implementation(Deps.Kotlin.stdlib)
     implementation(Deps.AndroidX.coreKtx)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     implementation(Deps.Test.kotlinCoroutinesTest)
