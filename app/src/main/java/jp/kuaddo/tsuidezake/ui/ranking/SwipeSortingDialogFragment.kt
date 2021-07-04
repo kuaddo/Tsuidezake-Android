@@ -24,7 +24,7 @@ class SwipeSortingDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogSwipeSortingBinding.inflate(
             inflater,
             container,

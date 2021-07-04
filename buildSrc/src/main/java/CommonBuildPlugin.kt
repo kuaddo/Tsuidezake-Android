@@ -14,6 +14,7 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.Locale
 
 class CommonBuildPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -124,7 +125,9 @@ class CommonBuildPlugin : Plugin<Project> {
 const val dependencyUpdatesFormatter = "json"
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
+        version.toUpperCase(Locale.US).contains(it)
+    }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
