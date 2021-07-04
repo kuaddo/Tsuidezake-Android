@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.wada811.databinding.dataBinding
@@ -12,6 +13,8 @@ import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityLauncherBinding
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.ui.MainActivity
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LauncherActivity : DaggerAppCompatActivity(R.layout.activity_launcher) {
@@ -36,8 +39,10 @@ class LauncherActivity : DaggerAppCompatActivity(R.layout.activity_launcher) {
             else supportActionBar?.hide()
         }
 
-        viewModel.canStart.observeNonNull(this) {
-            if (it) startMainActivityWithFinish()
+        lifecycleScope.launch {
+            viewModel.canStart.collect {
+                if (it) startMainActivityWithFinish()
+            }
         }
     }
 
