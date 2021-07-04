@@ -16,10 +16,6 @@ fun <T> MutableLiveData<T>.setValueIfNewAndNotNull(newValue: T?) {
     if (this.value != newValue && newValue != null) value = newValue
 }
 
-fun <T> MutableLiveData<T>.postValueIfNew(newValue: T) {
-    if (this.value != newValue) postValue(newValue)
-}
-
 fun <T1, T2, S> LiveData<T1>.combineLatest(source: LiveData<T2>, func: (T1, T2) -> S): LiveData<S> {
     val result = MediatorLiveData<S>()
     fun setValue() = value?.let { v1 -> source.value?.let { v2 -> result.value = func(v1, v2) } }
