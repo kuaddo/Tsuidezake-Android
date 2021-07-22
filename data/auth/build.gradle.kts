@@ -10,6 +10,7 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":data:remote"))
     implementation(project(":data:repository"))
     implementation(Deps.Kotlin.coroutinesCore)

@@ -1,8 +1,8 @@
 package jp.kuaddo.tsuidezake.domain
 
+import jp.kuaddo.tsuidezake.core.runCatchingS
 import jp.kuaddo.tsuidezake.model.ErrorResource
 import jp.kuaddo.tsuidezake.model.Resource
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -11,11 +11,10 @@ abstract class UseCase<in P, R>(
     private val coroutineDispatcher: CoroutineDispatcher? = null
 ) {
     suspend operator fun invoke(parameter: P): Resource<R> {
-        return runCatching {
+        return runCatchingS {
             if (coroutineDispatcher == null) execute(parameter)
             else withContext(coroutineDispatcher) { execute(parameter) }
         }
-            .onFailure { if (it is CancellationException) throw it }
             .fold(
                 onSuccess = { it },
                 onFailure = {

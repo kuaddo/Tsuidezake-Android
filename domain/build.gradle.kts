@@ -8,6 +8,7 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":model"))
 
     implementation(Deps.Kotlin.coroutinesCore)

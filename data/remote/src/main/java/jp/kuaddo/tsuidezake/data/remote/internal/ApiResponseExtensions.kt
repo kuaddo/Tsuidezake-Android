@@ -4,21 +4,20 @@ import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
+import jp.kuaddo.tsuidezake.core.runCatchingS
 import jp.kuaddo.tsuidezake.data.repository.ApiResponse
 import jp.kuaddo.tsuidezake.data.repository.ErrorResponse
 import jp.kuaddo.tsuidezake.data.repository.SuccessResponse
-import kotlinx.coroutines.CancellationException
 import timber.log.Timber
 
 internal suspend fun <T : Any, R> ApolloQueryCall<T>.toApiResponse(
     transform: suspend (T) -> R
-): ApiResponse<R> = runCatching {
+): ApiResponse<R> = runCatchingS {
     when (val res = await().toApiResponse()) {
         is SuccessResponse -> SuccessResponse(transform(res.data))
         is ErrorResponse -> res
     }
 }
-    .onFailure { if (it is CancellationException) throw it }
     .fold(
         onSuccess = { it },
         onFailure = {
@@ -29,13 +28,12 @@ internal suspend fun <T : Any, R> ApolloQueryCall<T>.toApiResponse(
 
 internal suspend fun <T : Any, R : Any> ApolloMutationCall<T>.toApiResponse(
     transform: suspend (T) -> R
-): ApiResponse<R> = runCatching {
+): ApiResponse<R> = runCatchingS {
     when (val res = await().toApiResponse()) {
         is SuccessResponse -> SuccessResponse(transform(res.data))
         is ErrorResponse -> res
     }
 }
-    .onFailure { if (it is CancellationException) throw it }
     .fold(
         onSuccess = { it },
         onFailure = {

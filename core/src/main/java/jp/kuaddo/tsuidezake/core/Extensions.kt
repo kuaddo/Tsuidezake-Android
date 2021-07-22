@@ -2,6 +2,7 @@
 
 package jp.kuaddo.tsuidezake.core
 
+import kotlinx.coroutines.CancellationException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -20,3 +21,9 @@ suspend inline fun <T, R> T.letS(crossinline block: suspend (T) -> R): R {
     }
     return block(this)
 }
+
+inline fun <R> runCatchingS(block: () -> R): Result<R> =
+    runCatching { block() }.onFailure { if (it is CancellationException) throw it }
+
+inline fun <T, R> T.runCatchingS(block: T.() -> R): Result<R> =
+    runCatching { block() }.onFailure { if (it is CancellationException) throw it }
