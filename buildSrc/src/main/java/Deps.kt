@@ -1,11 +1,11 @@
 object Deps {
-    private const val kotlinVersion = "1.5.20"
-    private const val coroutinesVersion = "1.5.0"
+    private const val kotlinVersion = "1.5.21"
+    private const val coroutinesVersion = "1.5.1"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.9"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.2.1"
+        const val android = "com.android.tools.build:gradle:4.2.2"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val gms = "com.google.gms:google-services:4.3.8"
         const val safeArgs =
@@ -27,15 +27,16 @@ object Deps {
     }
 
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:1.3.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.3.1"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
+        const val constraint = "androidx.constraintlayout:constraintlayout:2.1.0"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
-        const val coreKtx = "androidx.core:core-ktx:1.5.0"
+        const val coreKtx = "androidx.core:core-ktx:1.6.0"
         const val annotation = "androidx.annotation:annotation:1.2.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.5"
-        const val material = "com.google.android.material:material:1.3.0"
+        const val activityKtx = "androidx.activity:activity-ktx:1.3.1"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.6"
+        const val material = "com.google.android.material:material:1.4.0"
 
         object Lifecycle {
             private const val version = "2.3.1"
@@ -66,7 +67,7 @@ object Deps {
     }
 
     object Dagger {
-        private const val version = "2.37"
+        private const val version = "2.38"
 
         const val core = "com.google.dagger:dagger:$version"
         const val android = "com.google.dagger:dagger-android:$version"
@@ -121,15 +122,15 @@ object Deps {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         const val assertJ = "org.assertj:assertj-core:3.20.2"
-        const val mockk = "io.mockk:mockk:1.11.0"
+        const val mockk = "io.mockk:mockk:1.12.0"
 
         const val robolectric = "org.robolectric:robolectric:4.5.1"
         const val threeTenBp = "org.threeten:threetenbp:1.5.1"
 
         object AndroidX {
             const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
-            const val testRunner = "androidx.test:runner:1.3.0"
-            const val jUnit = "androidx.test.ext:junit:1.1.2"
+            const val testRunner = "androidx.test:runner:1.4.0"
+            const val jUnit = "androidx.test.ext:junit:1.1.3"
         }
 
         object JUnit {

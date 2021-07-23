@@ -94,6 +94,7 @@ dependencies {
     implementation(Deps.AndroidX.constraint)
     implementation(Deps.AndroidX.viewPager)
     implementation(Deps.AndroidX.coreKtx)
+    implementation(Deps.AndroidX.activityKtx)
     implementation(Deps.AndroidX.fragmentKtx)
     implementation(Deps.AndroidX.material)
     implementation(Deps.AndroidX.Lifecycle.viewModelKtx)
