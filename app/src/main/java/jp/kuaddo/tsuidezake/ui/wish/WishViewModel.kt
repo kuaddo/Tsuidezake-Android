@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.GetWishListUseCase
 import jp.kuaddo.tsuidezake.domain.invoke
@@ -23,6 +24,7 @@ import javax.inject.Inject
 
 typealias GroupedWishList = Map<String, List<SakeDetail>>
 
+@HiltViewModel
 class WishViewModel @Inject constructor(
     private val getWishListUseCase: GetWishListUseCase,
     snackbarViewModelDelegate: SnackbarViewModelDelegate

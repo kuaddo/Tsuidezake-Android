@@ -2,12 +2,14 @@ package jp.kuaddo.tsuidezake.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.kuaddo.tsuidezake.delegate.LoadingViewModelDelegate
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     loadingViewModelDelegate: LoadingViewModelDelegate
 ) : ViewModel(), LoadingViewModelDelegate by loadingViewModelDelegate {

@@ -1,14 +1,13 @@
 package jp.kuaddo.tsuidezake
 
+import android.app.Application
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.core.content.getSystemService
 import com.jakewharton.threetenabp.AndroidThreeTen
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import jp.kuaddo.tsuidezake.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 import jp.kuaddo.tsuidezake.domain.SignInAnonymouslyUseCase
 import jp.kuaddo.tsuidezake.domain.invoke
 import kotlinx.coroutines.GlobalScope
@@ -16,7 +15,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class TsuidezakeApp : DaggerApplication() {
+@HiltAndroidApp
+class TsuidezakeApp : Application() {
     @Inject
     lateinit var signInAnonymouslyUseCase: SignInAnonymouslyUseCase
 
@@ -29,9 +29,6 @@ class TsuidezakeApp : DaggerApplication() {
             Timber.plant(Timber.DebugTree())
         }
     }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-        DaggerAppComponent.factory().create(this)
 
     private fun registerAuthService() {
         val request = NetworkRequest.Builder()

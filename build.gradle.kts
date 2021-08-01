@@ -9,6 +9,7 @@ buildscript {
         classpath(Deps.GradlePlugin.kotlin)
         classpath(Deps.GradlePlugin.gms)
         classpath(Deps.GradlePlugin.safeArgs)
+        classpath(Deps.GradlePlugin.hilt)
         classpath(Deps.GradlePlugin.apollo)
         classpath(Deps.GradlePlugin.junit5)
         classpath(Deps.GradlePlugin.ktlint)

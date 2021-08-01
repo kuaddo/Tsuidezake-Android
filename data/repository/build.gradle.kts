@@ -18,6 +18,8 @@ dependencies {
     implementation(Deps.AndroidX.annotation)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
 }
 
 tasks.withType<DependencyUpdatesTask> {

@@ -18,6 +18,8 @@ dependencies {
     implementation(Deps.Firebase.auth)
     api(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
     implementation(Deps.timber)
 }
 

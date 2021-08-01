@@ -3,6 +3,7 @@ object Deps {
     private const val coroutinesVersion = "1.5.1"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.9"
+    private const val daggerVersion = "2.38.1"
 
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.2.2"
@@ -10,6 +11,7 @@ object Deps {
         const val gms = "com.google.gms:google-services:4.3.8"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+        const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$daggerVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
         const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
         const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
@@ -67,13 +69,13 @@ object Deps {
     }
 
     object Dagger {
-        private const val version = "2.38"
+        const val core = "com.google.dagger:dagger:$daggerVersion"
+        const val compiler = "com.google.dagger:dagger-compiler:$daggerVersion"
 
-        const val core = "com.google.dagger:dagger:$version"
-        const val android = "com.google.dagger:dagger-android:$version"
-        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
-        const val compiler = "com.google.dagger:dagger-compiler:$version"
-        const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
+        object Hilt {
+            const val android = "com.google.dagger:hilt-android:$daggerVersion"
+            const val compiler = "com.google.dagger:hilt-compiler:$daggerVersion"
+        }
     }
 
     object OkHttp {
