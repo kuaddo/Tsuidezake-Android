@@ -16,7 +16,8 @@ dependencies {
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
     implementation(Deps.Firebase.auth)
-    api(Deps.Dagger.core)
+
+    implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
     implementation(Deps.Dagger.Hilt.android)
     kapt(Deps.Dagger.Hilt.compiler)
