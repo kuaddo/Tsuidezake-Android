@@ -4,6 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.migration.DisableInstallInCheck
 import jp.kuaddo.tsuidezake.data.remote.internal.OAuthHeaderInterceptor
 import jp.kuaddo.tsuidezake.data.remote.internal.TsuidezakeServiceImpl
 import jp.kuaddo.tsuidezake.data.repository.TsuidezakeService
@@ -12,8 +13,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 
 @Module
+@DisableInstallInCheck
 internal abstract class RemoteDataModule {
-    @Suppress("unused")
     @Binds
     abstract fun bindTsuidezakeService(impl: TsuidezakeServiceImpl): TsuidezakeService
 

@@ -3,13 +3,14 @@ package jp.kuaddo.tsuidezake.ui.sake
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.wada811.databinding.dataBinding
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentSakeDetailBinding
 import jp.kuaddo.tsuidezake.databinding.ViewSakeEvaluationBinding
@@ -19,7 +20,8 @@ import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import timber.log.Timber
 import javax.inject.Inject
 
-class SakeDetailFragment : DaggerFragment(R.layout.fragment_sake_detail) {
+@AndroidEntryPoint
+class SakeDetailFragment : Fragment(R.layout.fragment_sake_detail) {
     @Inject
     lateinit var viewModelFactory: SakeDetailViewModel.Factory
 

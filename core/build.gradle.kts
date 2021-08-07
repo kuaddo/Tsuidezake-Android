@@ -9,8 +9,8 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
-    api(Deps.AndroidX.Lifecycle.liveDataKtx)
-    api(Deps.inject)
+    implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
+    implementation(Deps.inject)
 }
 
 tasks.withType<DependencyUpdatesTask> {

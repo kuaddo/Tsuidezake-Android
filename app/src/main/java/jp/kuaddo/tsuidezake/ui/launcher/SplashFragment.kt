@@ -1,17 +1,14 @@
 package jp.kuaddo.tsuidezake.ui.launcher
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jp.kuaddo.tsuidezake.R
-import javax.inject.Inject
 
-class SplashFragment : DaggerFragment(R.layout.fragment_splash) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val launcherViewModel: LauncherViewModel by activityViewModels { viewModelFactory }
+@AndroidEntryPoint
+class SplashFragment : Fragment(R.layout.fragment_splash) {
+    private val launcherViewModel: LauncherViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

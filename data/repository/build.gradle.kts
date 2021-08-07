@@ -16,8 +16,11 @@ dependencies {
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx) // TODO: remove
     implementation(Deps.AndroidX.annotation)
-    api(Deps.Dagger.core)
+
+    implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
 }
 
 tasks.withType<DependencyUpdatesTask> {

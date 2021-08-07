@@ -1,10 +1,10 @@
 package jp.kuaddo.tsuidezake.data.auth.internal
 
 import com.google.firebase.auth.FirebaseAuth
+import jp.kuaddo.tsuidezake.core.runCatchingS
 import jp.kuaddo.tsuidezake.data.auth.internal.di.AuthenticationScope
 import jp.kuaddo.tsuidezake.data.remote.AuthToken
 import jp.kuaddo.tsuidezake.data.repository.AuthService
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,13 +36,10 @@ internal class AuthServiceImpl @Inject constructor(
         Timber.d("Received a FirebaseAuth update.")
 
         GlobalScope.launch {
-            val tokenResult = runCatching {
-                auth.currentUser
-                    ?.getIdToken(true)
-                    ?.await()
-            }
-                .onFailure { if (it is CancellationException) throw it }
-                .getOrNull()
+            val tokenResult = auth.currentUser
+                ?.getIdToken(true)
+                ?.runCatchingS { await() }
+                ?.getOrNull()
                 ?.token
 
             token = tokenResult

@@ -29,6 +29,9 @@ import jp.kuaddo.tsuidezake.util.SnackbarMessageText
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO: Assisted injectionではなくHilt + SavedStateHandleを検討する。
+//  Installされるスコープに問題があり、リークする可能性があるらしい
+//  https://github.com/google/dagger/issues/2287
 class SakeDetailViewModel @AssistedInject constructor(
     @Assisted private val sakeId: Int,
     private val getUserSakeUseCase: GetUserSakeUseCase,

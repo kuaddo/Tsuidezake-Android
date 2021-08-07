@@ -3,9 +3,9 @@ package jp.kuaddo.tsuidezake.ui.wish
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +13,7 @@ import com.wada811.databinding.dataBinding
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.viewbinding.BindableItem
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentWishBinding
 import jp.kuaddo.tsuidezake.databinding.ViewEmptyListInstructionBinding
@@ -22,17 +22,12 @@ import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import jp.kuaddo.tsuidezake.model.Sake
 import jp.kuaddo.tsuidezake.ui.MainViewModel
 import jp.kuaddo.tsuidezake.util.viewStubDataBinding
-import javax.inject.Inject
 
-class WishFragment : DaggerFragment(R.layout.fragment_wish) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val wishViewModel: WishViewModel by viewModels { viewModelFactory }
-    private val emptyListInstructionViewModel: EmptyListInstructionViewModel by viewModels {
-        viewModelFactory
-    }
-    private val mainViewModel: MainViewModel by activityViewModels { viewModelFactory }
+@AndroidEntryPoint
+class WishFragment : Fragment(R.layout.fragment_wish) {
+    private val wishViewModel: WishViewModel by viewModels()
+    private val emptyListInstructionViewModel: EmptyListInstructionViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val binding: FragmentWishBinding by dataBinding()
     private val emptyInstructionBinding: ViewEmptyListInstructionBinding? by viewStubDataBinding {
         binding.emptyListInstruction

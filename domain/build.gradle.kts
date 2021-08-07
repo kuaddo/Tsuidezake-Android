@@ -8,11 +8,12 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":model"))
 
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.AndroidX.annotation)
-    api(Deps.inject)
+    implementation(Deps.inject)
     implementation(Deps.timber)
 
     testImplementation(Deps.Test.kotlinCoroutinesTest)

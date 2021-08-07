@@ -2,23 +2,20 @@ package jp.kuaddo.tsuidezake.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.wada811.databinding.dataBinding
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.ActivityMainBinding
 import jp.kuaddo.tsuidezake.ui.common.BottomNavigationViewController
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+    private val viewModel: MainViewModel by viewModels()
     private val binding: ActivityMainBinding by dataBinding()
     private lateinit var bottomNavigationViewController: BottomNavigationViewController
 

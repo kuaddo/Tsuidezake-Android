@@ -10,13 +10,17 @@ plugins {
 apply<CommonBuildPlugin>()
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":data:remote"))
     implementation(project(":data:repository"))
     implementation(Deps.Kotlin.coroutinesCore)
     implementation(Deps.Kotlin.coroutinesPlayServices)
     implementation(Deps.Firebase.auth)
-    api(Deps.Dagger.core)
+
+    implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
     implementation(Deps.timber)
 }
 

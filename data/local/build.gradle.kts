@@ -27,8 +27,11 @@ dependencies {
     implementation(Deps.AndroidX.Room.runtime)
     implementation(Deps.AndroidX.Room.ktx)
     kapt(Deps.AndroidX.Room.compiler)
-    api(Deps.Dagger.core)
+
+    implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
 
     testImplementation(project(":testutil"))
     testImplementation(Deps.Test.AndroidX.coreTesting)

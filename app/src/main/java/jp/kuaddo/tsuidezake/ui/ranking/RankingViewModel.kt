@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.kuaddo.tsuidezake.delegate.LoadingViewModelDelegate
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.GetRankingsUseCase
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class RankingViewModel @Inject constructor(
     getRecommendedSakesUseCase: GetRecommendedSakesUseCase,
     getRankingsUseCase: GetRankingsUseCase,

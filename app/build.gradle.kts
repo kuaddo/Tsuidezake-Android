@@ -7,6 +7,7 @@ plugins {
     kotlin("kapt")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
     id("deploygate")
@@ -76,6 +77,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":model"))
@@ -94,6 +99,7 @@ dependencies {
     implementation(Deps.AndroidX.constraint)
     implementation(Deps.AndroidX.viewPager)
     implementation(Deps.AndroidX.coreKtx)
+    implementation(Deps.AndroidX.activityKtx)
     implementation(Deps.AndroidX.fragmentKtx)
     implementation(Deps.AndroidX.material)
     implementation(Deps.AndroidX.Lifecycle.viewModelKtx)
@@ -104,11 +110,10 @@ dependencies {
 
     implementation(Deps.Firebase.analytics)
 
-    api(Deps.Dagger.core)
-    api(Deps.Dagger.android)
-    api(Deps.Dagger.androidSupport)
+    implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
-    kapt(Deps.Dagger.androidProcessor)
+    implementation(Deps.Dagger.Hilt.android)
+    kapt(Deps.Dagger.Hilt.compiler)
 
     implementation(Deps.Glide.core)
     kapt(Deps.Glide.compiler)

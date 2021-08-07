@@ -2,27 +2,24 @@ package jp.kuaddo.tsuidezake.ui.ranking
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.wada811.databinding.dataBinding
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jp.kuaddo.tsuidezake.R
 import jp.kuaddo.tsuidezake.databinding.FragmentRankingBinding
 import jp.kuaddo.tsuidezake.extensions.autoCleared
 import jp.kuaddo.tsuidezake.extensions.observeNonNull
 import jp.kuaddo.tsuidezake.extensions.observeViewModelDelegate
 import jp.kuaddo.tsuidezake.ui.common.AutoScroller
-import javax.inject.Inject
 
-class RankingFragment : DaggerFragment(R.layout.fragment_ranking) {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: RankingViewModel by viewModels { viewModelFactory }
+@AndroidEntryPoint
+class RankingFragment : Fragment(R.layout.fragment_ranking) {
+    private val viewModel: RankingViewModel by viewModels()
     private val binding: FragmentRankingBinding by dataBinding()
     private var recommendedAdapter: RecommendedAdapter by autoCleared()
     private var rankingStateAdapter: RankingStateAdapter by autoCleared()

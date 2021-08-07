@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.kuaddo.tsuidezake.delegate.SnackbarViewModelDelegate
 import jp.kuaddo.tsuidezake.domain.GetRecommendedSakesUseCase
 import jp.kuaddo.tsuidezake.domain.invoke
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class EmptyListInstructionViewModel @Inject constructor(
     private val getRecommendedSakesUseCase: GetRecommendedSakesUseCase,
     snackbarViewModelDelegate: SnackbarViewModelDelegate
