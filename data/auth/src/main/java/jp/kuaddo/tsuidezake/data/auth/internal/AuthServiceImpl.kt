@@ -13,7 +13,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @AuthenticationScope
@@ -29,7 +28,7 @@ internal class AuthServiceImpl @Inject constructor(
     private val _initialized = MutableStateFlow(false)
     override val initialized: Flow<Boolean> = _initialized
 
-    private val isAddedListener = AtomicBoolean(false)
+    private var isAddedListener = false
     private val signInMutex = Mutex()
 
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
@@ -52,7 +51,8 @@ internal class AuthServiceImpl @Inject constructor(
     }
 
     override suspend fun signInAnonymously(): Boolean = signInMutex.withLock {
-        if (!isAddedListener.getAndSet(true)) {
+        if (!isAddedListener) {
+            isAddedListener = true
             firebaseAuth.addAuthStateListener(authStateListener)
         }
         if (firebaseAuth.currentUser == null) {
