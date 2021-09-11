@@ -45,6 +45,7 @@ object Deps {
 
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+            const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val commonJava8 = "androidx.lifecycle:lifecycle-common-java8:$version"
         }
 
@@ -112,6 +113,8 @@ object Deps {
         const val lifecycle = "com.afollestad.material-dialogs:lifecycle:$version"
     }
 
+    const val gmsAuth = "com.google.android.gms:play-services-auth:19.0.0"
+    const val facebookLogin = "com.facebook.android:facebook-login:[8,9)"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
     const val gson = "com.google.code.gson:gson:2.8.7"
