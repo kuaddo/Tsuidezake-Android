@@ -6,4 +6,5 @@ interface AuthService {
     val initialized: Flow<Boolean>
 
     suspend fun signInAnonymously(): Boolean
+    fun signOut()
 }

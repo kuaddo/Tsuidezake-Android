@@ -62,4 +62,6 @@ internal class AuthServiceImpl @Inject constructor(
             true
         }
     }
+
+    override fun signOut() = firebaseAuth.signOut()
 }
