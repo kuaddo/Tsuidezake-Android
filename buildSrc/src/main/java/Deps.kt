@@ -64,9 +64,9 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:19.0.0"
-        const val auth = "com.google.firebase:firebase-auth:21.0.1"
-        const val storage = "com.google.firebase:firebase-storage:20.0.0"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx:19.0.0"
+        const val auth = "com.google.firebase:firebase-auth-ktx:21.0.1"
+        const val storage = "com.google.firebase:firebase-storage-ktx:20.0.0"
     }
 
     object Dagger {

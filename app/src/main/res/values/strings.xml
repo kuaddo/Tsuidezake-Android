@@ -32,4 +32,7 @@
 
     <string name="evaluation_dialog_title">このお酒は気に入りましたか？</string>
     <string name="evaluation_dialog_open_tasted_page">呑んだページを開く</string>
+
+    <string name="facebook_app_id">1730932427087483</string>
+    <string name="fb_login_protocol_scheme">fb1730932427087483</string>
 </resources>
