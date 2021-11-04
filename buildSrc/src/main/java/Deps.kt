@@ -1,5 +1,5 @@
 object Deps {
-    private const val kotlinVersion = "1.5.21"
+    private const val kotlinVersion = "1.5.31"
     private const val coroutinesVersion = "1.5.1"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.9"
