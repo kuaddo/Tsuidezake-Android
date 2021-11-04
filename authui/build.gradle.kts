@@ -1,4 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import java.io.File
+import java.io.FileInputStream
+import java.util.Properties
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -8,6 +11,18 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
 }
 apply<CommonBuildPlugin>()
+
+android {
+    defaultConfig {
+        val props = Properties().apply {
+            load(FileInputStream(File(projectDir, "secret.properties")))
+        }
+        buildConfigField("String", "GOOGLE_SIGN_IN_TOKEN", "\"${props.getProperty("googleSignInToken")}\"")
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+}
 
 dependencies {
     implementation(project(":core"))
@@ -20,6 +35,8 @@ dependencies {
 
     implementation(Deps.Dagger.Hilt.android)
     kapt(Deps.Dagger.Hilt.compiler)
+
+    implementation(Deps.timber)
 }
 
 tasks.withType<DependencyUpdatesTask> {
