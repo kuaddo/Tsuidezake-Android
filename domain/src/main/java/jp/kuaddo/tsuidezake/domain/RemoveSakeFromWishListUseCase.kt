@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class RemoveSakeFromWishListUseCase @Inject constructor(
     private val repository: Repository
-) : UseCase<Int, Unit>() {
+) : UseCaseS<Int, Unit>() {
     override suspend fun execute(parameter: Int): Resource<Unit> =
         repository.removeSakeFromWishList(parameter)
 }

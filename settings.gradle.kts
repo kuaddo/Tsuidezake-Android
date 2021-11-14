@@ -1,5 +1,6 @@
 include(
     ":app",
+    ":authui",
     ":core",
     ":model",
     ":domain",

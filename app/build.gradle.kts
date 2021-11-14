@@ -82,6 +82,7 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":authui"))
     implementation(project(":core"))
     implementation(project(":model"))
     implementation(project(":domain"))

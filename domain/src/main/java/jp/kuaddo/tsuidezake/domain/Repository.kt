@@ -11,6 +11,7 @@ interface Repository {
     val isAccountInitialized: Flow<Boolean>
 
     suspend fun signInAnonymously(): Boolean
+    fun signOut()
 
     fun getRankings(): Flow<Resource<List<Ranking>>>
     fun getRecommendedSakes(): Flow<Resource<List<Ranking.Content>>>

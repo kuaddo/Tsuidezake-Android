@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class SignInAnonymouslyUseCase @Inject constructor(
     private val repository: Repository
-) : UseCase<Unit, Unit>() {
+) : UseCaseS<Unit, Unit>() {
     override suspend fun execute(parameter: Unit): Resource<Unit> =
         if (repository.signInAnonymously()) SuccessResource(Unit)
         else ErrorResource(SIGN_IN_ERROR_MESSAGE, null)

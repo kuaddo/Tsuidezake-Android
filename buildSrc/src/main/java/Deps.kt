@@ -1,5 +1,5 @@
 object Deps {
-    private const val kotlinVersion = "1.5.21"
+    private const val kotlinVersion = "1.5.31"
     private const val coroutinesVersion = "1.5.1"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.9"
@@ -45,6 +45,7 @@ object Deps {
 
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+            const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val commonJava8 = "androidx.lifecycle:lifecycle-common-java8:$version"
         }
 
@@ -63,9 +64,9 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics:19.0.0"
-        const val auth = "com.google.firebase:firebase-auth:21.0.1"
-        const val storage = "com.google.firebase:firebase-storage:20.0.0"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx:19.0.0"
+        const val auth = "com.google.firebase:firebase-auth-ktx:21.0.1"
+        const val storage = "com.google.firebase:firebase-storage-ktx:20.0.0"
     }
 
     object Dagger {
@@ -112,6 +113,8 @@ object Deps {
         const val lifecycle = "com.afollestad.material-dialogs:lifecycle:$version"
     }
 
+    const val gmsAuth = "com.google.android.gms:play-services-auth:19.0.0"
+    const val facebookLogin = "com.facebook.android:facebook-login:[8,9)"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
     const val gson = "com.google.code.gson:gson:2.8.7"

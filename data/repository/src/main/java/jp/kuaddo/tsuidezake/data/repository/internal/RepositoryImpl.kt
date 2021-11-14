@@ -28,6 +28,8 @@ internal class RepositoryImpl @Inject constructor(
 
     override suspend fun signInAnonymously(): Boolean = authService.signInAnonymously()
 
+    override fun signOut() = authService.signOut()
+
     override fun getRankings(): Flow<Resource<List<Ranking>>> =
         object : NetworkBoundResource<List<Ranking>, List<Ranking>>() {
             override fun loadFromDb(): Flow<List<Ranking>?> =

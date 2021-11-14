@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-abstract class UseCase<in P, R>(
+abstract class UseCaseS<in P, R>(
     private val coroutineDispatcher: CoroutineDispatcher? = null
 ) {
     suspend operator fun invoke(parameter: P): Resource<R> {
@@ -31,4 +31,4 @@ abstract class UseCase<in P, R>(
     }
 }
 
-suspend operator fun <R> UseCase<Unit, R>.invoke(): Resource<R> = this(Unit)
+suspend operator fun <R> UseCaseS<Unit, R>.invoke(): Resource<R> = this(Unit)

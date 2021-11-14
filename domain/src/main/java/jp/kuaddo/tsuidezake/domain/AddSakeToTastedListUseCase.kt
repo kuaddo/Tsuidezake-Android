@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class AddSakeToTastedListUseCase @Inject constructor(
     private val repository: Repository
-) : UseCase<AddSakeToTastedListUseCase.Parameter, Unit>() {
+) : UseCaseS<AddSakeToTastedListUseCase.Parameter, Unit>() {
     override suspend fun execute(parameter: Parameter): Resource<Unit> =
         repository.addSakeToTastedList(parameter.sakeId, parameter.evaluation)
 

@@ -45,6 +45,7 @@ class CommonBuildPlugin : Plugin<Project> {
                             testLogging { setEvents(TEST_LOGGING_EVENTS) }
                             extensions.configure(JacocoTaskExtension::class.java) {
                                 isIncludeNoLocationClasses = true
+                                excludes?.add("jdk.internal.*")
                             }
                         } as Closure<Test>
                     )
