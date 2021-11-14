@@ -200,17 +200,20 @@ class SignInManager @AssistedInject constructor(
         private fun LoginManager.getTokenFlow(
             callbackManager: CallbackManager
         ): Flow<String?> = callbackFlow {
-            registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult?) {
-                    trySend(result?.accessToken?.token)
-                }
+            registerCallback(
+                callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult?) {
+                        trySend(result?.accessToken?.token)
+                    }
 
-                override fun onCancel() = Unit
+                    override fun onCancel() = Unit
 
-                override fun onError(error: FacebookException?) {
-                    trySend(null)
+                    override fun onError(error: FacebookException?) {
+                        trySend(null)
+                    }
                 }
-            })
+            )
 
             awaitClose { unregisterCallback(callbackManager) }
         }

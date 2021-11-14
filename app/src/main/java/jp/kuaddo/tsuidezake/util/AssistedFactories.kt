@@ -15,3 +15,6 @@ interface SignInManagerFactory {
         activityResultRegistry: ActivityResultRegistry
     ): SignInManager
 }
+
+// ktlintのwarning回避用。このファイルに2つ目のクラスが実装された時に消す。
+interface DummyFactory

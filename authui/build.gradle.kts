@@ -17,7 +17,11 @@ android {
         val props = Properties().apply {
             load(FileInputStream(File(projectDir, "secret.properties")))
         }
-        buildConfigField("String", "GOOGLE_SIGN_IN_TOKEN", "\"${props.getProperty("googleSignInToken")}\"")
+        buildConfigField(
+            "String",
+            "GOOGLE_SIGN_IN_TOKEN",
+            "\"${props.getProperty("googleSignInToken")}\""
+        )
     }
     buildFeatures {
         buildConfig = true
