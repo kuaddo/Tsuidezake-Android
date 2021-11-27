@@ -11,7 +11,7 @@ apply<CommonBuildPlugin>()
 
 tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
-        isNonStable(candidate.version)
+        getRejectVersion(candidate, currentVersion)
     }
     outputFormatter = dependencyUpdatesFormatter
 }
