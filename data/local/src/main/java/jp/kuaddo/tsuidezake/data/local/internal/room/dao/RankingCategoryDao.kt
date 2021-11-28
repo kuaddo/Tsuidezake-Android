@@ -13,6 +13,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.RankingCategoryEntit
 
 @Dao
 internal abstract class RankingCategoryDao {
+    @Transaction
     @Query("SELECT * FROM $TABLE_NAME")
     abstract fun findAll(): Flow<List<RoomRanking>>
 

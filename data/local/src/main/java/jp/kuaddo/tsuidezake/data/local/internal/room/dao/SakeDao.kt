@@ -16,9 +16,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal abstract class SakeDao {
+    @Transaction
     @Query("SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.IS_ADDED_TO_WISH} = 1")
     abstract fun selectWishList(): Flow<List<RoomSake>>
 
+    @Transaction
     @Query("SELECT * FROM $TABLE_NAME WHERE ${ColumnNames.ID} = :id")
     abstract fun findById(id: Int): Flow<RoomSake?>
 
@@ -73,6 +75,7 @@ internal abstract class SakeDao {
     protected abstract suspend fun updateWishUpdates(wishUpdates: List<WishUpdate>)
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Transaction
     @Query("SELECT * FROM $TABLE_NAME")
     abstract fun selectAll(): List<RoomSake>
 }

@@ -34,6 +34,7 @@ dependencies {
     kapt(Deps.Dagger.Hilt.compiler)
 
     testImplementation(project(":testutil"))
+    testImplementation(Deps.Kotlin.reflect)
     testImplementation(Deps.Test.AndroidX.coreTesting)
     testImplementation(Deps.Test.AndroidX.testRunner)
     testImplementation(Deps.Test.AndroidX.jUnit)
@@ -47,7 +48,7 @@ dependencies {
 
 tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
-        isNonStable(candidate.version)
+        getRejectVersion(candidate, currentVersion)
     }
     outputFormatter = dependencyUpdatesFormatter
 }
