@@ -1,25 +1,26 @@
 object Deps {
-    private const val kotlinVersion = "1.5.31"
-    private const val coroutinesVersion = "1.5.1"
+    private const val kotlinVersion = "1.6.0"
+    private const val coroutinesVersion = "1.5.2"
     private const val navigationVersion = "2.3.5"
-    private const val apolloVersion = "2.5.9"
-    private const val daggerVersion = "2.38.1"
+    private const val apolloVersion = "2.5.11"
+    private const val daggerVersion = "2.40.1"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:4.2.2"
+        const val android = "com.android.tools.build:gradle:7.0.3"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        const val gms = "com.google.gms:google-services:4.3.8"
+        const val gms = "com.google.gms:google-services:4.3.10"
         const val safeArgs =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$daggerVersion"
         const val apollo = "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
-        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
-        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
+        const val junit5 = "de.mannodermaus.gradle.plugins:android-junit5:1.8.0.0"
+        const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:10.2.0"
         const val versions = "com.github.ben-manes:gradle-versions-plugin:0.39.0"
         const val deployGate = "com.deploygate:gradle:2.4.0"
     }
 
     object Kotlin {
+        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
         const val coroutinesCore =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesAndroid =
@@ -29,19 +30,19 @@ object Deps {
     }
 
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:1.3.1"
+        const val appCompat = "androidx.appcompat:appcompat:1.4.0"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
         const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val constraint = "androidx.constraintlayout:constraintlayout:2.1.0"
+        const val constraint = "androidx.constraintlayout:constraintlayout:2.1.2"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"
-        const val coreKtx = "androidx.core:core-ktx:1.6.0"
-        const val annotation = "androidx.annotation:annotation:1.2.0"
-        const val activityKtx = "androidx.activity:activity-ktx:1.3.1"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.6"
+        const val coreKtx = "androidx.core:core-ktx:1.7.0"
+        const val annotation = "androidx.annotation:annotation:1.3.0"
+        const val activityKtx = "androidx.activity:activity-ktx:1.4.0"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.4.0"
         const val material = "com.google.android.material:material:1.4.0"
 
         object Lifecycle {
-            private const val version = "2.3.1"
+            private const val version = "2.4.0"
 
             const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
@@ -64,7 +65,7 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics-ktx:19.0.0"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx:20.0.0"
         const val auth = "com.google.firebase:firebase-auth-ktx:21.0.1"
         const val storage = "com.google.firebase:firebase-storage-ktx:20.0.0"
     }
@@ -80,7 +81,7 @@ object Deps {
     }
 
     object OkHttp {
-        private const val version = "4.9.1"
+        private const val version = "4.9.3"
 
         const val core = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
@@ -113,12 +114,12 @@ object Deps {
         const val lifecycle = "com.afollestad.material-dialogs:lifecycle:$version"
     }
 
-    const val gmsAuth = "com.google.android.gms:play-services-auth:19.0.0"
+    const val gmsAuth = "com.google.android.gms:play-services-auth:19.2.0"
     const val facebookLogin = "com.facebook.android:facebook-login:[8,9)"
-    const val timber = "com.jakewharton.timber:timber:4.7.1"
+    const val timber = "com.jakewharton.timber:timber:5.0.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
-    const val gson = "com.google.code.gson:gson:2.8.7"
-    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:5.0.2"
+    const val gson = "com.google.code.gson:gson:2.8.9"
+    const val dataBindingKtx = "com.github.wada811:DataBinding-ktx:6.0.0"
     const val liveEvent = "com.github.hadilq.liveevent:liveevent:1.2.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.7"
     const val inject = "javax.inject:javax.inject:1"
@@ -126,11 +127,11 @@ object Deps {
     object Test {
         const val kotlinCoroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-        const val assertJ = "org.assertj:assertj-core:3.20.2"
-        const val mockk = "io.mockk:mockk:1.12.0"
+        const val assertJ = "org.assertj:assertj-core:3.21.0"
+        const val mockk = "io.mockk:mockk:1.12.1"
 
-        const val robolectric = "org.robolectric:robolectric:4.5.1"
-        const val threeTenBp = "org.threeten:threetenbp:1.5.1"
+        const val robolectric = "org.robolectric:robolectric:4.7.2"
+        const val threeTenBp = "org.threeten:threetenbp:1.5.2"
 
         object AndroidX {
             const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
@@ -139,18 +140,16 @@ object Deps {
         }
 
         object JUnit {
-            private const val version = "5.7.2"
+            private const val version = "5.8.1"
 
             const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:$version"
             const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:$version"
 
-            const val androidTestRunner = "de.mannodermaus.junit5:android-test-runner:1.2.0"
+            const val androidTestRunner = "de.mannodermaus.junit5:android-test-runner:1.3.0"
         }
 
         object Spek {
-            // TODO: Updateはこのissueが解決するまで待つ
-            //  https://github.com/spekframework/spek/issues/964
-            private const val version = "2.0.15"
+            private const val version = "2.0.17"
 
             const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
             const val junit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
