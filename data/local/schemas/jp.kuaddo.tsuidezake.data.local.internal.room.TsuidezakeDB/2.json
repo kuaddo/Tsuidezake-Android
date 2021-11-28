@@ -1,0 +1,337 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "cc78d862a60714391541445c220f8b8c",
+    "entities": [
+      {
+        "tableName": "sakes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`is_added_to_wish` INTEGER NOT NULL DEFAULT false, `is_added_to_tasted` INTEGER NOT NULL DEFAULT false, `id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `region` TEXT NOT NULL, `brewer` TEXT, `image_uri` TEXT, `suitable_temperatures` INTEGER NOT NULL, `good_food_categories` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "isAddedToWish",
+            "columnName": "is_added_to_wish",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "false"
+          },
+          {
+            "fieldPath": "isAddedToTasted",
+            "columnName": "is_added_to_tasted",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "false"
+          },
+          {
+            "fieldPath": "sakeInfo.id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeInfo.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeInfo.description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sakeInfo.region",
+            "columnName": "region",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeInfo.brewer",
+            "columnName": "brewer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sakeInfo.imageUri",
+            "columnName": "image_uri",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sakeInfo.suitableTemperatures",
+            "columnName": "suitable_temperatures",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeInfo.goodFoodCategories",
+            "columnName": "good_food_categories",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "tags",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "recommended_sakes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`order`), FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "order",
+            "columnName": "order",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeId",
+            "columnName": "sake_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "order"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_recommended_sakes_sake_id",
+            "unique": false,
+            "columnNames": [
+              "sake_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_recommended_sakes_sake_id` ON `${TABLE_NAME}` (`sake_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sakes",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sake_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "rankings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER NOT NULL, `rank` INTEGER NOT NULL, `sake_id` INTEGER NOT NULL, PRIMARY KEY(`category_id`, `rank`), FOREIGN KEY(`category_id`) REFERENCES `ranking_categories`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "categoryId",
+            "columnName": "category_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sakeId",
+            "columnName": "sake_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "category_id",
+            "rank"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_rankings_sake_id",
+            "unique": false,
+            "columnNames": [
+              "sake_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rankings_sake_id` ON `${TABLE_NAME}` (`sake_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "ranking_categories",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "category_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "sakes",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sake_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ranking_categories",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `order` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "order",
+            "columnName": "order",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_ranking_categories_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_ranking_categories_name` ON `${TABLE_NAME}` (`name`)"
+          },
+          {
+            "name": "index_ranking_categories_name_order",
+            "unique": true,
+            "columnNames": [
+              "name",
+              "order"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_ranking_categories_name_order` ON `${TABLE_NAME}` (`name`, `order`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "sake_tag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sake_id` INTEGER NOT NULL, `tag_id` INTEGER NOT NULL, PRIMARY KEY(`sake_id`, `tag_id`), FOREIGN KEY(`sake_id`) REFERENCES `sakes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`tag_id`) REFERENCES `tags`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "sakeId",
+            "columnName": "sake_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tagId",
+            "columnName": "tag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "sake_id",
+            "tag_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_sake_tag_tag_id",
+            "unique": false,
+            "columnNames": [
+              "tag_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sake_tag_tag_id` ON `${TABLE_NAME}` (`tag_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sakes",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sake_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "tags",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tag_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc78d862a60714391541445c220f8b8c')"
+    ]
+  }
+}

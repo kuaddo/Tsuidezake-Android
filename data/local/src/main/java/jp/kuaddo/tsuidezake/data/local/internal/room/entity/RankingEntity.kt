@@ -31,7 +31,7 @@ internal data class RankingEntity(
     val categoryId: Int,
     @ColumnInfo(name = ColumnNames.RANK)
     val rank: Int,
-    @ColumnInfo(name = ColumnNames.SAKE_ID)
+    @ColumnInfo(name = ColumnNames.SAKE_ID, index = true)
     val sakeId: Int,
 ) {
     object ColumnNames {

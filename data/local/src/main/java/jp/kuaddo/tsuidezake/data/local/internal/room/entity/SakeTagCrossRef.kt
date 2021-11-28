@@ -1,11 +1,11 @@
 package jp.kuaddo.tsuidezake.data.local.internal.room.entity
 
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.ColumnNames as SakeColumns
+import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity.ColumnNames as TagColumns
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import jp.kuaddo.tsuidezake.model.SakeDetail
-import jp.kuaddo.tsuidezake.data.local.internal.room.entity.SakeEntity.ColumnNames as SakeColumns
-import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity.ColumnNames as TagColumns
 
 @Entity(
     tableName = SakeTagCrossRef.TABLE_NAME,
@@ -30,7 +30,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity.ColumnName
 )
 internal data class SakeTagCrossRef(
     @ColumnInfo(name = ColumnNames.SAKE_ID) val sakeId: Int,
-    @ColumnInfo(name = ColumnNames.TAG_ID) val tagId: Int
+    @ColumnInfo(name = ColumnNames.TAG_ID, index = true) val tagId: Int
 ) {
     object ColumnNames {
         const val SAKE_ID = "sake_id"

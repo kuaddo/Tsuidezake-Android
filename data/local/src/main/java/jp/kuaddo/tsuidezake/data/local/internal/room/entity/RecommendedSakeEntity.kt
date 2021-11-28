@@ -21,7 +21,7 @@ internal data class RecommendedSakeEntity(
     @PrimaryKey
     @ColumnInfo(name = ColumnNames.ORDER)
     val order: Int,
-    @ColumnInfo(name = ColumnNames.SAKE_ID)
+    @ColumnInfo(name = ColumnNames.SAKE_ID, index = true)
     val sakeId: Int,
 ) {
     object ColumnNames {

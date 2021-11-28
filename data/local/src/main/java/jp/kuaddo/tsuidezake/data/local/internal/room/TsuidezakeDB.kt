@@ -29,7 +29,7 @@ import jp.kuaddo.tsuidezake.data.local.internal.room.entity.TagEntity
         RankingCategoryEntity::class,
         SakeTagCrossRef::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(
