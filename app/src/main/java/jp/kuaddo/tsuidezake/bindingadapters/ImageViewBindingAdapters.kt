@@ -17,7 +17,7 @@ fun ImageView.bindImageUri(uriString: String?) {
 @BindingMethods(
     BindingMethod(
         type = ImageView::class,
-        attribute = "app:tint",
+        attribute = "tint",
         method = "setImageTintList"
     )
 )
