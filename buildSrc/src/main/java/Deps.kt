@@ -1,12 +1,14 @@
 object Deps {
-    private const val kotlinVersion = "1.6.0"
+    private const val kotlinVersion = "1.6.10"
     private const val coroutinesVersion = "1.5.2"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.11"
+    // TODO: Update dagger version after "androidx.databinding:databinding-compiler-common" depends
+    //  on javapoet 1.13.0 or later.
     private const val daggerVersion = "2.40.1"
 
     object GradlePlugin {
-        const val android = "com.android.tools.build:gradle:7.0.3"
+        const val android = "com.android.tools.build:gradle:7.0.4"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         const val gms = "com.google.gms:google-services:4.3.10"
         const val safeArgs =
@@ -56,7 +58,7 @@ object Deps {
         }
 
         object Room {
-            private const val version = "2.3.0"
+            private const val version = "2.4.0"
 
             const val runtime = "androidx.room:room-runtime:$version"
             const val compiler = "androidx.room:room-compiler:$version"
@@ -65,7 +67,7 @@ object Deps {
     }
 
     object Firebase {
-        const val analytics = "com.google.firebase:firebase-analytics-ktx:20.0.0"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx:20.0.2"
         const val auth = "com.google.firebase:firebase-auth-ktx:21.0.1"
         const val storage = "com.google.firebase:firebase-storage-ktx:20.0.0"
     }
@@ -101,10 +103,10 @@ object Deps {
     }
 
     object Groupie {
-        private const val version = "2.9.0"
+        private const val version = "2.10.0"
 
-        const val core = "com.xwray:groupie:$version"
-        const val viewBinding = "com.xwray:groupie-viewbinding:$version"
+        const val core = "com.github.lisawray.groupie:groupie:$version"
+        const val viewBinding = "com.github.lisawray.groupie:groupie-viewbinding:$version"
     }
 
     object MaterialDialogs {
@@ -114,7 +116,7 @@ object Deps {
         const val lifecycle = "com.afollestad.material-dialogs:lifecycle:$version"
     }
 
-    const val gmsAuth = "com.google.android.gms:play-services-auth:19.2.0"
+    const val gmsAuth = "com.google.android.gms:play-services-auth:20.0.0"
     const val facebookLogin = "com.facebook.android:facebook-login:[8,9)"
     const val timber = "com.jakewharton.timber:timber:5.0.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
@@ -130,7 +132,7 @@ object Deps {
         const val assertJ = "org.assertj:assertj-core:3.21.0"
         const val mockk = "io.mockk:mockk:1.12.1"
 
-        const val robolectric = "org.robolectric:robolectric:4.7.2"
+        const val robolectric = "org.robolectric:robolectric:4.7.3"
         const val threeTenBp = "org.threeten:threetenbp:1.5.2"
 
         object AndroidX {
