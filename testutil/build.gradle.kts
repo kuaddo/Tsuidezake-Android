@@ -14,7 +14,6 @@ dependencies {
     implementation(Deps.Test.kotlinCoroutinesTest)
     implementation(Deps.Test.AndroidX.coreTesting)
     implementation(Deps.Test.AndroidX.testRunner)
-    implementation(Deps.Test.Spek.dslJvm)
     implementation(Deps.Test.mockk)
 }
 
