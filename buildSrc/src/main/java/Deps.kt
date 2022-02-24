@@ -115,7 +115,7 @@ object Deps {
     }
 
     const val gmsAuth = "com.google.android.gms:play-services-auth:20.1.0"
-    const val facebookLogin = "com.facebook.android:facebook-login:[8,9)"
+    const val facebookLogin = "com.facebook.android:facebook-login:13.0.0"
     const val timber = "com.jakewharton.timber:timber:5.0.1"
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
     const val gson = "com.google.code.gson:gson:2.9.0"
