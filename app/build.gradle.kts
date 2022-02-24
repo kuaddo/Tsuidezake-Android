@@ -101,6 +101,9 @@ dependencies {
 
     implementation(Deps.Firebase.analytics)
 
+    compileOnly(Deps.facebookLogin)
+    compileOnly(Deps.Firebase.auth)
+
     implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
     implementation(Deps.Dagger.Hilt.android)

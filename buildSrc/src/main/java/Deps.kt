@@ -3,9 +3,7 @@ object Deps {
     private const val coroutinesVersion = "1.6.0"
     private const val navigationVersion = "2.3.5"
     private const val apolloVersion = "2.5.11"
-    // TODO: Update dagger version after "androidx.databinding:databinding-compiler-common" depends
-    //  on javapoet 1.13.0 or later.
-    private const val daggerVersion = "2.40.1"
+    private const val daggerVersion = "2.41"
 
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:7.1.2"
