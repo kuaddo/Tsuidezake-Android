@@ -1,7 +1,7 @@
 object Deps {
     private const val kotlinVersion = "1.6.10"
     private const val coroutinesVersion = "1.6.0"
-    private const val navigationVersion = "2.3.5"
+    private const val navigationVersion = "2.4.1"
     private const val apolloVersion = "2.5.11"
     private const val daggerVersion = "2.41"
 
