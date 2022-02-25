@@ -6,7 +6,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("org.jlleitschuh.gradle.ktlint")
-    id("de.mannodermaus.android-junit5")
     id("com.apollographql.apollo")
 }
 apply<CommonBuildPlugin>()
@@ -15,14 +14,6 @@ apollo {
     generateKotlinModels.set(true)
     generateAsInternal.set(true)
     sealedClassesForEnumsMatching.set(listOf(".*"))
-}
-
-android {
-    tasks.withType<Test> {
-        useJUnitPlatform {
-            includeEngines("spek2")
-        }
-    }
 }
 
 dependencies {
@@ -44,11 +35,8 @@ dependencies {
     implementation(Deps.timber)
 
     implementation(kotlin("test-junit"))
+    testImplementation(Deps.Test.AndroidX.jUnit)
     testImplementation(Deps.Test.kotlinCoroutinesTest)
-    testImplementation(Deps.Test.JUnit.jupiterApi)
-    testImplementation(Deps.Test.JUnit.jupiterEngine)
-    testImplementation(Deps.Test.Spek.dslJvm)
-    testImplementation(Deps.Test.Spek.junit5)
     testImplementation(Deps.Test.assertJ)
     testImplementation(Deps.Test.mockk)
     testImplementation(Deps.OkHttp.mockWebServer)

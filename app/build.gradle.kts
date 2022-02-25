@@ -8,7 +8,6 @@ plugins {
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
-    id("de.mannodermaus.android-junit5")
     id("org.jlleitschuh.gradle.ktlint")
     id("deploygate")
 }
@@ -20,10 +19,6 @@ android {
         versionCode = Versions.versionCode
         versionName = Versions.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument(
-            "runnerBuilder",
-            "de.mannodermaus.junit5.AndroidJUnit5Builder"
-        )
     }
     signingConfigs {
         getByName("debug") {
@@ -70,11 +65,6 @@ android {
             )
         }
     }
-    tasks.withType<Test> {
-        useJUnitPlatform {
-            includeEngines("spek2")
-        }
-    }
 }
 
 kapt {
@@ -111,6 +101,9 @@ dependencies {
 
     implementation(Deps.Firebase.analytics)
 
+    compileOnly(Deps.facebookLogin)
+    compileOnly(Deps.Firebase.auth)
+
     implementation(Deps.Dagger.core)
     kapt(Deps.Dagger.compiler)
     implementation(Deps.Dagger.Hilt.android)
@@ -135,20 +128,12 @@ dependencies {
     testImplementation(Deps.Test.kotlinCoroutinesTest)
     testImplementation(Deps.Test.AndroidX.coreTesting)
 
-    testImplementation(Deps.Test.JUnit.jupiterApi)
-    testImplementation(Deps.Test.JUnit.jupiterEngine)
-
-    testImplementation(Deps.Test.Spek.dslJvm)
-    testImplementation(Deps.Test.Spek.junit5)
-
     testImplementation(Deps.Test.assertJ)
     testImplementation(Deps.Test.mockk)
 
     testImplementation(Deps.Test.threeTenBp) {
         exclude(Deps.threeTenAbp)
     }
-
-    androidTestRuntimeOnly(Deps.Test.JUnit.androidTestRunner)
 }
 
 tasks.withType<DependencyUpdatesTask> {

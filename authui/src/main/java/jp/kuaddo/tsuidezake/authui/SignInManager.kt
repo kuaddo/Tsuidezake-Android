@@ -27,16 +27,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.kuaddo.tsuidezake.core.ActivityRegistrationKeyCreator
 import jp.kuaddo.tsuidezake.core.letS
 import jp.kuaddo.tsuidezake.core.runCatchingS
+import kotlin.reflect.KClass
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
-import kotlin.reflect.KClass
 
 class SignInManager @AssistedInject constructor(
     @Assisted lifecycleOwner: LifecycleOwner,
@@ -139,6 +138,7 @@ class SignInManager @AssistedInject constructor(
     fun linkByFacebook(fragment: Fragment) {
         facebookLoginManager.logInWithReadPermissions(
             fragment,
+            facebookCallbackManager,
             mutableListOf("email", "public_profile")
         )
     }
@@ -190,11 +190,6 @@ class SignInManager @AssistedInject constructor(
         }
     }
 
-    // FacebookのSDKがActivity Result APIに対応していないので、今はonActivityResultを使うしか無い
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        facebookCallbackManager.onActivityResult(requestCode, resultCode, data)
-    }
-
     companion object {
         @OptIn(ExperimentalCoroutinesApi::class)
         private fun LoginManager.getTokenFlow(
@@ -203,13 +198,13 @@ class SignInManager @AssistedInject constructor(
             registerCallback(
                 callbackManager,
                 object : FacebookCallback<LoginResult> {
-                    override fun onSuccess(result: LoginResult?) {
-                        trySend(result?.accessToken?.token)
+                    override fun onSuccess(result: LoginResult) {
+                        trySend(result.accessToken.token)
                     }
 
                     override fun onCancel() = Unit
 
-                    override fun onError(error: FacebookException?) {
+                    override fun onError(error: FacebookException) {
                         trySend(null)
                     }
                 }

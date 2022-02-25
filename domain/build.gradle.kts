@@ -15,14 +15,6 @@ dependencies {
     implementation(Deps.AndroidX.annotation)
     implementation(Deps.inject)
     implementation(Deps.timber)
-
-    testImplementation(Deps.Test.kotlinCoroutinesTest)
-    testImplementation(Deps.Test.JUnit.jupiterApi)
-    testImplementation(Deps.Test.JUnit.jupiterEngine)
-    testImplementation(Deps.Test.Spek.dslJvm)
-    testImplementation(Deps.Test.Spek.junit5)
-    testImplementation(Deps.Test.assertJ)
-    testImplementation(Deps.Test.mockk)
 }
 
 ktlint {
