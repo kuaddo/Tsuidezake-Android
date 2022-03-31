@@ -7,7 +7,7 @@
     <dimen name="ranking_loaded_image_padding">0dp</dimen>
     <dimen name="ranking_crown_padding">0dp</dimen>
     <dimen name="ranking_oval_padding">4dp</dimen>
-    <dimen name="ranking_crown_top_margin">4dp</dimen>
+    <dimen name="ranking_crown_top_margin">8dp</dimen>
     <dimen name="ranking_oval_top_margin">0dp</dimen>
 
     <!-- margin = offset + page_margin -->
