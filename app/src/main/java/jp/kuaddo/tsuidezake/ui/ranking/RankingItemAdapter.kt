@@ -1,22 +1,43 @@
 package jp.kuaddo.tsuidezake.ui.ranking
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import jp.kuaddo.tsuidezake.databinding.ItemRankingBinding
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.composethemeadapter.MdcTheme
 import jp.kuaddo.tsuidezake.model.Ranking
-import jp.kuaddo.tsuidezake.ui.common.DataBoundListAdapter
 import jp.kuaddo.tsuidezake.ui.common.SimpleDiffUtil
 
 class RankingItemAdapter(
-    lifecycleOwner: LifecycleOwner,
     private val onClickItem: (content: Ranking.Content) -> Unit
-) : DataBoundListAdapter<Ranking.Content, ItemRankingBinding>(lifecycleOwner, SimpleDiffUtil()) {
-    override fun createBinding(parent: ViewGroup): ItemRankingBinding =
-        ItemRankingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+) : ListAdapter<Ranking.Content, RankingItemAdapter.RankingItemViewHolder>(SimpleDiffUtil()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingItemViewHolder =
+        RankingItemViewHolder(ComposeView(parent.context))
 
-    override fun bind(binding: ItemRankingBinding, item: Ranking.Content, position: Int) {
-        binding.content = item
-        binding.root.setOnClickListener { onClickItem(item) }
+    override fun onBindViewHolder(holder: RankingItemViewHolder, position: Int) =
+        holder.bind(getItem(position))
+
+    override fun onViewRecycled(holder: RankingItemViewHolder) {
+        holder.composeView.disposeComposition()
+    }
+
+    class RankingItemViewHolder(
+        val composeView: ComposeView
+    ) : RecyclerView.ViewHolder(composeView) {
+        init {
+            composeView.setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+        }
+
+        fun bind(item: Ranking.Content) {
+            composeView.setContent {
+                MdcTheme {
+                    RankingItem(rankingContent = item)
+                }
+            }
+            // TODO: Set click listener
+        }
     }
 }
