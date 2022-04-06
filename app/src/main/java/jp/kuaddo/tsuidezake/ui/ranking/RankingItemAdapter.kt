@@ -13,7 +13,7 @@ class RankingItemAdapter(
     private val onClickItem: (content: Ranking.Content) -> Unit
 ) : ListAdapter<Ranking.Content, RankingItemAdapter.RankingItemViewHolder>(SimpleDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingItemViewHolder =
-        RankingItemViewHolder(ComposeView(parent.context))
+        RankingItemViewHolder(ComposeView(parent.context), onClickItem)
 
     override fun onBindViewHolder(holder: RankingItemViewHolder, position: Int) =
         holder.bind(getItem(position))
@@ -23,7 +23,8 @@ class RankingItemAdapter(
     }
 
     class RankingItemViewHolder(
-        val composeView: ComposeView
+        val composeView: ComposeView,
+        private val onClickItem: (content: Ranking.Content) -> Unit
     ) : RecyclerView.ViewHolder(composeView) {
         init {
             composeView.setViewCompositionStrategy(
@@ -34,10 +35,11 @@ class RankingItemAdapter(
         fun bind(item: Ranking.Content) {
             composeView.setContent {
                 MdcTheme {
-                    RankingItem(rankingContent = item)
+                    RankingItem(rankingContent = item) {
+                        onClickItem(item)
+                    }
                 }
             }
-            // TODO: Set click listener
         }
     }
 }

@@ -2,6 +2,7 @@ package jp.kuaddo.tsuidezake.ui.ranking
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,10 +33,11 @@ import jp.kuaddo.tsuidezake.model.Ranking
 import jp.kuaddo.tsuidezake.model.SakeDetail
 
 @Composable
-fun RankingItem(rankingContent: Ranking.Content) {
+fun RankingItem(rankingContent: Ranking.Content, onClickItem: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClickItem() }
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -116,7 +118,7 @@ fun PreviewRankingItem() {
         )
     )
     MdcTheme {
-        RankingItem(rankingContent)
+        RankingItem(rankingContent) {}
     }
 }
 
