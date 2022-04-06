@@ -65,6 +65,12 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Deps.AndroidX.Compose.version
+    }
 }
 
 kapt {
@@ -90,14 +96,21 @@ dependencies {
     implementation(Deps.AndroidX.constraint)
     implementation(Deps.AndroidX.viewPager)
     implementation(Deps.AndroidX.coreKtx)
-    implementation(Deps.AndroidX.activityKtx)
+    implementation(Deps.AndroidX.activityCompose)
     implementation(Deps.AndroidX.fragmentKtx)
     implementation(Deps.AndroidX.material)
-    implementation(Deps.AndroidX.Lifecycle.viewModelKtx)
+    implementation(Deps.AndroidX.Lifecycle.viewModelCompose)
     implementation(Deps.AndroidX.Lifecycle.liveDataKtx)
     implementation(Deps.AndroidX.Lifecycle.commonJava8)
     implementation(Deps.AndroidX.Navigation.fragmentKtx)
     implementation(Deps.AndroidX.Navigation.uiKtx)
+    implementation(Deps.AndroidX.Compose.ui)
+    implementation(Deps.AndroidX.Compose.uiTooling)
+    implementation(Deps.AndroidX.Compose.foundation)
+    implementation(Deps.AndroidX.Compose.animation)
+    implementation(Deps.AndroidX.Compose.material)
+    implementation(Deps.AndroidX.Compose.materialThemeAdapter)
+    implementation(Deps.AndroidX.Compose.coil)
 
     implementation(Deps.Firebase.analytics)
 
